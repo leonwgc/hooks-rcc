@@ -1,0 +1,34 @@
+.fe-popup-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  
+    &.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+  
+    > .fe-popup {
+      transition: transform 200ms ease-in;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+  
+      &.entering,
+      &.exited {
+        transform: translate(0, 100%);
+      }
+  
+      &.entered,
+      &.exiting {
+        transform: translate(0, 0);
+      }
+    }
+  }
+  

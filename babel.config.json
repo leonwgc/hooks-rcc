@@ -1,0 +1,27 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [">1%", "last 4 versions", "Firefox ESR", "not ie < 9"]
+        },
+        "modules": false
+      }
+    ],
+    ["@babel/preset-react"]
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": false }],
+    ["@babel/plugin-transform-runtime"],
+    ["react-hot-loader/babel"],
+    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }, "antd"],
+    [
+      "import",
+      { "libraryName": "antd-mobile", "libraryDirectory": "es", "style": "css" },
+      "antd-mobile"
+    ],
+    ["import", { "libraryName": "zarm", "style": "css" }, "zarm"]
+  ]
+}
