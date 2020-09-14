@@ -326,11 +326,10 @@ if (isDev) {
   config.devServer = {
     disableHostCheck: true,
     contentBase: dist,
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     port,
     hot: true,
     inline: true,
-    useLocalIp: true,
   };
   console.log(chalk.green(`开发测试地址:http://localhost:${port}/${modules[0]}.html`));
 } else {

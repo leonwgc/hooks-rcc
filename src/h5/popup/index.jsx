@@ -58,12 +58,14 @@ export default function PopupIndex() {
       <Popup
         visible={visible.center}
         showMask={true}
-        width="50vw"
+        width="70vw"
         direction="center"
         onMaskClick={() => show('center', false)}
       >
         <div className="pop-up-center-demo">
-          <Button onClick={() => show('center', false)}>close</Button>
+          <Cell hasArrow title="hi" onClick={() => show('center', false)}>
+            close center
+          </Cell>
         </div>
       </Popup>
     </div>
