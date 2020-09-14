@@ -57,7 +57,7 @@ export default function PopupIndex() {
 
       <Popup
         visible={visible.center}
-        showMask={false}
+        showMask={true}
         width="50vw"
         direction="center"
         onMaskClick={() => show('center', false)}

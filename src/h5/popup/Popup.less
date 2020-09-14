@@ -5,10 +5,20 @@
     top: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.35);
     z-index: 1000;
-    &.hide {
+    transition: all 0.3s ease;
+
+    &.mask_entering,
+    &.mask_entered {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &.mask_exited,
+    &.mask_exiting {
       opacity: 0;
+      visibility: hidden;
     }
   }
 
@@ -27,7 +37,6 @@
 
   .fe-popup {
     position: fixed;
-    // z-index: 1000;
 
     // bottom
     &.fe-popup-bottom {
@@ -93,9 +102,7 @@
     }
 
     //center
-
     &.fe-popup-center {
-      // transition-property: all !important;
     }
     &.center_entering,
     &.center_entered {

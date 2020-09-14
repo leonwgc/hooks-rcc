@@ -25,13 +25,15 @@ export default function Popup({
   }, []);
 
   useEffect(() => {
-    const onTransitionEnd = () => {
-      maskRef.current.classList[visible ? 'add' : 'remove']('mask');
-    };
-    popupRef.current.addEventListener('transitionend', onTransitionEnd);
+    if (direction == 'center') {
+      const onTransitionEnd = () => {
+        maskRef.current.classList[visible ? 'add' : 'remove']('mask');
+      };
+      popupRef.current.addEventListener('transitionend', onTransitionEnd);
 
-    return () => popupRef.current.removeEventListener('transitionend', onTransitionEnd);
-  }, [visible]);
+      return () => popupRef.current.removeEventListener('transitionend', onTransitionEnd);
+    }
+  }, [visible, direction]);
 
   const isFirstRenderAndNotVisible = !visible && !didMount.current;
 
@@ -53,14 +55,20 @@ export default function Popup({
   }
 
   const maskStyle = {
-    backgroundColor: showMask ? 'rgba(0, 0, 0, 0.4)' : 'transparent',
+    backgroundColor: showMask ? 'rgba(0, 0, 0, 0.35)' : 'transparent',
+    opacity: isFirstRenderAndNotVisible ? 0 : 1,
   };
 
   return ReactDOM.createPortal(
     <div className={`fe-popup-wrapper fe-popup-wrapper-${direction}`} ref={wrapperRef}>
       <Transition in={visible} timeout={duration} mountOnEnter={false}>
         {(status) => (
-          <div ref={maskRef} style={maskStyle} onClick={clickMask}>
+          <div
+            ref={maskRef}
+            style={maskStyle}
+            className={`mask mask_${status}`}
+            onClick={clickMask}
+          >
             <div
               ref={popupRef}
               style={popupStyle}
