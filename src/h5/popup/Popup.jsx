@@ -7,6 +7,7 @@ export default function Popup({
   children,
   visible,
   width = '100%',
+  top = 0, // for center
   showMask = true,
   onMaskClick = null,
   direction = 'bottom',
@@ -15,6 +16,7 @@ export default function Popup({
   const wrapperRef = useRef(null);
   const popupRef = useRef(null);
   const didMount = useRef(false);
+  const maskRef = useRef(null);
 
   useEffect(() => {
     if (!didMount.current) {
@@ -22,26 +24,54 @@ export default function Popup({
     }
   }, []);
 
+  useEffect(() => {
+    const onTransitionEnd = () => {
+      maskRef.current.classList[visible ? 'add' : 'remove']('mask');
+    };
+    popupRef.current.addEventListener('transitionend', onTransitionEnd);
+
+    return () => popupRef.current.removeEventListener('transitionend', onTransitionEnd);
+  }, [visible]);
+
   const isFirstRenderAndNotVisible = !visible && !didMount.current;
 
+  const clickMask = (e) => {
+    if (e.target === maskRef.current) {
+      onMaskClick();
+    }
+  };
+
+  const popupStyle = {
+    width,
+    transition: isFirstRenderAndNotVisible
+      ? null
+      : `${direction === 'center' ? 'all' : 'transform'} ${duration}ms ease-in-out`,
+  };
+
+  if (direction === 'center') {
+    popupStyle.top = top || '10vh';
+  }
+
+  const maskStyle = {
+    backgroundColor: showMask ? 'rgba(0, 0, 0, 0.4)' : 'transparent',
+  };
+
   return ReactDOM.createPortal(
-    <Transition in={visible} timeout={duration} mountOnEnter={false}>
-      {(status) => (
-        <div className={`fe-popup-wrapper fe-popup-wrapper-${direction} `} ref={wrapperRef}>
-          {showMask && visible && <div onClick={onMaskClick} className={`mask ${status}`}></div>}
-          <div
-            ref={popupRef}
-            style={{
-              width,
-              transition: isFirstRenderAndNotVisible ? null : `transform ${duration}ms ease-in-out`,
-            }}
-            className={`fe-popup fe-popup-${direction} ${direction + '_' + status}`}
-          >
-            {children}
+    <div className={`fe-popup-wrapper fe-popup-wrapper-${direction}`} ref={wrapperRef}>
+      <Transition in={visible} timeout={duration} mountOnEnter={false}>
+        {(status) => (
+          <div ref={maskRef} style={maskStyle} onClick={clickMask}>
+            <div
+              ref={popupRef}
+              style={popupStyle}
+              className={`fe-popup fe-popup-${direction} ${direction + '_' + status}`}
+            >
+              {children}
+            </div>
           </div>
-        </div>
-      )}
-    </Transition>,
+        )}
+      </Transition>
+    </div>,
     document.body
   );
 }
