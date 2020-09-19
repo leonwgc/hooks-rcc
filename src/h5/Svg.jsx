@@ -29,4 +29,28 @@ const Svg = () => {
   return <div dangerouslySetInnerHTML={{ __html: data }}></div>;
 };
 
-export default Svg;
+const SVG1 = () => {
+  const rectClick = (e) => {
+    e.target.setAttributeNS(null, 'width', '60');
+    e.target.setAttributeNS(null, 'height', '60')
+  };
+
+  return (
+    <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="10" width="100" height="100" rx="15" ry="15" onClick={rectClick}>
+        <animate attributeName="fill" from="green" to="red" dur="2s" fill="freeze"></animate>
+        <animateTransform
+          attributeName="transform"
+          type="scale"
+          from="0"
+          to="2"
+          dur="1s"
+          repeatCount="1"
+          fill="freeze" //fill: 动画结束之后的状态 保持freeze结束状态/remove恢复初始状态（默认值）
+        />
+      </rect>
+    </svg>
+  );
+};
+
+export default SVG1;
