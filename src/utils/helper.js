@@ -226,3 +226,106 @@ export const isValidId = function (id) {
   }
   return pass;
 };
+
+export const compressImage = (file, compressRatio = 0.5) => {
+  //imgRatio为图片压缩比，默认为0.9
+  const compress = (img, imgRatio = compressRatio) => {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    //    瓦片canvas
+    var tCanvas = document.createElement('canvas');
+    var tctx = tCanvas.getContext('2d');
+
+    var initSize = img.src.length;
+    var width = img.width;
+    var height = img.height;
+    //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+    var ratio;
+    if ((ratio = (width * height) / 4000000) > 1) {
+      ratio = Math.sqrt(ratio); // 平方根
+      width /= ratio;
+      height /= ratio;
+    } else {
+      ratio = 1;
+    }
+    canvas.width = width;
+    canvas.height = height;
+    //   铺底色（防止png透明背景转成JPG变黑色）
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //  如果图片像素大于100万则使用瓦片绘制
+    var count;
+    if ((count = (width * height) / 1000000) > 1) {
+      count = ~~(Math.sqrt(count) + 1); // 计算要分成多少块瓦片
+      //   计算每块瓦片的宽和高
+      var nw = ~~(width / count); // ~~取整
+      var nh = ~~(height / count);
+      tCanvas.width = nw;
+      tCanvas.height = nh;
+      for (var i = 0; i < count; i++) {
+        for (var j = 0; j < count; j++) {
+          //  drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight,destX, destY, destWidth, destHeight)
+          tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
+          ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+        }
+      }
+    } else {
+      ctx.drawImage(img, 0, 0, width, height);
+    }
+    //进行最小压缩（将原来图片的质量压缩到原先的0.5倍）
+    var ndata = canvas.toDataURL('image/jpeg', imgRatio);
+    // console.log('压缩前：' + initSize);
+    // console.log('压缩后：' + ndata.length);
+    // console.log('压缩率：' + ~~((100 * (initSize - ndata.length)) / initSize) + '%');
+    tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+    return ndata;
+  };
+
+  const base64ToBlob = (compressDataUrl) => {
+    //去掉url的头，并转换为byte
+    let bytes = window.atob(compressDataUrl.split(',')[1]);
+
+    //处理异常,将ascii码小于0的转换为大于0
+    let ab = new ArrayBuffer(bytes.length);
+    let ia = new Uint8Array(ab);
+    for (let i = 0; i < bytes.length; i++) {
+      ia[i] = bytes.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/jpeg' });
+  };
+
+  return new Promise((resolve, reject) => {
+    // 读取文件
+    let reader = new FileReader();
+    reader.onload = (e2) => {
+      let result = e2.target.result;
+      //图片大小小于1Mb，则直接上传
+      if (result.length <= 1024 * 1024) {
+        const blobObj = base64ToBlob(result);
+        let fileObj = new window.File([blobObj], file.name, { type: file.type });
+
+        resolve(fileObj);
+      } else {
+        let img = new Image();
+        img.src = result;
+        if (img.complete) {
+          let compDataUrl = compress(img);
+          img = null;
+          const blobObj = base64ToBlob(compDataUrl);
+          let fileObj = new window.File([blobObj], file.name, { type: file.type });
+
+          resolve(fileObj);
+        } else {
+          img.onload = () => {
+            let compDataUrl = compress(img);
+            img = null;
+            const blobObj = base64ToBlob(compDataUrl);
+            let fileObj = new window.File([blobObj], file.name, { type: file.type });
+            resolve(fileObj);
+          };
+        }
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+};
