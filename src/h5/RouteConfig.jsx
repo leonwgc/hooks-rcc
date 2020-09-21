@@ -6,6 +6,10 @@ const routes = [
     component: lazy(() => import('./popup/index')),
   },
   {
+    path: '/picker',
+    component: lazy(() => import('./ImagePicker/index')),
+  },
+  {
     path: '/svg',
     component: lazy(() => import('./Svg')),
   },

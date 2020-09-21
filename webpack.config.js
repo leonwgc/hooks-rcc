@@ -23,7 +23,7 @@ const process = require('process');
 const chalk = require('chalk');
 const pkg = require('./package.json');
 const argv = require('yargs').argv;
-const port = 9001;
+const port = 9002;
 const dist = getPath('./dist');
 const isDev = argv.env === 'dev'; // build mode: development
 const isProd = !isDev; // build mode: production
