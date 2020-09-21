@@ -40,7 +40,7 @@ export default function ImagePicker({
           data: { pathIsMd5: true, storeType: 'I', type: '39' },
           file: pfile,
           withCredentials: true,
-          action: `https://t-api.zuifuli.com/api/customer/v2/individual/attach/upload4individual`,
+          action: `file-upload-api`,
           method: 'post',
         });
       });
