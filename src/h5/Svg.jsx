@@ -6,20 +6,43 @@ const data = `
 <svg
    xmlns="http://www.w3.org/2000/svg"
    xmlns:oryx="http://www.b3mn.org/oryx"
-   width="110"
-   height="42"
+   width="40"
+   height="40"
    version="1.0">
   <defs></defs>
   <oryx:magnets>
-  	<oryx:magnet oryx:cx="31" oryx:cy="31" oryx:default="yes" />
+  	<oryx:magnet oryx:cx="16" oryx:cy="16" oryx:default="yes" />
   </oryx:magnets>
   <g pointer-events="fill">
-    <rect id="bg_frame" x="30" y="30" width="110" height="42" stroke="#585858" fill="#0d72ff" stroke-width="1"/>
-	<text font-size="14" 
+    <circle id="bg_frame" cx="16" cy="16" r="10" stroke="#ccc" fill="#ccc" stroke-width="0"/>
+	<text font-size="11" 
 		id="text_name" 
-		x="31" y="35" 
+		x="16" y="32" 
 		oryx:align="top center" 
-		fill="#fff"
+		stroke="#373e48"
+	></text>
+  </g>
+</svg>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:oryx="http://www.b3mn.org/oryx"
+   width="40"
+   height="40"
+   version="1.0">
+  <defs></defs>
+  <oryx:magnets>
+  	<oryx:magnet oryx:cx="16" oryx:cy="16" oryx:default="yes" />
+  </oryx:magnets>
+  <g pointer-events="fill">
+    <circle id="bg_frame" cx="16" cy="16" r="15" stroke="#3362A9" fill="#0D72FF" stroke-width="1"/>
+	<text font-size="11" 
+		id="text_name" 
+		x="16" y="33" 
+		oryx:align="top center" 
+		stroke="#373e48"
 	></text>
   </g>
 </svg>
@@ -32,7 +55,7 @@ const Svg = () => {
 const SVG1 = () => {
   const rectClick = (e) => {
     e.target.setAttributeNS(null, 'width', '60');
-    e.target.setAttributeNS(null, 'height', '60')
+    e.target.setAttributeNS(null, 'height', '60');
   };
 
   return (
@@ -53,4 +76,4 @@ const SVG1 = () => {
   );
 };
 
-export default SVG1;
+export default Svg;

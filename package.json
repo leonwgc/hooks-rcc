@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@types/react-transition-group": "^4.4.0",
+    "antd": "^4.6.5",
     "core-js": "^3.6.4",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
@@ -81,7 +82,8 @@
   },
   "scripts": {
     "build:ship": "echo done",
-    "start": "webpack-dev-server --flex --cfg h5 --env dev"
+    "start": "webpack-dev-server --flex --cfg h5 --env dev",
+    "start:pc": "webpack-dev-server --cfg pc --env dev"
   },
   "browserslist": {
     "development": [
