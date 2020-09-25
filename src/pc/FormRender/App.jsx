@@ -5,13 +5,17 @@ import { Input, Radio, DatePicker, Select, Form, Button, Spin } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
+import './App.less';
 
 const dateFormat = 'YYYY-MM-DD';
 
 export default function App({}) {
   const [form] = Form.useForm();
+  const [settingForm] = Form.useForm();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+
+  const [settingData, setSettingData] = useState({ formLayout: 'horizontal' });
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,12 +51,20 @@ export default function App({}) {
         label: '姓名',
         placeholder: '请填写',
         name: 'name',
-        rules: [{ required: true, message: '*' }],
+        rules: [{ required: true, message: '' }],
       },
       { type: Input, label: '拼音', placeholder: '例：liming (李明)', name: 'nameSpell' },
     ],
     [
-      { type: Input, label: '昵称', placeholder: '请填写（非必填）', name: 'custNickNameInOrg' },
+      {
+        type: Input,
+        label: '昵称',
+        placeholder: '请填写（非必填）',
+        name: 'custNickNameInOrg',
+        show: () => {
+          return form.getFieldValue('name') === '汪国超';
+        },
+      },
       { type: Input, label: '英文名', placeholder: '请填写（非必填）', name: 'englishName' },
     ],
     [
@@ -186,14 +198,53 @@ export default function App({}) {
     ],
   ];
 
-  const onFinish = (values) => {
+  const onChange = (values) => {
     setData(values);
   };
 
+  // settings
+
+  const settingLayout = [
+    [
+      {
+        type: Radio.Group,
+        label: 'Form Layout',
+        name: 'formLayout',
+        options: [
+          { value: 'horizontal', label: 'horizontal' },
+          { value: 'vertical', label: 'vertical' },
+          { value: 'inline', label: 'inline' },
+        ],
+      },
+    ],
+  ];
+
+  const onValuesChange = (values) => {
+    setSettingData(values);
+  };
+
+  const { formLayout } = settingData;
+
   return (
-    <div className="page-base-info">
+    <div className="app">
+      <div>
+        <Form
+          form={settingForm}
+          layout={formLayout}
+          initialValues={settingData}
+          onValuesChange={onValuesChange}
+        >
+          <FormRenderer layoutData={settingLayout} />
+        </Form>
+      </div>
       <Spin spinning={loading}>
-        <Form form={form} onFinish={onFinish} initialValues={data} layout="vertical">
+        <Form
+          form={form}
+          onFinish={onChange}
+          onValuesChange={onChange}
+          initialValues={data}
+          layout={formLayout}
+        >
           <FormRenderer layoutData={layoutData} />
           <div>
             <Button type="primary" htmlType="submit">

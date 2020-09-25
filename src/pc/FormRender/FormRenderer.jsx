@@ -15,7 +15,8 @@ export default function FormRenderer({ layoutData }) {
         return (
           <Row key={idx} gutter={{ xs: 8, sm: 16, md: 24 }}>
             {arr.map((item, itemIdx) => {
-              const { type, name, rules, label, description, items, ...props } = item;
+              const { type, name, rules, label, ...props } = item;
+
               return (
                 <Col span={span} key={itemIdx}>
                   <Form.Item name={name} label={label} rules={rules}>
