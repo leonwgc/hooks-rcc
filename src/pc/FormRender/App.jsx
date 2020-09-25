@@ -9,6 +9,15 @@ import './App.less';
 
 const dateFormat = 'YYYY-MM-DD';
 
+const MyDatePicker = ({ value, onChange }) => {
+  const [v, setV] = useState(moment(value));
+  const myOnChange = (mv) => {
+    setV(mv);
+    onChange(mv.format(dateFormat));
+  };
+  return <DatePicker value={v} onChange={myOnChange}></DatePicker>;
+};
+
 export default function App({}) {
   const [form] = Form.useForm();
   const [settingForm] = Form.useForm();
@@ -26,14 +35,14 @@ export default function App({}) {
         englishName: 'leon',
         gender: 'M',
         marryStatus: 'Y',
-        birthday: moment('1986-11-19'),
+        birthday: '1986-11-19',
         individualEmail: 'giantfish@15.om',
         country: 'HK',
         race: '01',
         politicStatus: 'LM',
         educationLevel: 'U',
         overseasStudyExp: 'N',
-        firstworkdate: moment('2020-09-17'),
+        firstworkdate: '2020-09-17',
         householdType: 'U',
         householdAddress: '阳新',
         contactAddress: '上海闵行',
@@ -89,7 +98,7 @@ export default function App({}) {
     ],
     [
       {
-        type: DatePicker,
+        type: MyDatePicker,
         label: '生日',
         title: '出生日期',
         placeholder: '请选择',
@@ -151,7 +160,7 @@ export default function App({}) {
         ],
       },
       {
-        type: DatePicker,
+        type: MyDatePicker,
         label: '首次工作',
         title: '首次工作',
         name: 'firstworkdate',
