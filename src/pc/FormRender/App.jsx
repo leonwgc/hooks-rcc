@@ -9,6 +9,7 @@ import './App.less';
 
 const dateFormat = 'YYYY-MM-DD';
 
+// self-defined Comp
 const MyDatePicker = ({ value, onChange }) => {
   const [v, setV] = useState(moment(value));
   const myOnChange = (mv) => {
@@ -24,7 +25,21 @@ export default function App({}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
+  // simulate ajax load data
+  const [coutries, setCoutries] = useState([]);
+
   const [settingData, setSettingData] = useState({ formLayout: 'horizontal' });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCoutries([
+        { label: '中国香港', value: '中国香港' },
+        { label: '中国澳门', value: '中国澳门' },
+        { label: '中国台湾', value: '中国台湾' },
+        { label: '中华人民共和国', value: '中华人民共和国' },
+      ]);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,7 +52,7 @@ export default function App({}) {
         marryStatus: 'Y',
         birthday: '1986-11-19',
         individualEmail: 'giantfish@15.om',
-        country: 'HK',
+        country: '中华人民共和国',
         race: '01',
         politicStatus: 'LM',
         educationLevel: 'U',
@@ -115,7 +130,7 @@ export default function App({}) {
         label: '国籍',
         title: '国籍',
         name: 'country',
-        options: enums.coutries,
+        options: coutries,
         showSearch: true,
         optionFilterProp: 'label',
       },
