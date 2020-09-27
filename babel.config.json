@@ -16,12 +16,6 @@
     ["@babel/plugin-proposal-class-properties", { "loose": false }],
     ["@babel/plugin-transform-runtime"],
     ["react-hot-loader/babel"],
-    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }, "antd"],
-    [
-      "import",
-      { "libraryName": "antd-mobile", "libraryDirectory": "es", "style": "css" },
-      "antd-mobile"
-    ],
     ["import", { "libraryName": "zarm", "style": "css" }, "zarm"]
   ]
 }

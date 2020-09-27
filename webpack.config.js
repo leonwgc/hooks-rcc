@@ -175,6 +175,10 @@ function getStyleLoaders(useCss = false) {
         relativeUrls: false,
         sourceMap: isDev,
         javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': '#004BCC',
+          'link-color': '#004BCC',
+        },
       },
     },
   ];
