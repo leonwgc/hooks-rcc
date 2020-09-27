@@ -18,6 +18,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const process = require('process');
 const chalk = require('chalk');
@@ -306,6 +307,7 @@ const config = {
       hashDigestLength: 20,
     }),
     new WebpackBar(),
+    new AntdDayjsWebpackPlugin(),
     ...htmlsPlugins,
   ],
 };

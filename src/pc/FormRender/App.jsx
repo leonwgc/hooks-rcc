@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FormRenderer from './FormRenderer';
 import * as enums from './enums';
 import { Input, Radio, DatePicker, Select, Form, Button, Spin } from 'antd';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import locale from 'antd/es/date-picker/locale/zh_CN';
+import dayjs from 'dayjs';
 import './App.less';
 
 const dateFormat = 'YYYY-MM-DD';
@@ -15,10 +13,14 @@ const GroupTitle = ({ title }) => {
 
 // self-defined Comp
 const MyDatePicker = ({ value, onChange }) => {
-  const [v, setV] = useState(moment(value));
+  const [v, setV] = useState(dayjs(value));
   const myOnChange = (mv) => {
     setV(mv);
-    onChange(mv.format(dateFormat));
+    if (!mv) {
+      onChange(mv);
+    } else {
+      onChange(mv.format(dateFormat));
+    }
   };
   return <DatePicker value={v} onChange={myOnChange}></DatePicker>;
 };
@@ -125,7 +127,7 @@ export default function App({}) {
         placeholder: '请选择',
         name: 'birthday',
         format: dateFormat,
-        locale: locale,
+        // locale,
       },
 
       { type: Input, label: '个人邮箱', placeholder: '请填写（非必填）', name: 'individualEmail' },
@@ -187,7 +189,7 @@ export default function App({}) {
         name: 'firstworkdate',
         placeholder: '请选择首次参加工作时间',
         format: dateFormat,
-        locale: locale,
+        // locale,
       },
     ],
     [
