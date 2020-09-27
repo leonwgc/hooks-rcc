@@ -9,6 +9,10 @@ import './App.less';
 
 const dateFormat = 'YYYY-MM-DD';
 
+const GroupTitle = ({ title }) => {
+  return <h3>{title}</h3>;
+};
+
 // self-defined Comp
 const MyDatePicker = ({ value, onChange }) => {
   const [v, setV] = useState(moment(value));
@@ -69,6 +73,7 @@ export default function App({}) {
   }, []);
 
   const layoutData = [
+    [{ type: GroupTitle, title: '基础信息' }],
     [
       {
         type: Input,
@@ -79,6 +84,7 @@ export default function App({}) {
       },
       { type: Input, label: '拼音', placeholder: '例：liming (李明)', name: 'nameSpell' },
     ],
+    [{ type: GroupTitle, title: '其他信息' }],
     [
       {
         type: Input,

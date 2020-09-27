@@ -19,7 +19,7 @@ export default function FormRenderer({ layoutData }) {
 
               return (
                 <Col span={span} key={itemIdx}>
-                  <Form.Item name={name} label={label} rules={rules}>
+                  <Form.Item name={name} label={label} noStyle={!name} rules={rules}>
                     {React.createElement(type, props)}
                   </Form.Item>
                 </Col>
