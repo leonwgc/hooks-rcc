@@ -84,6 +84,7 @@
   "scripts": {
     "build:ship": "echo done",
     "start": "webpack-dev-server --flex --cfg h5 --env dev",
+    "start:qrcode": "webpack-dev-server --flex --cfg qrcode --env dev",
     "start:pc": "webpack-dev-server --cfg pc --env dev"
   },
   "browserslist": {
