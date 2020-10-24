@@ -2,8 +2,8 @@ import { lazy } from 'react';
 
 const routes = [
   {
-    path: '/formrender',
-    component: lazy(() => import('./FormRender/App')),
+    path: '/page1',
+    component: lazy(() => import('./Page1')),
   },
 ];
 
