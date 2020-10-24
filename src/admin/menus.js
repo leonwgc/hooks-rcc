@@ -5,7 +5,7 @@ const menus = [
         id: 1194020,
         funName: 'MyMerits',
         funTitle: '我的绩效',
-        funUrl: 'https://hrm.zuifuli.com/#/merits/fillTargrt',
+        funUrl: '/page1',
         funLogo: '',
         funMiniLogo: '',
         priority: 10,
