@@ -4,6 +4,7 @@ import { Button, Input } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { isValidPhone, isValidSMSCode } from '~/utils/helper';
 import qs from 'qs';
+import './Login.less';
 
 const defaultCountdown = 60;
 
@@ -70,46 +71,15 @@ export default function Login({ history }) {
   };
 
   const submit = () => {
-    const { tel, code } = data;
-
-    if (!isValidSMSCode(code)) {
-      Toast.show('验证码错误');
-      return;
-    }
-
     history.push('/admin');
   };
 
   return (
-    <div className="reg-login-page">
+    <div className="login-page">
       <div className="header"></div>
       <div className="form">
-        <div className="tel onepx-bottom">
-          <div className="icon tel"></div>
-          <Input
-            type="text"
-            placeholder="11位手机号码"
-            value={tel}
-            onChange={onFieldChange('tel')}
-          />
-        </div>
-
-        <div className="vcode onepx-bottom">
-          <div className="icon lock"></div>
-          <Input
-            type="text"
-            maxLength={6}
-            placeholder="6位数字验证码"
-            value={code}
-            onChange={onFieldChange('code')}
-          />
-          <a className="code" ref={ref} onClick={codeSent ? null : show}>
-            {codeSent ? countdown + '秒' : '获取验证码'}
-          </a>
-        </div>
-
-        <Button block theme="primary" className="btn" onClick={submit}>
-          提交
+        <Button block type="primary" className="btn" onClick={submit}>
+          登录
         </Button>
       </div>
     </div>

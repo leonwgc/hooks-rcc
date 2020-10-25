@@ -7,8 +7,8 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 
 import IconFont from '~/common/IconFont';
 import Header from './Header';
-import menus from '../layout/menus';
-import './Index.less';
+import menus from './menus';
+import './Layout.less';
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -78,7 +78,20 @@ export default function LayoutIndex() {
         return <Menu.Item key={item.id}>{item.funTitle}</Menu.Item>;
       } else {
         return (
-          <SubMenu key={item.id} title={item.funTitle} icon={<UnorderedListOutlined />}>
+          <SubMenu
+            key={item.id}
+            title={item.funTitle}
+            icon={
+              item.funLogo ? (
+                <IconFont
+                  style={{ fontSize: 16, color: iconFontColor }}
+                  type={`icon-${item.funLogo}`}
+                />
+              ) : (
+                <UnorderedListOutlined />
+              )
+            }
+          >
             {menuRender(item.childs)}
           </SubMenu>
         );
