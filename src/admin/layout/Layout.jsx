@@ -112,7 +112,7 @@ export default function LayoutIndex() {
         </div>
         {collapsed ? null : (
           <div className="fold-menues">
-            <span onClick={toggleMenusFoldState}>展开全部菜单</span>
+            <span onClick={toggleMenusFoldState}>{isMenuAllUnFold ? '收起' : '展开'}全部菜单</span>
           </div>
         )}
 
