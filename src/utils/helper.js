@@ -329,3 +329,11 @@ export const compressImage = (file, compressRatio = 0.5) => {
     reader.readAsDataURL(file);
   });
 };
+
+export const isValidPhone = (tel = '') => {
+  return /^1[3|4|5|8|7|9][0-9]\d{8}$/.test(tel);
+};
+
+export const isValidSMSCode = (code = '') => {
+  return /^\d{6}$/.test(code);
+};

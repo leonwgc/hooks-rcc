@@ -2830,6 +2830,13 @@ connect-history-api-fallback@^1.6.0:
   resolved "https://registry.npm.taobao.org/connect-history-api-fallback/download/connect-history-api-fallback-1.6.0.tgz#8b32089359308d111115d81cad3fceab888f97bc"
   integrity sha1-izIIk1kwjRERFdgcrT/Oq4iPl7w=
 
+connected-react-router@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.npm.taobao.org/connected-react-router/download/connected-react-router-6.8.0.tgz#ddc687b31d498322445d235d660798489fa56cae"
+  integrity sha1-3caHsx1JgyJEXSNdZgeYSJ+lbK4=
+  dependencies:
+    prop-types "^15.7.2"
+
 consola@^2.10.0:
   version "2.15.0"
   resolved "https://registry.npm.taobao.org/consola/download/consola-2.15.0.tgz#40fc4eefa4d2f8ef2e2806147f056ea207fcc0e9"
@@ -8461,7 +8468,7 @@ react-hot-loader@^4.12.19:
     shallowequal "^1.1.0"
     source-map "^0.7.3"
 
-react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
+react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.9.0:
   version "16.13.1"
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.1.tgz?cache=0&sync_timestamp=1600731971537&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
@@ -8475,6 +8482,17 @@ react-native-camera-roll-picker@1.2.3:
   version "1.2.3"
   resolved "https://registry.npm.taobao.org/react-native-camera-roll-picker/download/react-native-camera-roll-picker-1.2.3.tgz#b117fd3a2b9012dcccee1261a9bc427226b8d6d2"
   integrity sha1-sRf9OiuQEtzM7hJhqbxCcia41tI=
+
+react-redux@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.npm.taobao.org/react-redux/download/react-redux-7.2.1.tgz#8dedf784901014db2feca1ab633864dee68ad985"
+  integrity sha1-je33hJAQFNsv7KGrYzhk3uaK2YU=
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    hoist-non-react-statics "^3.3.0"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^16.9.0"
 
 react-router-dom@^5.2.0:
   version "5.2.0"
@@ -8601,6 +8619,11 @@ reduce-function-call@^1.0.1:
   integrity sha1-YDUPf7JSwKZ+sQ/UaU0WkJlxMA8=
   dependencies:
     balanced-match "^1.0.0"
+
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha1-UcLBmhhe1Rh6qpotCLZm0NZGdiI=
 
 redux@^4.0.0:
   version "4.0.5"

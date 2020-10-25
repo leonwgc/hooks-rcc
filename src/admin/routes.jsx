@@ -3,13 +3,13 @@ import { lazy } from 'react';
 import biz1Routes from './biz1/routes';
 import biz2Routes from './biz2/routes';
 
-const routes = [
+const common = [
   {
-    path: '/page1',
-    component: lazy(() => import('./Page1')),
+    path: '/login',
+    component: lazy(() => import('./Login')),
   },
-  ...biz1Routes,
-  ...biz2Routes,
 ];
+
+const routes = [...common, ...biz1Routes, ...biz2Routes];
 
 export default routes;
