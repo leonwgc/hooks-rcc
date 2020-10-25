@@ -1,5 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react';
 
 export default function Page1() {
-  return <div>page1</div>;
+  return <div>biz1 page2</div>;
 }
