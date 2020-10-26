@@ -1,12 +1,14 @@
 import { lazy } from 'react';
 
+const basePath = '/biz1';
+
 const routes = [
   {
-    path: '/biz1/page1',
+    path: `${basePath}/page1`,
     component: lazy(() => import('./Page1')),
   },
   {
-    path: '/biz1/page2',
+    path: `${basePath}/page2`,
     component: lazy(() => import('./Page2')),
   },
 ];
