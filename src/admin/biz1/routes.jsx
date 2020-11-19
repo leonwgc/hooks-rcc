@@ -15,6 +15,10 @@ const routes = [
     path: `${basePath}/list`,
     component: lazy(() => import('./List')),
   },
+  {
+    path: `${basePath}/picker`,
+    component: lazy(() => import('./Picker')),
+  },
 ];
 
 export default routes;

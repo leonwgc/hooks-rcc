@@ -1,7 +1,52 @@
 import React, { useState } from 'react';
 import Popup from './Popup';
-import { Cell, Button } from 'zarm';
+import { Cell, Button, Toast } from 'zarm';
+import Picker from '../picker/Picker';
 import './index.less';
+
+const pickerData = [
+  {
+    label: 'Venomancer',
+    value: 1,
+    disabled: 'wheel-disabled-item',
+  },
+  {
+    label: 'Nerubian Weaver',
+    value: 2,
+  },
+  {
+    label: 'Spectre',
+    value: 3,
+  },
+  {
+    label: 'Juggernaut',
+    value: 4,
+  },
+  {
+    label: 'Karl',
+    value: 5,
+  },
+  {
+    label: 'Zeus',
+    value: 6,
+  },
+  {
+    label: 'Witch Doctor',
+    value: 7,
+  },
+  {
+    label: 'Lich',
+    value: 8,
+  },
+  {
+    label: 'Oracle',
+    value: 9,
+  },
+  {
+    label: 'Earthshaker',
+    value: 10,
+  },
+];
 
 export default function PopupIndex() {
   const [visible, setVisible] = useState({
@@ -23,7 +68,18 @@ export default function PopupIndex() {
 
       <Popup visible={visible.bottom} onMaskClick={() => show('bottom', false)}>
         <div className="pop-up-bottom-demo">
-          <Button onClick={() => show('bottom', false)}>close</Button>
+          <Picker
+            data={pickerData}
+            onOk={(selected) => {
+              Toast.show(selected.label);
+              show('bottom', false);
+            }}
+            onCancel={() => {
+              show('bottom', false);
+            }}
+            onChange={(v) => console.log(v.label)}
+            value={4}
+          />
         </div>
       </Popup>
 
