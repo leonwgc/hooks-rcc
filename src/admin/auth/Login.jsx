@@ -71,7 +71,7 @@ export default function Login({ history }) {
   };
 
   const submit = () => {
-    history.push('/admin');
+    history.push('/biz1/page1');
   };
 
   return (

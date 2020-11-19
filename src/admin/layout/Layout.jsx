@@ -1,25 +1,19 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { HashRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
-import routes from '../routes';
+import routes from './routes';
 import { Spin } from 'antd';
 import { UnorderedListOutlined } from '@ant-design/icons';
 
-import IconFont from '~/common/IconFont';
+import IconFont from '~/admin/common/IconFont';
 import Header from './Header';
 import menus from './menus';
 import './Layout.less';
+import PageLoading from '../common/PageLoading';
+import PageNotFound from '../PageNotFound';
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
-
-const Loading = () => {
-  return (
-    <div className="my-loading">
-      <Spin />
-    </div>
-  );
-};
 
 const parentMenusKeys = [];
 
@@ -129,8 +123,8 @@ export default function LayoutIndex() {
       <Layout className="page-layout">
         <Header />
         <Content style={{ padding: 20 }}>
-          <Router basename="/admin">
-            <Suspense fallback={<Loading />}>
+          <Router>
+            <Suspense fallback={<PageLoading />}>
               <Switch>
                 {routes.map((route, idx) => (
                   <Route
@@ -140,6 +134,7 @@ export default function LayoutIndex() {
                     component={route.component}
                   />
                 ))}
+                <Route component={PageNotFound}></Route>
               </Switch>
             </Suspense>
           </Router>

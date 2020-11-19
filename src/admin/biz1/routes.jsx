@@ -11,6 +11,10 @@ const routes = [
     path: `${basePath}/page2`,
     component: lazy(() => import('./Page2')),
   },
+  {
+    path: `${basePath}/list`,
+    component: lazy(() => import('./List')),
+  },
 ];
 
 export default routes;

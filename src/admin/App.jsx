@@ -8,8 +8,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import { HashRouter as Router, Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import store, { history } from './store';
 import dayjs from 'dayjs';
-import Layout from './layout/Layout';
-import Login from './Login';
+import routes from './routes';
+import PageLoading from './common/PageLoading';
 import './App.less';
 
 dayjs.locale('zh-cn');
@@ -19,11 +19,18 @@ const App = () => {
     <Provider store={store}>
       <ConfigProvider locale={zhCN}>
         <ConnectedRouter history={history}>
-          <Switch>
-            <Route path="/login" component={Login}></Route>
-            <Route path="/admin" component={Layout}></Route>
-            <Redirect to="/admin" />
-          </Switch>
+          <Suspense fallback={<PageLoading />}>
+            <Switch>
+              {routes.map((route, idx) => (
+                <Route
+                  key={idx}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.component}
+                />
+              ))}
+            </Switch>
+          </Suspense>
         </ConnectedRouter>
       </ConfigProvider>
     </Provider>

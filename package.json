@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "dependencies": {
     "@types/react-transition-group": "^4.4.0",
+    "ahooks": "^2.9.1",
     "antd": "^4.6.5",
+    "better-scroll": "^2.0.5",
     "connected-react-router": "^6.8.0",
     "core-js": "^3.6.4",
     "react": "^16.8.0",
