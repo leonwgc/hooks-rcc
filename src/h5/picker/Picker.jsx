@@ -39,6 +39,10 @@ export default function Picker({
       probeType: 3,
     });
 
+    requestAnimationFrame(() => {
+      weelRef.current.refresh();
+    });
+
     weelRef.current.on('scrollEnd', () => {
       setIndex(weelRef.current.getSelectedIndex());
     });
