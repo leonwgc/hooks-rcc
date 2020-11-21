@@ -89,7 +89,8 @@
   "scripts": {
     "build:ship": "echo done",
     "start": "webpack-dev-server --flex --env dev --cfg",
-    "start:pc": "webpack-dev-server --env dev --cfg"
+    "start:pc": "webpack-dev-server --env dev --cfg",
+    "build":"webpack --flex --env prd --nocdn --cfg"
   },
   "browserslist": {
     "development": [
