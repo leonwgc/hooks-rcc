@@ -38,7 +38,7 @@ export default function Slide() {
     <div className="slide-wrapper">
       <div className="slide-wrapper__banner">
         <div className="slide-wrapper__banner__wrapper" ref={ref}>
-          <div className="slide-wrapper__banner__wrapper__content">
+          <div className="slide-wrapper__banner__content">
             {data.map((item, idx) => (
               <div className={`slide-page p${idx}`} key={idx}>
                 Page {item}
