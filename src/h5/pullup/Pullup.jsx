@@ -1,59 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
-import BScroll from 'better-scroll';
-import useUpdateEffect from '~/hooks/useUpdateEffect';
+import usePullup from '~/hooks/usePullup';
 import './Pullup.less';
-
-const loadMore = (page) => {
-  return new Promise((resolve) => {
-    var ar = [];
-    for (var i = 0; i < 10; i++) {
-      ar.push((page - 1) * 10 + i);
-    }
-
-    setTimeout(() => {
-      resolve(ar);
-    }, 1000);
-  });
-};
 
 export default function Pullup() {
   const ref = useRef();
-  const bs = useRef();
-
-  const [isPulling, setIsPulling] = useState(false);
-  const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    loadMore(page).then((data) => {
-      setData(data);
+  const fetchData = (pageIndex) => {
+    return new Promise((resolve) => {
+      var ar = [];
+      for (var i = 0; i < 10; i++) {
+        ar.push(pageIndex * 10 + i);
+      }
+      setTimeout(() => {
+        setData((d) => d.concat(ar));
+        resolve(ar);
+      }, 1000);
     });
-  }, []);
+  };
 
   useEffect(() => {
-    bs.current = new BScroll(ref.current, {
-      click: true,
-      pullUpLoad: {
-        threshold: 90,
-      },
-    });
-
-    bs.current.on('pullingUp', () => {
-      setPage((p) => p + 1);
-    });
-
-    return () => bs.current.destroy();
+    fetchData(0);
   }, []);
 
-  useUpdateEffect(() => {
-    setIsPulling(true);
-    loadMore(page).then((data) => {
-      setData((d) => d.concat(data));
-      bs.current.finishPullUp();
-      bs.current.refresh();
-      setIsPulling(false);
-    });
-  }, [page]);
+  const isPulling = usePullup({ ref, loadMore: fetchData });
 
   return (
     <div className="pullup-wrapper" ref={ref}>
