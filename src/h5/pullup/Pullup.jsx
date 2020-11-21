@@ -23,7 +23,7 @@ export default function Pullup() {
     fetchData(0);
   }, []);
 
-  const isPulling = usePullup({ ref, loadMore: fetchData });
+  const isPulling = usePullup({ ref, fetchData });
 
   return (
     <div className="pullup-wrapper" ref={ref}>

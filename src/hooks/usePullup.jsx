@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import BScroll from 'better-scroll';
 import useUpdateEffect from '~/hooks/useUpdateEffect';
 
-export default function usePullup({ ref, loadMore, threshold = 90 }) {
+export default function usePullup({ ref, fetchData, threshold = 90 }) {
   const bs = useRef();
   const [isPulling, setIsPulling] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
@@ -24,7 +24,7 @@ export default function usePullup({ ref, loadMore, threshold = 90 }) {
 
   useUpdateEffect(() => {
     setIsPulling(true);
-    loadMore(pageIndex).then(() => {
+    fetchData(pageIndex).then(() => {
       bs.current.finishPullUp();
       bs.current.refresh();
       setIsPulling(false);
