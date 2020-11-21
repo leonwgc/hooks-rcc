@@ -14,6 +14,10 @@ const routes = [
     component: lazy(() => import('./picker/Picker')),
   },
   {
+    path: '/slide',
+    component: lazy(() => import('./slide/Slide')),
+  },
+  {
     path: '/svg',
     component: lazy(() => import('./Svg')),
   },
