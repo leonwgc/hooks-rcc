@@ -5,20 +5,15 @@
     top: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.35);
-    z-index: 1000;
-    transition: all 0.3s ease;
 
-    &.mask_entering,
-    &.mask_entered {
+    &.in {
+      background-color: rgba(0, 0, 0, 0.35);
+      z-index: 1000;
       opacity: 1;
-      visibility: visible;
     }
-
-    &.mask_exited,
-    &.mask_exiting {
+    &.exited {
       opacity: 0;
-      visibility: hidden;
+      z-index: -1;
     }
   }
 
@@ -103,6 +98,7 @@
 
     //center
     &.fe-popup-center {
+      transform-origin: center center;
     }
     &.center_entering,
     &.center_entered {

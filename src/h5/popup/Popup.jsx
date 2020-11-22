@@ -11,7 +11,7 @@ export default function Popup({
   showMask = true,
   onMaskClick = null,
   direction = 'bottom',
-  duration = 200,
+  duration = 400,
 }) {
   const wrapperRef = useRef(null);
   const popupRef = useRef(null);
@@ -24,18 +24,16 @@ export default function Popup({
     }
   }, []);
 
-  useEffect(() => {
-    if (direction == 'center') {
-      const onTransitionEnd = () => {
-        maskRef.current.classList[visible ? 'add' : 'remove']('mask');
-      };
-      popupRef.current.addEventListener('transitionend', onTransitionEnd);
+  // useEffect(() => {
+  //   const onTransitionEnd = () => {
+  //     maskRef.current.classList[visible ? 'add' : 'remove']('mask');
+  //   };
+  //   popupRef.current.addEventListener('transitionend', onTransitionEnd);
 
-      return () => popupRef.current.removeEventListener('transitionend', onTransitionEnd);
-    }
-  }, [visible, direction]);
+  //   return () => popupRef.current.removeEventListener('transitionend', onTransitionEnd);
+  // }, [visible, direction]);
 
-  const isFirstRenderAndNotVisible = !visible && !didMount.current;
+  // const isFirstRenderAndNotVisible = !visible && !didMount.current;
 
   const clickMask = (e) => {
     if (e.target === maskRef.current) {
@@ -45,7 +43,7 @@ export default function Popup({
 
   const popupStyle = {
     width,
-    transition: isFirstRenderAndNotVisible
+    transition: !didMount.current
       ? null
       : `${direction === 'center' ? 'all' : 'transform'} ${duration}ms ease-in-out`,
   };
@@ -55,8 +53,7 @@ export default function Popup({
   }
 
   const maskStyle = {
-    backgroundColor: showMask ? 'rgba(0, 0, 0, 0.35)' : 'transparent',
-    opacity: isFirstRenderAndNotVisible ? 0 : 1,
+    transition: `all ${duration}ms ease-in-out`,
   };
 
   return ReactDOM.createPortal(
@@ -66,7 +63,7 @@ export default function Popup({
           <div
             ref={maskRef}
             style={maskStyle}
-            className={`mask mask_${status}`}
+            className={`${visible ? 'mask in' : 'mask exited'}`}
             onClick={clickMask}
           >
             <div
