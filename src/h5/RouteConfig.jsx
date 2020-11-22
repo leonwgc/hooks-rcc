@@ -22,6 +22,10 @@ const routes = [
     component: lazy(() => import('./pullup/Pullup')),
   },
   {
+    path: '/mz',
+    component: lazy(() => import('./move-zoom/Mz')),
+  },
+  {
     path: '/svg',
     component: lazy(() => import('./Svg')),
   },
