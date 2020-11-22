@@ -14,6 +14,10 @@ export default function Mz() {
       scrollY: true,
       freeScroll: true,
       bounce: true,
+     
+      startX: 417,
+      startY: 317,
+      // enable: false,
       movable: true, // for movable plugin
       zoom: {
         // for zoom plugin
@@ -28,11 +32,11 @@ export default function Mz() {
     });
 
     bs.current.on('zoomEnd', () => {
-      bs.current.refresh();
+      // bs.current.refresh();
     });
 
     setTimeout(() => {
-      bs.current.putAt(417, 317);
+      // bs.current.putAt(417, 317);
       bs.current.refresh();
     }, 0);
 
