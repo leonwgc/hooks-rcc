@@ -3,6 +3,8 @@ import { Button } from 'zarm';
 import BScroll from 'better-scroll';
 import './Mz.less';
 
+const startPosition = [417, 317];
+
 export default function Mz() {
   const ref = useRef();
   const bs = useRef();
@@ -14,14 +16,14 @@ export default function Mz() {
       scrollY: true,
       freeScroll: true,
       bounce: true,
-     
-      startX: 417,
-      startY: 317,
+
+      startX: startPosition[0],
+      startY: startPosition[1],
       // enable: false,
       movable: true, // for movable plugin
       zoom: {
         // for zoom plugin
-        start: 1,
+        start: .7,
         min: 0.2,
         max: 3,
       },
@@ -36,7 +38,7 @@ export default function Mz() {
     });
 
     setTimeout(() => {
-      // bs.current.putAt(417, 317);
+      bs.current.putAt(startPosition[0], startPosition[1]);
       bs.current.refresh();
     }, 0);
 
