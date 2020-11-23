@@ -16,14 +16,14 @@ export default function Mz() {
       scrollY: true,
       freeScroll: true,
       bounce: true,
-
+      momentum: false,
       startX: startPosition[0],
       startY: startPosition[1],
       // enable: false,
       movable: true, // for movable plugin
       zoom: {
         // for zoom plugin
-        start: .7,
+        start: 0.7,
         min: 0.2,
         max: 3,
       },
