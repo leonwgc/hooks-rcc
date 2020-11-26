@@ -29,6 +29,10 @@ const routes = [
     path: '/svg',
     component: lazy(() => import('./Svg')),
   },
+  {
+    path: '/sig',
+    component: lazy(() => import('./sig/Sig')),
+  },
 ];
 
 export default routes;

@@ -2,7 +2,7 @@ import { hot } from 'react-hot-loader/root';
 import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PageNotFound from './PageNotFound';
-import routes from './RouteConfig';
+import routes from './Routes';
 import 'zarm/dist/zarm.min.css';
 import { ActivityIndicator } from 'zarm';
 
