@@ -3,22 +3,18 @@ import './sig';
 //手写签名
 
 function _download(dataURL, filename) {
-  if (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') === -1) {
-    window.open(dataURL);
-  } else {
-    var blob = _dataURLToBlob(dataURL);
-    var url = window.URL.createObjectURL(blob);
+  var blob = _dataURLToBlob(dataURL);
+  var url = window.URL.createObjectURL(blob);
 
-    var a = document.createElement('a');
-    a.style = 'display: none';
-    a.href = url;
-    a.download = filename;
+  var a = document.createElement('a');
+  a.style = 'display: none';
+  a.href = url;
+  a.download = filename;
 
-    document.body.appendChild(a);
-    a.click();
+  document.body.appendChild(a);
+  a.click();
 
-    window.URL.revokeObjectURL(url);
-  }
+  window.URL.revokeObjectURL(url);
 }
 
 function _dataURLToBlob(dataURL) {
@@ -38,8 +34,9 @@ function _dataURLToBlob(dataURL) {
 export default function useSignature(
   cavansRef,
   options = {
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: 'rgb(255, 255, 255,0)',
     penColor: 'black',
+    useLandscape: true,
   }
 ) {
   const _pad = useRef();
@@ -48,17 +45,29 @@ export default function useSignature(
     var signaturePad = (_pad.current = new SignaturePad(canvas, options));
 
     function resizeCanvas() {
-      var ratio = Math.max(window.devicePixelRatio || 1, 1);
-      canvas.width = canvas.offsetWidth * ratio;
-      canvas.height = canvas.offsetHeight * ratio;
-      canvas.getContext('2d').scale(ratio, ratio);
+      const { useLandscape } = options;
+      var w = canvas.offsetWidth;
+      var h = canvas.offsetHeight;
+      canvas.width = w;
+      canvas.height = h;
+
+      if (useLandscape) {
+        var ctx = canvas.getContext('2d');
+        ctx.rotate(1.5 * Math.PI);
+        ctx.translate(-canvas.height, 0);
+      }
+
       signaturePad.clear(); // otherwise isEmpty() might return incorrect value
     }
+
+    window.addEventListener('resize', resizeCanvas, false);
     resizeCanvas();
     setTimeout(() => {
       resizeCanvas();
     }, 100);
-  }, []);
+
+    return () => window.removeEventListener('resize', resizeCanvas, false);
+  }, [cavansRef, options]);
 
   const download = (fileName) => {
     let type = '';
@@ -73,6 +82,10 @@ export default function useSignature(
   };
 
   const undo = () => {
+    if (options.useLandscape) {
+      console.log(`not supported`);
+      return;
+    }
     var data = _pad.current.toData();
 
     if (data) {
@@ -87,6 +100,13 @@ export default function useSignature(
 
   const clear = () => {
     _pad.current.clear();
+
+    if (options.useLandscape) {
+      var canvas = cavansRef.current;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.height, canvas.width);
+    }
   };
 
   return { download, pad: _pad.current, undo, setPenColor, clear };
