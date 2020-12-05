@@ -28,15 +28,21 @@ try {
   passiveSupported = false;
 }
 
-export default function usePullupLoadMore(ref, threshold = 10) {
+const doScrollCheck = (el, threshold) => {
+  return el === window
+    ? window.pageYOffset + window.innerHeight + threshold >= document.documentElement.scrollHeight
+    : el.scrollTop + el.offsetHeight + threshold >= el.scrollHeight;
+};
+
+export default function usePullupLoadMore({ ref, useWindow = false, threshold = 10 }) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
+    if (useWindow) {
+      ref = { current: window };
+    }
     const onScroll = debounce(() => {
-      if (
-        ref.current.scrollTop + ref.current.offsetHeight + threshold >=
-        ref.current.scrollHeight
-      ) {
+      if (doScrollCheck(ref.current, threshold)) {
         setPage((p) => p + 1);
       }
     }, 60);
