@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/pullup',
-    component: lazy(() => import('./pullup/Pullup')),
+    component: lazy(() => import('./pullup-js/Pullup')),
   },
   {
     path: '/mz',
