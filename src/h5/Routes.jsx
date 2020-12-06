@@ -33,6 +33,10 @@ const routes = [
     path: '/sig',
     component: lazy(() => import('./sig/Sig')),
   },
+  {
+    path: '/animate',
+    component: lazy(() => import('./animate/App')),
+  },
 ];
 
 export default routes;

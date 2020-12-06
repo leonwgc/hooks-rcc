@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/react-transition-group": "^4.4.0",
     "ahooks": "^2.9.1",
+    "animate.css": "^4.1.1",
     "antd": "^4.6.5",
     "better-scroll": "^2.0.5",
     "connected-react-router": "^6.8.0",
@@ -90,7 +91,7 @@
     "build:ship": "echo done",
     "start": "webpack-dev-server --flex --env dev --cfg",
     "start:pc": "webpack-dev-server --env dev --cfg",
-    "build":"webpack --flex --env prd --nocdn --cfg"
+    "build": "webpack --flex --env prd --nocdn --cfg"
   },
   "browserslist": {
     "development": [
