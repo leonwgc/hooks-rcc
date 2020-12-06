@@ -11,11 +11,12 @@ export default function Pullup() {
   const [data, setData] = useState([]);
 
   const { page } = usePullupLoadMore({
-    // useWindow: true,
-    ref,
+    useBodyScroll: true,
+    // ref,
   });
 
   useEffect(() => {
+    console.log(page)
     const fetchData = () => {
       setLoading(true);
       return new Promise((resolve) => {
@@ -26,7 +27,7 @@ export default function Pullup() {
         setTimeout(() => {
           setData((d) => d.concat(ar));
           resolve();
-        }, 1000);
+        }, 1500);
       }).then(() => {
         setLoading(false);
       });

@@ -34,18 +34,18 @@ const doScrollCheck = (el, threshold) => {
     : el.scrollTop + el.offsetHeight + threshold >= el.scrollHeight;
 };
 
-export default function usePullupLoadMore({ ref, useWindow = false, threshold = 10 }) {
+export default function usePullupLoadMore({ ref, useBodyScroll = false, threshold = 10 }) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (useWindow) {
+    if (useBodyScroll) {
       ref = { current: window };
     }
     const onScroll = debounce(() => {
       if (doScrollCheck(ref.current, threshold)) {
         setPage((p) => p + 1);
       }
-    }, 60);
+    }, 100);
     const options = passiveSupported ? { passive: true } : false;
     ref.current.addEventListener('scroll', onScroll, options);
     return () => ref.current.removeEventListener('scroll', onScroll, options);
