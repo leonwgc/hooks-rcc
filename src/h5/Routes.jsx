@@ -37,6 +37,10 @@ const routes = [
     path: '/animate',
     component: lazy(() => import('./animate/App')),
   },
+  {
+    path: '/ip',
+    component: lazy(() => import('./ImagePicker/')),
+  },
 ];
 
 export default routes;

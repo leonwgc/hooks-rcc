@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Badge, FilePicker, Icon, Toast, ImagePreview } from 'zarm';
 import upload from './upload';
 import { compressImage } from '~/utils/helper';
-import { getHostPrefix } from '~/utils/host';
 import './ImagePicker.less';
+
+// onFileChanged: 上传成功/删除都会触发
 
 export default function ImagePicker({
   onChange,
@@ -11,8 +12,10 @@ export default function ImagePicker({
   text = '',
   formData = {},
   data = [],
+  action = '',
 }) {
-  const [fileItems, setFileItems] = useState(data); 
+  const [fileItems, setFileItems] = useState(data); // response object from server
+
   // preview
   const [visible, setVisible] = useState(false);
   const [index, setIndex] = useState(0);
@@ -37,10 +40,10 @@ export default function ImagePicker({
               onChange(data);
             }
           },
-          data: { pathIsMd5: true, storeType: 'I', type: '39' },
+          data: formData,
           file: pfile,
           withCredentials: true,
-          action: `file-upload-api`,
+          action: action,
           method: 'post',
         });
       });
@@ -66,10 +69,11 @@ export default function ImagePicker({
                 onChange(newFileItems);
               }
             },
+            // data: { pathIsMd5: true, storeType: 'I', type: '39' },
             data: formData,
             file: pfile,
             withCredentials: true,
-            action: `file-upload-api`,
+            action: action,
             method: 'post',
           });
         });
@@ -91,7 +95,6 @@ export default function ImagePicker({
       {fileItems.map((item, idx) => (
         <Badge
           key={idx}
-          className="file-picker-item"
           shape="circle"
           text={
             <span className="file-picker-closebtn">
@@ -118,12 +121,13 @@ export default function ImagePicker({
       {fileItems.length === 1 && !multiple ? null : (
         <FilePicker
           multiple={multiple}
-          className="file-picker-btn"
+          className={`file-picker-btn ${text ? 'has-text' : ''}`}
+          name={text}
           accept="image/*"
           onChange={onPickerChange}
         >
           <div>
-            <Icon type="add" size="lg" />
+            <Icon type="add" size="md" />
             <div className="text">{text}</div>
           </div>
         </FilePicker>

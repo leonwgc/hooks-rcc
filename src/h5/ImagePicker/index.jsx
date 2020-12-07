@@ -21,8 +21,8 @@ export default function IndexPicker() {
         }}
         text="正面"
         formData={{ storeType: 'I', type: '39' }}
-        multiple
         data={data}
+        action={''}
       />
     </div>
   );

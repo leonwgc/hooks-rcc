@@ -2,41 +2,60 @@
   display: flex;
   flex-wrap: wrap;
 
-  .file-picker-item {
-    width: 74px;
-    height: 74px;
-    margin-bottom: 15px;
-    display: inline-block;
-    border: 2px solid #ddd;
-    margin-right: 15px;
-  }
-
   .file-picker-btn {
-    width: 74px;
-    height: 74px;
+    width: 75px;
+    height: 75px;
     margin-bottom: 15px;
+    position: relative;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed #ddd;
-    color: #ddd;
+    border: 1px dashed #bfbfbf;
+    border-radius: 9px;
+    color: #8c8c8c;
 
     .za-icon {
-      color: #ddd;
+      color: #8c8c8c;
+    }
+
+    &.has-text:after {
+      content: ' ';
+      position: absolute;
+      bottom: 0;
+      height: 22px;
+      background: #737373;
+      width: 100%;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+    }
+
+    .text {
+      position: absolute;
+      font-size: 12px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: center;
+      color: #ffffff;
+      line-height: 16px;
+      bottom: 3px;
+      z-index: 5;
+      width: 100%;
+      left: 0;
     }
   }
 
   .file-picker-item-img {
-    width: 74px;
-    height: 74px;
-    width: 100%;
-    height: 100%;
+    width: 75px;
+    height: 75px;
+    border: 1px dashed #bfbfbf;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 
-    img {
+    > img {
       max-width: 100%;
-      height: 100%;
+      max-height: 100%;
     }
   }
   .file-picker-closebtn {
