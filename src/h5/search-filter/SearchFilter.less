@@ -1,0 +1,32 @@
+.search-filter {
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  overflow: auto;
+
+  > .bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 44px;
+    z-index: 2;
+  }
+
+  .item-list {
+    margin-top: 44px;
+    > div {
+      position: relative;
+      display: flex;
+      padding-left: 15px;
+      min-height: 44px;
+      background-color: #fff;
+      overflow: hidden;
+      align-items: center;
+      border-bottom: 1px solid #f5f5f5;
+    }
+  }
+}

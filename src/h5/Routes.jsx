@@ -41,6 +41,10 @@ const routes = [
     path: '/ip',
     component: lazy(() => import('./ImagePicker/')),
   },
+  {
+    path: '/search-filter',
+    component: lazy(() => import('./search-filter/App')),
+  },
 ];
 
 export default routes;
