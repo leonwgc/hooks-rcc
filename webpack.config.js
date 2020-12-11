@@ -36,14 +36,14 @@ function getPath(_path) {
 
 module.exports = (cfg) => {
   console.log(cfg);
-  let useCDN = true; // 使用阿里cdn ,默认使用
+  let useCDN = false; // 使用阿里cdn ,默认不使用
   const env = cfg.env;
   const isDev = env === 'dev'; // build mode: development
   const isProd = !isDev; // build mode: production
   const isMkt = cfg.mkt; // deploy to oss mkt folder
   process.env.NODE_ENV = isProd ? 'production' : 'development';
 
-  if (env.nocdn) {
+  if (cfg.nocdn) {
     useCDN = false; // 本地用http-server/serve host, test purpose.
   }
   const prefixMap = {
@@ -84,10 +84,11 @@ module.exports = (cfg) => {
   };
 
   function getPublicPath() {
-    if (isMkt) {
-      return `https://static.site.com/${env}/mkt/${repoName}/`;
-    }
-    return useCDN ? `https://static.site.com/${env}/${repoName}/` : '';
+    // if (isMkt) {
+    //   return `https://static.site.com/${env}/mkt/${repoName}/`;
+    // }
+    // return useCDN ? `https://static.site.com/${env}/${repoName}/` : '';
+    return '';
   }
   const configFile = getPath(`./config/${compileConfig}.js`);
 
@@ -169,15 +170,8 @@ module.exports = (cfg) => {
         loader: 'postcss-loader',
         options: {
           postcssOptions: {
+            flex: isUsingFlexH5,
             sourceMap: isDev,
-            ident: 'postcss',
-            plugins: (loader) => {
-              const rt = [require('postcss-flexbugs-fixes'), require('autoprefixer')];
-              if (isUsingFlexH5 && !/node_modules/.test(loader.resourcePath)) {
-                rt.push(require('postcss-px2rem')({ remUnit: 100 }));
-              }
-              return rt;
-            },
           },
         },
       },
@@ -307,10 +301,7 @@ module.exports = (cfg) => {
         __dev__: isDev,
         __env__: JSON.stringify(env),
       }),
-      // new webpack.HashedModuleIdsPlugin({
-      //   hashDigestLength: 20,
-      // }),
-      // new WebpackBar(),
+      new WebpackBar(),
       new AntdDayjsWebpackPlugin(),
       ...htmlsPlugins,
     ],
@@ -340,6 +331,7 @@ module.exports = (cfg) => {
       port,
       hot: true,
       inline: true,
+      publicPath: '',
     };
     console.log(chalk.green(`开发测试地址:http://localhost:${port}/${modules[0]}.html`));
   } else {
