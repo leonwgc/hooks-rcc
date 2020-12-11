@@ -16,7 +16,7 @@ export default function SearchFilter({ dataArray = [], onItemClick, visible = fa
     } else {
       setData(dataArray);
     }
-  }, [value]);
+  }, [value, dataArray]);
 
   return visible ? (
     <div className="search-filter ">
