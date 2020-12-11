@@ -293,8 +293,8 @@ module.exports = (cfg) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: `[name].[contenthash:6].css`,
-        chunkFilename: `[name].[contenthash:6].css`,
+        filename: `${prefix}.[name].[contenthash:6].css`,
+        chunkFilename: `${prefix}.[name].[contenthash:6].css`,
       }),
       new webpack.DefinePlugin({
         __client__: true,
