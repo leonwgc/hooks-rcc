@@ -16,7 +16,6 @@
     "react-router-dom": "^5.2.0",
     "react-transition-group": "^4.4.1",
     "redux-thunk": "^2.3.0",
-    "webpack": "^5.10",
     "zarm": "^2.6.1"
   },
   "devDependencies": {
@@ -86,12 +85,13 @@
     "webpack-dev-server": "^3.11",
     "webpack-node-externals": "^2.5.2",
     "webpackbar": "^5.0.0-3",
+    "webpack": "^5.10",
     "yargs": "^16.2.0"
   },
   "scripts": {
     "clear": "rm -rf ./dist && clear",
     "start": "webpack serve --env flex --env env=dev  --env cfg=h5",
-    "start:pc": "webpack-dev-server --env dev --cfg",
+    "start:pc": "webpack serve --env env=dev --env",
     "build": "webpack --env flex --env env=prd --env nocdn  --env cfg=h5"
   },
   "browserslist": {
