@@ -17,7 +17,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const process = require('process');
@@ -53,20 +53,16 @@ module.exports = (cfg) => {
   const flex = cfg.flex;
   const prefix = prefixMap[env] + '.' + cfg.cfg;
   const stats = 'errors-only';
-  const cache = isDev
-    ? {
-        type: 'memory',
-      }
-    : {
-        type: 'filesystem',
-        name: cfg.cfg,
-        cacheDirectory: path.resolve(__dirname, 'node_modules', '.cache', 'webpack-cache'),
-        buildDependencies: {
-          // This makes all dependencies of this file - build dependencies
-          config: [__filename],
-          // By default webpack and loaders are build dependencies
-        },
-      };
+  const cache = {
+    type: 'filesystem',
+    name: cfg.cfg + `${isProd ? 'prd' : 'dev'}`,
+    cacheDirectory: path.resolve(__dirname, 'node_modules', '.cache', 'webpack-cache'),
+    buildDependencies: {
+      // This makes all dependencies of this file - build dependencies
+      config: [__filename],
+      // By default webpack and loaders are build dependencies
+    },
+  };
   const alias = {
     '~': path.resolve(__dirname, './src'),
     'react-dom': '@hot-loader/react-dom',
@@ -283,6 +279,7 @@ module.exports = (cfg) => {
     },
     optimization: {
       minimize: isProd,
+      minimizer: [new CssMinimizerPlugin()],
       moduleIds: 'deterministic',
       chunkIds: 'deterministic',
       splitChunks: {
@@ -326,6 +323,7 @@ module.exports = (cfg) => {
       disableHostCheck: true,
       contentBase: dist,
       host: '0.0.0.0',
+      useLocalIp: true,
       port,
       hot: true,
       inline: true,
@@ -335,8 +333,6 @@ module.exports = (cfg) => {
     };
     console.log(chalk.green(`开发测试地址:http://localhost:${port}/${modules[0]}.html`));
   } else {
-    config.plugins.push(new OptimizeCSSAssetsPlugin({ cssProcessorOptions: { safe: true } }));
-
     if (genReport) {
       config.plugins.push(
         new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)({
