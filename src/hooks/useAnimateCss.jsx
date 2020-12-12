@@ -8,7 +8,7 @@ const animateCSS = (element, animation, prefix = 'animate__') =>
     const nodeList = [...document.querySelectorAll(element)];
 
     for (let node of nodeList) {
-      node.style.visibility = 'visible';
+      // node.style.visibility = 'visible';
       node.classList.add(`${prefix}animated`, animationName);
 
       function handleAnimationEnd() {

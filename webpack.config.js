@@ -23,7 +23,12 @@ const WebpackBar = require('webpackbar');
 const process = require('process');
 const chalk = require('chalk');
 const pkg = require('./package.json');
-
+const prefixMap = {
+  prd: 'p',
+  test: 't',
+  pre: 'u',
+  dev: 'd',
+};
 // const argv = require('yargs').argv;
 const port = 9002;
 const dist = getPath('./dist');
@@ -36,11 +41,52 @@ function getPath(_path) {
 
 module.exports = (cfg) => {
   console.log(cfg);
-  let useCDN = false; // 使用阿里cdn ,默认不使用
   const env = cfg.env;
   const isDev = env === 'dev'; // build mode: development
   const isProd = !isDev; // build mode: production
-  const isMkt = cfg.mkt; // deploy to oss mkt folder
+  const repoName = pkg.name;
+  const genReport = cfg.report === true;
+  const entry = Object.create(null);
+  const htmlsPlugins = [];
+  const compileConfig = 'index.' + cfg.cfg;
+  const defaultEntry = 'index'; // 默认模块的入口文件必须是index.jsx
+  const flex = cfg.flex;
+  const prefix = prefixMap[env] + '.' + cfg.cfg;
+  const stats = 'errors-only';
+  const cache = isDev
+    ? {
+        type: 'memory',
+      }
+    : {
+        type: 'filesystem',
+        name: cfg.cfg,
+        cacheDirectory: path.resolve(__dirname, 'node_modules', '.cache', 'webpack-cache'),
+        buildDependencies: {
+          // This makes all dependencies of this file - build dependencies
+          config: [__filename],
+          // By default webpack and loaders are build dependencies
+        },
+      };
+  const alias = {
+    '~': path.resolve(__dirname, './src'),
+    'react-dom': '@hot-loader/react-dom',
+  };
+  const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+  const configFile = getPath(`./config/${compileConfig}.js`);
+
+  if (!env) {
+    exit('env is required');
+  }
+  if (deployEnvs.indexOf(env) === -1) {
+    exit('env must be' + deployEnvs);
+  }
+  if (!cfg.cfg) {
+    exit('cfg is required');
+  }
+
+  if (!fs.existsSync(configFile)) {
+    exit(`${configFile} does not exist`);
+  }
 
   // Do this as the first thing so that any code reading it knows the right env.
   process.env.BABEL_ENV = isProd ? 'production' : 'development';
@@ -53,46 +99,6 @@ module.exports = (cfg) => {
     throw err;
   });
 
-  if (cfg.nocdn) {
-    useCDN = false; // 本地用http-server/serve host, test purpose.
-  }
-  const prefixMap = {
-    prd: 'p',
-    test: 't',
-    pre: 'u',
-    dev: 'd',
-  };
-
-  if (!env && !isDev) {
-    exit('env is required');
-  }
-
-  console.log(chalk.blue(`env: ${env}`));
-
-  if (env && deployEnvs.indexOf(env) === -1) {
-    exit('env must be' + deployEnvs);
-  }
-  let prefix = prefixMap[env] + '.' + cfg.cfg;
-
-  const repoName = pkg.name;
-
-  const genReport = cfg.report === true;
-  const entry = Object.create(null);
-  const htmlsPlugins = [];
-  let compileConfig = 'index';
-  const defaultEntry = 'index'; // 默认模块的入口文件必须是index.jsx
-
-  const isUsingFlexH5 = cfg.flex;
-
-  if (cfg.cfg) {
-    compileConfig = 'index.' + cfg.cfg;
-  }
-
-  const resolveAlias = {
-    '~': path.resolve(__dirname, './src'),
-    'react-dom': '@hot-loader/react-dom',
-  };
-
   function getPublicPath() {
     // if (isMkt) {
     //   return `https://static.site.com/${env}/mkt/${repoName}/`;
@@ -100,19 +106,13 @@ module.exports = (cfg) => {
     // return useCDN ? `https://static.site.com/${env}/${repoName}/` : '';
     return '';
   }
-  const configFile = getPath(`./config/${compileConfig}.js`);
-
-  if (!fs.existsSync(configFile)) {
-    exit(`${configFile} does not exist`);
-  }
 
   const configObject = require(`./config/${compileConfig}`);
   const modules = Object.keys(configObject);
 
   if (!modules.length) {
-    exit(`please config modules to prerender in ${configFile}`);
+    exit(`please config compile module`);
   }
-  console.log(chalk.blue(`config: ${compileConfig}.js`));
 
   for (let srcModule of modules) {
     if (!fs.existsSync(path.resolve(`./src/${srcModule}`))) {
@@ -128,8 +128,6 @@ module.exports = (cfg) => {
 
     moduleEntry = getPath(`./src/${srcModule}/${defaultEntry}`);
 
-    console.log(chalk.blue(`module: ${srcModule}`));
-
     entry[srcModule] = [getPath('./src/polyfill'), moduleEntry];
 
     htmlsPlugins.push(
@@ -138,7 +136,7 @@ module.exports = (cfg) => {
           {
             filename: `${srcModule}.html`,
             templateContent: ({ htmlWebpackPlugin }) =>
-              getHtmlTpl(isUsingFlexH5, htmlWebpackPlugin, configObject[srcModule].title),
+              getHtmlTpl(flex, htmlWebpackPlugin, configObject[srcModule].title),
             inject: false,
             hash: false,
             chunks: [srcModule, 'vendor', 'common', 'runtime'],
@@ -180,7 +178,7 @@ module.exports = (cfg) => {
         loader: 'postcss-loader',
         options: {
           postcssOptions: {
-            flex: isUsingFlexH5,
+            flex,
             sourceMap: isDev,
           },
         },
@@ -223,6 +221,8 @@ module.exports = (cfg) => {
   }
 
   const config = {
+    stats,
+    cache,
     mode: isDev ? 'development' : 'production',
     bail: isProd,
     entry,
@@ -234,7 +234,7 @@ module.exports = (cfg) => {
       publicPath: isDev ? '' : getPublicPath(),
     },
     devtool: isDev ? 'cheap-module-source-map' : false,
-    target: 'web',
+    target: ['web', 'es5'],
     module: {
       rules: [
         {
@@ -278,11 +278,13 @@ module.exports = (cfg) => {
       ],
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      alias: resolveAlias,
+      extensions,
+      alias,
     },
     optimization: {
       minimize: isProd,
+      moduleIds: 'deterministic',
+      chunkIds: 'deterministic',
       splitChunks: {
         name: false,
         cacheGroups: {
@@ -319,23 +321,7 @@ module.exports = (cfg) => {
     ],
   };
 
-  function getOpenUrl() {
-    return modules[0] + '.html';
-  }
-
   if (isDev) {
-    config.stats = 'errors-warnings';
-    // config.module.rules.unshift({
-    //   enforce: 'pre',
-    //   test: /\.jsx?$/,
-    //   exclude: /node_modules/,
-    //   loader: 'eslint-loader',
-    //   options: {
-    //     failOnError: false,
-    //     failOnWarning: false,
-    //   },
-    // });
-
     config.devServer = {
       disableHostCheck: true,
       contentBase: dist,
@@ -344,10 +330,11 @@ module.exports = (cfg) => {
       hot: true,
       inline: true,
       publicPath: '',
+      stats,
+      compress: true,
     };
     console.log(chalk.green(`开发测试地址:http://localhost:${port}/${modules[0]}.html`));
   } else {
-    config.stats = 'errors-only';
     config.plugins.push(new OptimizeCSSAssetsPlugin({ cssProcessorOptions: { safe: true } }));
 
     if (genReport) {
