@@ -5,7 +5,17 @@ module.exports = (api) => {
   // `api.env` - alias `api.mode` for compatibility with `postcss-cli`
   // `api.options` - the `postcssOptions` options
 
-  const plugins = ['postcss-preset-env'];
+  const plugins = [
+    [
+      'postcss-preset-env',
+      {
+        autoprefixer: {
+          flexbox: 'no-2009',
+        },
+        stage: 3,
+      },
+    ],
+  ];
 
   if (api.options.flex && !/node_modules/.test(api.file)) {
     plugins.unshift(['postcss-px2rem', { remUnit: 100 }]);

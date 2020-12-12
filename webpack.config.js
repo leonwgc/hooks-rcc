@@ -41,7 +41,17 @@ module.exports = (cfg) => {
   const isDev = env === 'dev'; // build mode: development
   const isProd = !isDev; // build mode: production
   const isMkt = cfg.mkt; // deploy to oss mkt folder
+
+  // Do this as the first thing so that any code reading it knows the right env.
+  process.env.BABEL_ENV = isProd ? 'production' : 'development';
   process.env.NODE_ENV = isProd ? 'production' : 'development';
+
+  // Makes the script crash on unhandled rejections instead of silently
+  // ignoring them. In the future, promise rejections that are not handled will
+  // terminate the Node.js process with a non-zero exit code.
+  process.on('unhandledRejection', (err) => {
+    throw err;
+  });
 
   if (cfg.nocdn) {
     useCDN = false; // 本地用http-server/serve host, test purpose.
@@ -217,9 +227,10 @@ module.exports = (cfg) => {
     bail: isProd,
     entry,
     output: {
-      path: getDist(),
-      chunkFilename: `${prefix}.[name].[contenthash:6].js`,
-      filename: isDev ? '[name].js' : `${prefix}.[name].[contenthash:6].js`,
+      path: isDev ? undefined : getDist(),
+      pathinfo: isDev,
+      chunkFilename: `${prefix}.[name].[contenthash:8].js`,
+      filename: isDev ? '[name].js' : `${prefix}.[name].[contenthash:8].js`,
       publicPath: isDev ? '' : getPublicPath(),
     },
     devtool: isDev ? 'cheap-module-source-map' : false,
@@ -250,7 +261,7 @@ module.exports = (cfg) => {
             loader: 'url-loader',
             options: {
               limit: isProd ? 10000 : 1,
-              name: './images/[name].[contenthash:6].[ext]',
+              name: './images/[name].[contenthash:8].[ext]',
             },
           },
         },
@@ -271,6 +282,7 @@ module.exports = (cfg) => {
       alias: resolveAlias,
     },
     optimization: {
+      minimize: isProd,
       splitChunks: {
         name: false,
         cacheGroups: {
@@ -288,13 +300,13 @@ module.exports = (cfg) => {
         },
       },
       runtimeChunk: {
-        name: 'runtime',
+        name: (entrypoint) => `runtime-${entrypoint.name}`,
       },
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: `${prefix}.[name].[contenthash:6].css`,
-        chunkFilename: `${prefix}.[name].[contenthash:6].css`,
+        filename: `${prefix}.[name].[contenthash:8].css`,
+        chunkFilename: `${prefix}.[name].[contenthash:8].css`,
       }),
       new webpack.DefinePlugin({
         __client__: true,
