@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SearchBar } from 'zarm';
 import './SearchFilter.less';
 
-export default function SearchFilter({ dataArray = [], onItemClick, visible = false }) {
+const noop = () => {};
+
+export default function SearchFilter({
+  dataArray = [],
+  onItemClick,
+  visible = false,
+  onCancel = noop,
+}) {
   const [data, setData] = useState(dataArray);
   const [value, setValue] = useState('');
 
@@ -26,7 +33,10 @@ export default function SearchFilter({ dataArray = [], onItemClick, visible = fa
           cancelText="取消"
           value={value}
           onChange={setValue}
-          onCancel={() => setValue('')}
+          onCancel={() => {
+            setValue('');
+            onCancel();
+          }}
           onClear={() => {
             setValue('');
           }}

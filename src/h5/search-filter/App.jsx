@@ -13,6 +13,9 @@ export default function App({}) {
       <SearchFilter
         dataArray={cities}
         visible={visible}
+        onCancel={() => {
+          setVisible(false);
+        }}
         onItemClick={(item) => {
           setValue(item.value);
           setVisible(false);
