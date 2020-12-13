@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import useAnimateCss from '~/hooks/useAnimateCss';
 import './App.less';
 
+// 注意给所有动画元素加个 visibility:hidden 样式
+
 export default function App() {
   const { replay } = useAnimateCss('.rocket', 'bounceInLeft');
 
