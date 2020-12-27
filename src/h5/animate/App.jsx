@@ -12,6 +12,9 @@ export default function App() {
 
   useAnimateCss('.words p:last-child', 'fadeInDown');
 
+  useAnimateCss('.rocket1', 'r1');
+  useAnimateCss('.rocket2', 'r2');
+
   return (
     <div className="animate">
       <div className="rocket" onClick={replay}></div>
@@ -24,6 +27,9 @@ export default function App() {
         <p>让我们写下来</p>
         <p className="red">与众安一起，共舞</p>
       </div>
+
+      <div className="rocket1"></div>
+      <div className="rocket2"></div>
     </div>
   );
 }

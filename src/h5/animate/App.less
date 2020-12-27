@@ -5,13 +5,66 @@
     background-size: 100% 100%;
     width: 140px;
     height: 185px;
-    top: 30px;
-    left: 0;
-    visibility: hidden;
+    // top: 30px;
+    // left: 0;
+    // visibility: hidden;
 
     // animation-duration: 1.5s; /* don't forget to set a duration! */
     // animation-delay: 0.2s;
     // animation-iteration-count: 2;
+  }
+  @keyframes r1 {
+    from {
+      opacity: 0;
+      bottom: -100%;
+      left: -100%;
+    }
+
+    to {
+      bottom: 200px;
+      left: 50px;
+    }
+  }
+  .rocket1 {
+    position: absolute;
+    background: no-repeat url(./images/rocket.png);
+    background-size: 100% 100%;
+    width: 140px;
+    height: 185px;
+    animation: r1 3s linear forwards;
+  }
+
+  @keyframes move {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    25% {
+      transform: translate3d(0, -10px, 0);
+    }
+
+    50% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    75% {
+      transform: translate3d(0, 10px, 0);
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .rocket2 {
+    position: absolute;
+    background: no-repeat url(./images/rocket.png);
+    background-size: 100% 100%;
+    width: 140px;
+    height: 185px;
+    left: 180px;
+    bottom: 50px;
+    animation: move 2s linear forwards infinite;
   }
   .words {
     font-family: PingFangSC-Light;
