@@ -29,7 +29,6 @@ const prefixMap = {
   pre: 'u',
   dev: 'd',
 };
-// const argv = require('yargs').argv;
 const port = 9002;
 const dist = getPath('./dist');
 const deployEnvs = ['prd', 'test', 'pre', 'dev'];
@@ -39,8 +38,18 @@ function getPath(_path) {
   return path.resolve(__dirname, _path);
 }
 
+const configKeys = ['env', 'flex', 'report', 'nocdn', 'mkt', 'WEBPACK_SERVE'];
+
 module.exports = (cfg) => {
   console.log(cfg);
+  const envKeys = Object.keys(cfg);
+  let cfgEnv = envKeys.find((k) => !configKeys.includes(k));
+
+  if (!fs.existsSync(getPath(`./config/index.${cfgEnv}.js`))) {
+    exit('config not exist');
+  }
+  cfg.cfg = cfgEnv;
+
   const env = cfg.env;
   const isDev = env === 'dev'; // build mode: development
   const isProd = !isDev; // build mode: production

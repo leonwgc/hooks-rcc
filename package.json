@@ -90,7 +90,7 @@
   },
   "scripts": {
     "clear": "rm -rf ./dist && clear",
-    "start": "webpack serve --env flex --env env=dev  --env cfg=h5",
+    "start": "webpack serve --env flex --env env=dev  --env",
     "start:pc": "webpack serve --env env=dev --env",
     "build": "webpack --env flex --env env=prd --env nocdn  --env cfg=h5"
   },
