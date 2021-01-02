@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Popup from './Popup';
 import { Cell, Button, Toast } from 'zarm';
 import Picker from '../picker/Picker';
+import areas from './area';
 import './index.less';
 
-const pickerData = [
+const pickerItems = [
   {
     label: 'Venomancer',
     value: 1,
@@ -69,9 +70,10 @@ export default function PopupIndex() {
       <Popup visible={visible.bottom} onMaskClick={() => show('bottom', false)}>
         <div className="pop-up-bottom-demo">
           <Picker
-            data={pickerData}
+            items={areas}
             onOk={(selected) => {
-              Toast.show(selected.label);
+              // Toast.show(selected.label);
+              console.log(selected);
               show('bottom', false);
             }}
             onCancel={() => {

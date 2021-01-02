@@ -11,7 +11,7 @@ export default function Popup({
   showMask = true,
   onMaskClick = null,
   direction = 'bottom',
-  duration = 400,
+  duration = 120,
 }) {
   const wrapperRef = useRef(null);
   const popupRef = useRef(null);
@@ -24,19 +24,8 @@ export default function Popup({
     }
   }, []);
 
-  // useEffect(() => {
-  //   const onTransitionEnd = () => {
-  //     maskRef.current.classList[visible ? 'add' : 'remove']('mask');
-  //   };
-  //   popupRef.current.addEventListener('transitionend', onTransitionEnd);
-
-  //   return () => popupRef.current.removeEventListener('transitionend', onTransitionEnd);
-  // }, [visible, direction]);
-
-  // const isFirstRenderAndNotVisible = !visible && !didMount.current;
-
   const clickMask = (e) => {
-    if (e.target === maskRef.current) {
+    if (e.target === e.currentTarget) {
       onMaskClick();
     }
   };

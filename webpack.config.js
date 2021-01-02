@@ -41,7 +41,7 @@ function getPath(_path) {
 const configKeys = ['env', 'flex', 'report', 'nocdn', 'mkt', 'WEBPACK_SERVE'];
 
 module.exports = (cfg) => {
-  console.log(cfg);
+  // console.log(cfg);
   const envKeys = Object.keys(cfg);
   let cfgEnv = envKeys.find((k) => !configKeys.includes(k));
 
