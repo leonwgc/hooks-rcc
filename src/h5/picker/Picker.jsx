@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect, useReducer } from 'react';
 import BScroll from 'better-scroll';
 import './Picker.less';
-import usePrevious from '~/hooks/usePrevious';
-import { useSetState } from 'ahooks';
 
 const noop = () => {};
 
 export default function Picker({
-  value = '',
+  value = [],
   items = [],
   onChange = noop,
   onOk = noop,
@@ -31,9 +29,26 @@ export default function Picker({
   });
 
   const arrRef = useRef(arr);
-  const indexRef = useRef([]);
+
+  const [initIndex] = useState(() => {
+    let ar = [];
+
+    // if (value.length > 0) {
+    //   let i = 0;
+    //   while (i + 1 < arr.length) {
+    //     arrRef.current[i + 1] = arr[i].find((item) => (item.value = value[i])).chidren;
+    //     i++;
+    //   }
+    // }
+
+    return ar;
+  });
+
+
+  const indexRef = useRef(initIndex);
   const wrapperRef = useRef();
   const weels = useRef([]);
+  const lastValue = useRef(value);
 
   const renderWheels = () => {
     return arrRef.current.map((items, index) => (
@@ -49,6 +64,64 @@ export default function Picker({
     ));
   };
 
+  const refreshAll = () => {
+    weels.current.map((w) => w.refresh());
+  };
+
+  const getData = () => {
+    if (arr[arr.length - 1]) {
+      let data = arrRef.current
+        .map((a, idx) => {
+          const cIndex = weels.current[idx].getSelectedIndex();
+          if (cIndex > -1) {
+            return a[cIndex];
+          } else {
+            return a[0];
+          }
+        })
+        .map((item) => ({ label: item.label, value: item.value }));
+
+      return data;
+    }
+  };
+
+  const onScrollEnd = (idx, isInit = false) => {
+    let selectedIndex = weels.current[idx].getSelectedIndex();
+    indexRef.current[idx] = selectedIndex;
+
+    let next = idx + 1;
+    while (next < arr.length) {
+      indexRef.current[next] = 0;
+      next++;
+    }
+
+    next = idx + 1;
+
+    let _idx = idx;
+    let _sindex = selectedIndex;
+
+    while (next < arrRef.current.length) {
+      if (arrRef.current[_idx][_sindex]) {
+        arrRef.current[next] = arrRef.current[_idx][_sindex].children;
+      }
+
+      weels.current[next].wheelTo(0);
+      next++;
+      _idx++;
+      _sindex = 0;
+    }
+    forceUpdate();
+    refreshAll();
+
+    if (typeof onChange === 'function' && !isInit) {
+      const cValue = getData().map((i) => i.value);
+      if (lastValue.current.join() !== cValue.join()) {
+        lastValue.current = cValue;
+        onChange(getData());
+      }
+    }
+  };
+
   useEffect(() => {
     [...wrapperRef.current.children].map((el, idx) => {
       weels.current[idx] = new BScroll(el, {
@@ -62,57 +135,27 @@ export default function Picker({
         probeType: 3,
       });
 
-      weels.current[idx].on('scrollEnd', () => {
-        let selectedIndex = weels.current[idx].getSelectedIndex();
-        indexRef.current[idx] = selectedIndex;
-
-        let next = idx + 1;
-        while (next < arr.length) {
-          indexRef.current[next] = 0;
-          next++;
-        }
-
-        next = idx + 1;
-
-        let _idx = idx;
-        let _sindex = selectedIndex;
-
-        while (next < arrRef.current.length) {
-          if (arrRef.current[_idx][_sindex]) {
-            arrRef.current[next] = arrRef.current[_idx][_sindex].children;
-          }
-
-          weels.current[next].wheelTo(0);
-          weels.current[next].refresh();
-          next++;
-          _idx++;
-          _sindex = 0;
-        }
-        forceUpdate();
-        requestAnimationFrame(() => {
-          weels.current.map((w) => w.refresh());
-        });
-      });
+      weels.current[idx].on('scrollEnd', () => onScrollEnd(idx));
     });
 
-    requestAnimationFrame(() => {
-      weels.current.map((w) => w.refresh());
-    });
+    if (!value.length) {
+      onScrollEnd(0, true);
+    } else {
+    }
   }, []);
 
   return (
     <div className="container">
       <div className="picker">
         <div className="picker-panel">
-          <div className="picker-choose border-bottom-1px">
+          <div className="picker-choose">
             <span className="cancel" onClick={onCancel}>
               {cancelLabel}
             </span>
             <span
               className="confirm"
               onClick={() => {
-                let data = arrRef.current.map((a, idx) => a[weels.current[idx].getSelectedIndex()]);
-                console.log(data);
+                onOk(getData());
               }}
             >
               {okLabel}

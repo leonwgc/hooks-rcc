@@ -72,15 +72,15 @@ export default function PopupIndex() {
           <Picker
             items={areas}
             onOk={(selected) => {
-              // Toast.show(selected.label);
               console.log(selected);
               show('bottom', false);
             }}
             onCancel={() => {
               show('bottom', false);
             }}
-            onChange={(v) => console.log(v.label)}
-            value={4}
+            onChange={(v) => {
+              console.log(v);
+            }}
           />
         </div>
       </Popup>
@@ -116,7 +116,6 @@ export default function PopupIndex() {
       <Popup
         visible={visible.center}
         showMask={true}
-        width="70vw"
         direction="center"
         onMaskClick={() => show('center', false)}
       >

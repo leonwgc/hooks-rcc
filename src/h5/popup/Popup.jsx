@@ -37,10 +37,6 @@ export default function Popup({
       : `${direction === 'center' ? 'all' : 'transform'} ${duration}ms ease-in-out`,
   };
 
-  if (direction === 'center') {
-    popupStyle.top = top || '10vh';
-  }
-
   const maskStyle = {
     transition: `all ${duration}ms ease-in-out`,
   };
@@ -49,12 +45,13 @@ export default function Popup({
     <div className={`fe-popup-wrapper fe-popup-wrapper-${direction}`} ref={wrapperRef}>
       <Transition in={visible} timeout={duration} mountOnEnter={false}>
         {(status) => (
-          <div
-            ref={maskRef}
-            style={maskStyle}
-            className={`${visible ? 'mask in' : 'mask exited'}`}
-            onClick={clickMask}
-          >
+          <>
+            <div
+              ref={maskRef}
+              style={maskStyle}
+              className={`${visible ? 'mask in' : 'mask exited'}`}
+              onClick={clickMask}
+            ></div>
             <div
               ref={popupRef}
               style={popupStyle}
@@ -62,7 +59,7 @@ export default function Popup({
             >
               {children}
             </div>
-          </div>
+          </>
         )}
       </Transition>
     </div>,
