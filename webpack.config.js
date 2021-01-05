@@ -19,6 +19,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const process = require('process');
 const chalk = require('chalk');
@@ -74,7 +75,6 @@ module.exports = (cfg) => {
   };
   const alias = {
     '~': path.resolve(__dirname, './src'),
-    'react-dom': '@hot-loader/react-dom',
   };
   const extensions = ['.js', '.jsx', '.ts', '.tsx'];
   const configFile = getPath(`./config/${compileConfig}.js`);
@@ -328,14 +328,15 @@ module.exports = (cfg) => {
   };
 
   if (isDev) {
+    config.plugins.push(new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin());
     config.devServer = {
       disableHostCheck: true,
       contentBase: dist,
-      host: '0.0.0.0',
-      useLocalIp: true,
+      // host: '0.0.0.0',
+      // useLocalIp: true,
       port,
-      hot: true,
       inline: true,
+      hot: true,
       publicPath: '',
       stats,
       compress: true,
