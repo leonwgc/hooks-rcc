@@ -15,7 +15,7 @@ const App = () => {
         y: 100,
         fontWeight: 10,
         textAlign: 'left',
-        text: '你好，世界2',
+        text: '你好，世界23333444',
         fontFamily: 'PingFang SC',
         stroke: 'black',
       },
