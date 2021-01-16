@@ -45,6 +45,10 @@ const routes = [
     path: '/search-filter',
     component: lazy(() => import('./search-filter/App')),
   },
+  {
+    path: '/g',
+    component: lazy(() => import('./g/App')),
+  },
 ];
 
 export default routes;

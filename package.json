@@ -3,6 +3,7 @@
   "name": "hook-rcc",
   "version": "1.0.0",
   "dependencies": {
+    "@antv/g-canvas": "^0.5.6",
     "@types/react-transition-group": "^4.4.0",
     "ahooks": "^2.9.2",
     "animate.css": "^4.1.1",
