@@ -229,6 +229,7 @@ module.exports = (cfg) => {
     stats,
     cache,
     mode: isDev ? 'development' : 'production',
+    target: isDev ? 'web' : 'browserslist',
     bail: isProd,
     entry,
     output: {
@@ -328,20 +329,27 @@ module.exports = (cfg) => {
   };
 
   if (isDev) {
-    config.plugins.push(new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin());
+    config.plugins.push(
+      new ReactRefreshWebpackPlugin({
+        overlay: {
+          module: getPath('./ErrorOverlay'),
+        },
+      })
+    );
+
     config.devServer = {
       disableHostCheck: true,
       contentBase: dist,
-      // host: '0.0.0.0',
-      // useLocalIp: true,
+      host: '0.0.0.0',
       port,
-      inline: true,
+      stats: 'errors-only',
       hot: true,
-      publicPath: '',
-      stats,
-      compress: true,
+      inline: true,
+      historyApiFallback: false,
+      useLocalIp: true,
+      headers: { 'Access-Control-Allow-Origin': '*' },
     };
-    console.log(chalk.green(`开发测试地址:http://localhost:${port}/${modules[0]}.html`));
+    console.log(chalk.green(`开发地址:http://localhost:${port}/${modules[0]}.html`));
   } else {
     if (genReport) {
       config.plugins.push(
