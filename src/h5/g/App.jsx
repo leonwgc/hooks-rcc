@@ -5,20 +5,32 @@ const App = () => {
   useEffect(() => {
     const canvas = new Canvas({
       container: 'c1',
-      width: 200,
+      width: 600,
       height: 500,
     });
 
-    canvas.addShape('text', {
+    const circle = canvas.addShape('circle', {
       attrs: {
-        x: 0,
-        y: 100,
-        fontWeight: 10,
-        textAlign: 'left',
-        text: '你好，世界23333444',
-        fontFamily: 'PingFang SC',
-        stroke: 'black',
+        x: 200,
+        y: 200,
+        r: 100,
+        fill: '#1890FF',
+        stroke: '#F04864',
+        lineWidth: 4,
+        cursor: 'pointer',
       },
+    });
+
+    circle.on('mouseenter', () => {
+      circle.attr('fill', '#2FC25B');
+    });
+
+    circle.on('mouseleave', () => {
+      circle.attr('fill', '#1890FF');
+    });
+
+    circle.on('click', () => {
+      alert('clicked');
     });
   }, []);
 
