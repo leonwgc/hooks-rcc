@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PageNotFound from './PageNotFound';
@@ -21,4 +20,4 @@ const Routes = () => {
   );
 };
 
-export default hot(Routes);
+export default Routes;
