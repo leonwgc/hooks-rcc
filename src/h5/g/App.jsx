@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { Canvas } from '@antv/g-canvas';
 
-
 //g 生成年终账单
 
 const App = () => {
-
   useEffect(() => {
     const canvas = new Canvas({
       container: 'c1',
@@ -71,6 +69,11 @@ const App = () => {
         textAlign: 'left',
       },
     });
+
+    window.c = canvas;
+    window.g = group;
+
+    window.c.on('click', (args) => console.log(args));
   }, []);
 
   return <div id="c1"></div>;
