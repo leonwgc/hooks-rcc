@@ -66,6 +66,7 @@ let compileConfig = 'index';
 const defaultEntry = 'index'; // 默认模块的入口文件必须是index.jsx
 
 const isUsingFlexH5 = argv.flex;
+const isUsingViewport = argv.viewport;
 
 if (argv.cfg) {
   compileConfig = 'index.' + argv.cfg;
@@ -159,6 +160,7 @@ function getStyleLoaders(useCss = false) {
       options: {
         postcssOptions: {
           flex: isUsingFlexH5,
+          viewport: isUsingViewport,
           sourceMap: isDev,
         },
       },

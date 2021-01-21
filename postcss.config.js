@@ -20,6 +20,30 @@ module.exports = (api) => {
   if (api.options.flex && !/node_modules/.test(api.file)) {
     plugins.unshift(['postcss-px2rem', { remUnit: 100 }]);
   }
+
+  if (api.options.viewport && !/node_modules/.test(api.file)) {
+    plugins.unshift([
+      'postcss-px-to-viewport',
+      {
+        unitToConvert: 'px',
+        viewportWidth: 375,
+        unitPrecision: 5,
+        propList: ['*'],
+        viewportUnit: 'vw',
+        fontViewportUnit: 'vw',
+        selectorBlackList: ['ignore'],
+        minPixelValue: 1,
+        mediaQuery: false,
+        replace: true,
+        exclude: [/node_modules/],
+        include: undefined,
+        landscape: false,
+        landscapeUnit: 'vw',
+        landscapeWidth: 568,
+      },
+    ]);
+  }
+
   return {
     // You can specify any options from https://postcss.org/api/#processoptions here
     plugins,
