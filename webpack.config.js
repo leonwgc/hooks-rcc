@@ -307,26 +307,17 @@ function getOpenUrl() {
 }
 
 if (isDev) {
-  config.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshWebpackPlugin({
-      overlay: {
-        module: getPath('./ErrorOverlay'),
-      },
-    })
-  );
+  config.plugins.push(new ReactRefreshWebpackPlugin());
   config.stats = 'errors-warnings';
 
   config.devServer = {
     disableHostCheck: true,
     contentBase: dist,
-    host: '0.0.0.0',
+    host: '127.0.0.1',
     port,
     hot: true,
     inline: true,
     historyApiFallback: false,
-    // openPage: getOpenUrl(),
-    useLocalIp: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
   };
   console.log(chalk.green(`开发地址:http://localhost:${port}/${modules[0]}.html`));
