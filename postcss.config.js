@@ -39,7 +39,6 @@ module.exports = (api) => {
         include: undefined,
         landscape: false,
         landscapeUnit: 'vw',
-        landscapeWidth: 568,
       },
     ]);
   }
