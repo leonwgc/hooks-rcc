@@ -65,7 +65,7 @@ export default function PopupIndex() {
       <Cell hasArrow title="left" onClick={() => show('left', true)}></Cell>
       <Cell hasArrow title="top" onClick={() => show('top', true)}></Cell>
       <Cell hasArrow title="right" onClick={() => show('right', true)}></Cell>
-      <Cell hasArrow title="center1234444455555" onClick={() => show('center', true)}></Cell>
+      <Cell hasArrow title="center" onClick={() => show('center', true)}></Cell>
 
       <Popup visible={visible.bottom} onMaskClick={() => show('bottom', false)}>
         <div className="pop-up-bottom-demo">

@@ -20,6 +20,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const ESBuildPlugin = require('esbuild-webpack-plugin').default;
 const process = require('process');
 const chalk = require('chalk');
 const pkg = require('./package.json');
@@ -183,10 +184,6 @@ function getStyleLoaders(useCss = false) {
   }
   loaders.unshift({
     loader: MiniCssExtractPlugin.loader,
-    options: {
-      hmr: isDev,
-      reloadAll: true,
-    },
   });
   if (isDev) {
     loaders.shift();
@@ -268,6 +265,7 @@ const config = {
     alias: resolveAlias,
   },
   optimization: {
+    minimizer: [new ESBuildPlugin({ target: 'es5' })],
     splitChunks: {
       name: false,
       cacheGroups: {

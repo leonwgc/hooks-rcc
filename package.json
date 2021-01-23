@@ -51,6 +51,7 @@
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.1.5",
     "ejs": "^3.1.5",
+    "esbuild-webpack-plugin": "^1.1.0",
     "eslint": "^7.15.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-react": "^7.21.5",
@@ -98,7 +99,8 @@
   "scripts": {
     "clear": "rm -rf ./dist && clear",
     "start": "webpack-dev-server --flex --env dev --cfg",
-    "start1": "webpack-dev-server --viewport --env dev --cfg"
+    "start1": "webpack-dev-server --viewport --env dev --cfg",
+    "build": "webpack --flex --env prd --mkt --cfg"
   },
   "browserslist": {
     "development": [
