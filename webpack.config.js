@@ -307,7 +307,11 @@ function getOpenUrl() {
 }
 
 if (isDev) {
-  config.plugins.push(new ReactRefreshWebpackPlugin());
+  config.plugins.push(
+    new ReactRefreshWebpackPlugin({
+      overlay: false,
+    })
+  );
   config.stats = 'errors-warnings';
 
   config.devServer = {

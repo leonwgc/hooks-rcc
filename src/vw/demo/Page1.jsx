@@ -16,7 +16,7 @@ export default function Page1() {
 
   return (
     <div className="page1">
-      <div className="rect"></div>
+      <div className="rect">xxx</div>
     </div>
   );
 }
