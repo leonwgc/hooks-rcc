@@ -117,7 +117,11 @@ for (let srcModule of modules) {
         {
           filename: `${srcModule}.html`,
           templateContent: ({ htmlWebpackPlugin }) =>
-            getHtmlTpl(isUsingFlexH5, htmlWebpackPlugin, configObject[srcModule].title),
+            getHtmlTpl(
+              isUsingFlexH5 || isUsingViewport,
+              htmlWebpackPlugin,
+              configObject[srcModule].title
+            ),
           inject: false,
           hash: false,
           chunks: [srcModule, 'vendor', 'common', 'runtime'],
