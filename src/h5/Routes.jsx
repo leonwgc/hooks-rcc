@@ -49,6 +49,10 @@ const routes = [
     path: '/g',
     component: lazy(() => import('./g/App')),
   },
+  {
+    path: '/i18',
+    component: lazy(() => import('./locale/App')),
+  },
 ];
 
 export default routes;

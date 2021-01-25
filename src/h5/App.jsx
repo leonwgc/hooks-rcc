@@ -4,6 +4,7 @@ import PageNotFound from './PageNotFound';
 import routes from './Routes';
 import 'zarm/dist/zarm.min.css';
 import { ActivityIndicator } from 'zarm';
+import './i18n';
 
 const Routes = () => {
   return (
