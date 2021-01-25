@@ -51,7 +51,7 @@ const routes = [
   },
   {
     path: '/i18',
-    component: lazy(() => import('./locale/App')),
+    component: lazy(() => import('./i18nnext/App')),
   },
 ];
 
