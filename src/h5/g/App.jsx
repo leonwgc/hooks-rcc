@@ -48,7 +48,7 @@ const App = () => {
       },
     });
 
-    group.addShape('image', {
+    const qrcode = group.addShape('image', {
       attrs: {
         x: 55,
         y: 592,
@@ -58,7 +58,7 @@ const App = () => {
       },
     });
 
-    group.addShape('text', {
+    const text = group.addShape('text', {
       attrs: {
         x: 125,
         y: 627,
@@ -74,6 +74,52 @@ const App = () => {
     window.g = group;
 
     window.c.on('click', (args) => console.log(args));
+
+    qrcode.on('click', () => console.log('clicked'));
+
+    text.on('mouseenter', () => {
+      text.attr('fill', '#2FC25B');
+    });
+
+    text.on('mouseleave', () => {
+      text.attr('fill', '#999');
+    });
+
+    const setTextBig = () => {
+      text.animate(
+        {
+          fontSize: 38,
+        },
+        {
+          delay: 0,
+          duration: 2000,
+          easing: 'easeLinear',
+          callback: () => {
+            setTextSmall();
+          },
+          repeat: false,
+        }
+      );
+    };
+
+    const setTextSmall = () => {
+      text.animate(
+        {
+          fontSize: 16,
+        },
+        {
+          delay: 0,
+          duration: 2000,
+          easing: 'easeLinear',
+          callback: () => {
+            setTextBig();
+          },
+          repeat: false,
+        }
+      );
+    };
+
+    setTextBig();
   }, []);
 
   return <div id="c1"></div>;
