@@ -53,6 +53,10 @@ const routes = [
     path: '/i18',
     component: lazy(() => import('./i18nnext/App')),
   },
+  {
+    path: '/pixi',
+    component: lazy(() => import('./pixi/App')),
+  },
 ];
 
 export default routes;
