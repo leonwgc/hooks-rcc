@@ -11,6 +11,7 @@
     "better-scroll": "^2.0.6",
     "connected-react-router": "^6.8.0",
     "core-js": "^3.8.1",
+    "css-vars-ponyfill": "^2.4.3",
     "i18next": "^19.8.4",
     "pixi.js": "^5.3.7",
     "react": "^17.0.1",
@@ -21,6 +22,7 @@
     "react-transition-group": "^4.4.1",
     "redux-thunk": "^2.3.0",
     "socket.io": "^3.0.5",
+    "sortablejs": "^1.13.0",
     "zarm": "^2.6.1"
   },
   "devDependencies": {
@@ -103,6 +105,7 @@
     "clear": "rm -rf ./dist && clear",
     "start": "webpack-dev-server --flex --env dev --cfg",
     "start1": "webpack-dev-server --viewport --env dev --cfg",
+    "start2": "webpack-dev-server --env dev --cfg",
     "build": "webpack --flex --env prd --mkt --cfg"
   },
   "browserslist": {

@@ -1,0 +1,24 @@
+.left {
+  min-height: 700px;
+  display: flex;
+  width: 240px;
+  padding-left: 15px;
+
+  flex-direction: column;
+  li {
+    border-bottom: 1px dashed #ccc;
+    margin: 2px 0;
+    font-size: 16px;
+    transition: all 100ms ease;
+    height: 60px;
+    line-height: 60px;
+
+    &:hover {
+      font-size: 24px;
+      color: unset;
+      font-weight: 500;
+      border: none;
+      border-bottom: 1px dashed #ccc;
+    }
+  }
+}
