@@ -1,12 +1,14 @@
+import { Input, Switch, Select } from 'antd';
+
 const Product = {
   props: {
     link: {
       label: 'link',
-      type: 'string',
+      type: Input,
     },
     imageSrc: {
       label: 'imageSrc',
-      type: 'string',
+      type: Input,
       elProps: {
         defaultValue:
           'http://t8.baidu.com/it/u=2247852322,986532796&fm=79&app=86&f=JPEG?w=1280&h=853',
@@ -14,14 +16,14 @@ const Product = {
     },
     title: {
       label: 'title',
-      type: 'string',
+      type: Input,
       elProps: {
         defaultValue: 'title',
       },
     },
     desc: {
       label: 'desc',
-      type: 'string',
+      type: Input,
       elProps: {
         defaultValue: 'this is desc',
       },
@@ -37,7 +39,7 @@ const Product = {
     cssText: {
       label: 'cssText',
       tip: '整体样式设置优先于单个样式设置',
-      type: 'mstring',
+      type: Input.TextArea,
       elProps: {
         defaultValue: 'font-size:30px; color:red;',
         allowClear: true,
@@ -51,27 +53,27 @@ const Product = {
     },
     margin: {
       label: 'margin',
-      type: 'string',
+      type: Input,
     },
     padding: {
       label: 'padding',
-      type: 'string',
+      type: Input,
     },
     width: {
       label: '宽度',
-      type: 'string',
+      type: Input,
     },
     height: {
       label: '高度',
-      type: 'string',
+      type: Input,
     },
     fontSize: {
       label: 'fontSize',
-      type: 'string',
+      type: Input,
     },
     color: {
       label: 'fontColor',
-      type: 'string',
+      type: Input,
       elProps: {
         type: 'color',
       },

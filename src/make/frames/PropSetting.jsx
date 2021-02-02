@@ -1,15 +1,12 @@
-import React from 'react';
-import { Form, Tooltip, Select, Tabs, Divider } from 'antd';
+import React, { useEffect, uesState } from 'react';
+import { Form, Tabs } from 'antd';
 import config from '../config';
-import * as antd from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from '../stores/actions';
-import { getEditComponentType, isValidDataType } from '~/make/helper';
+import FormRenderer from '~/common-pc/FormRenderer';
 import './PropSetting.less';
 
 const { TabPane } = Tabs;
-
-const FormItem = Form.Item;
 
 function PropSetting() {
   const [form] = Form.useForm();
@@ -47,6 +44,7 @@ function PropSetting() {
 
   const initValues = {};
   const keys = Object.keys(comp.props);
+
   for (let k of keys) {
     initValues[k] = comp.props[k];
   }
@@ -69,52 +67,28 @@ function PropSetting() {
     update(dispatch)({ comps: app.comps });
   };
 
-  const renderFormItem = (prop, config) => {
-    const { type, label, tip, elProps = {} } = config;
-    const props = {};
-    if (type === 'boolean') {
-      props['checked'] = initValues[prop];
-    }
+  const props = config[comp.type].props;
+  const propFields = Object.keys(props);
 
-    if (type === 'enum') {
-      const options = elProps.options;
-      if (typeof options[0] === 'string') {
-        elProps.options = options.map((str) => ({ label: str, value: str }));
-      }
-    }
+  const styles = config[comp.type].styles || {};
+  const styleFields = Object.keys(styles);
 
-    let editCompType;
-    if (isValidDataType(type)) {
-      editCompType = getEditComponentType(type);
-    } else {
-      editCompType = antd[type] || type;
-    }
+  const propsLayoutData = [];
+  const styleLayoutData = [];
 
-    if (type === 'images') {
-      return React.createElement(editCompType, {
-        form,
-        onValuesChange,
-        images: comp.props[prop] || [],
-      });
-    }
+  propFields.map((key) => {
+    propsLayoutData.push({
+      name: key,
+      ...props[key],
+    });
+  });
 
-    return (
-      <FormItem
-        key={`${prop}`}
-        name={prop}
-        initialValue={elProps.defaultValue}
-        label={label ? <Tooltip title={`${tip}`}>{label}</Tooltip> : null}
-      >
-        {React.createElement(editCompType, { ...props, ...elProps }, elProps.children)}
-      </FormItem>
-    );
-  };
-
-  let props = config[comp.type].props;
-  let fields = Object.keys(props);
-
-  let styles = config[comp.type].styles || {};
-  let styleFields = Object.keys(styles);
+  styleFields.map((key) => {
+    styleLayoutData.push({
+      name: key,
+      ...styles[key],
+    });
+  });
 
   return (
     <div className="right">
@@ -122,15 +96,14 @@ function PropSetting() {
         form={form}
         onValuesChange={onValuesChange}
         layout="vertical"
-        key={comp.id}
         initialValues={initValues}
       >
         <Tabs type="line" size="large">
           <TabPane tab="属性设置" key="1">
-            {fields.map((f) => renderFormItem(f, props[f]))}
+            <FormRenderer layoutData={propsLayoutData}></FormRenderer>
           </TabPane>
           <TabPane tab="样式设置" key="2">
-            {styleFields.map((f) => renderFormItem(f, styles[f]))}
+            <FormRenderer layoutData={styleLayoutData}></FormRenderer>
           </TabPane>
         </Tabs>
       </Form>

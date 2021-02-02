@@ -1,8 +1,10 @@
+import { Input, Switch, Select } from 'antd';
+
 const Button = {
   props: {
     children: {
       label: '按钮文本',
-      type: 'string',
+      type: Input,
       elProps: {
         defaultValue: '确定',
       },
@@ -10,68 +12,83 @@ const Button = {
     disabled: {
       label: '禁用',
       tip: '按钮失效状态',
-      type: 'boolean',
+      type: Switch,
     },
     loading: {
       label: 'loading',
       tip: 'loading',
-      type: 'boolean',
+      type: Switch,
     },
     htmlType: {
       label: 'htmlType',
       tip: 'htmlType',
-      type: 'enum',
+      type: Select,
       elProps: {
-        options: ['submit', 'button'],
+        options: ['submit', 'button'].map((v) => ({
+          label: v,
+          value: v,
+        })),
       },
     },
     ghost: {
       label: '幽灵模式',
       tip: '按钮背景透明',
-      type: 'boolean',
+      type: Switch,
     },
     href: {
       label: '跳转的地址',
       tip: '点击跳转的地址，指定此属性 button 的行为和 a 链接一致',
-      type: 'string',
+      type: Input,
     },
     shape: {
       label: '按钮形状',
       tip: '设置按钮形状，可选值为 circle、 round 或者不设',
-      type: 'enum',
+      type: Select,
       elProps: {
-        options: ['default', 'circle', 'round'],
+        options: ['default', 'circle', 'round'].map((v) => ({
+          label: v,
+          value: v,
+        })),
       },
     },
     size: {
       label: '按钮大小',
       tip: '设置按钮大小',
-      type: 'enum',
+      type: Select,
       elProps: {
-        options: ['default', 'small', 'large'],
+        options: ['default', 'small', 'large'].map((v) => ({
+          label: v,
+          value: v,
+        })),
       },
     },
     target: {
       label: '链接target',
       tip: '相当于a链接的target属性, 设置跳转链接时有效',
-      type: 'enum',
+      type: Select,
       elProps: {
-        options: ['_blank', '_self', '_parent', '_top'],
+        options: ['_blank', '_self', '_parent', '_top'].map((v) => ({
+          label: v,
+          value: v,
+        })),
       },
     },
     type: {
       label: '按钮类型',
       tip: '设置按钮类型',
-      type: 'enum',
+      type: Select,
       elProps: {
         defaultValue: 'primary',
-        options: ['default', 'primary', 'dashed', 'danger', 'link'],
+        options: ['default', 'primary', 'dashed', 'danger', 'link'].map((v) => ({
+          label: v,
+          value: v,
+        })),
       },
     },
     onClick: {
       label: '点击事件',
       tip: '点击事件回调',
-      type: 'function',
+      type: Input,
       elProps: {
         placeholder: 'console.log(1)',
       },
@@ -79,7 +96,7 @@ const Button = {
     block: {
       label: '自适应宽度',
       tip: '将按钮宽度调整为其父宽度',
-      type: 'boolean',
+      type: Switch,
     },
   },
 };
