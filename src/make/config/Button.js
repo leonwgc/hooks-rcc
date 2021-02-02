@@ -1,7 +1,7 @@
 const Button = {
   props: {
     children: {
-      label: '内容',
+      label: '按钮文本',
       type: 'string',
       elProps: {
         defaultValue: '确定',

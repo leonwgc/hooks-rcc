@@ -1,28 +1,28 @@
 import React from 'react';
-import {Form, Tooltip, Select, Tabs, Divider} from 'antd';
+import { Form, Tooltip, Select, Tabs, Divider } from 'antd';
 import config from '../config';
 import * as antd from 'antd';
-import {useSelector, useDispatch} from 'react-redux';
-import {update} from '../stores/actions';
-import {getEditComponentType, isValidDataType} from '~/make/helper';
+import { useSelector, useDispatch } from 'react-redux';
+import { update } from '../stores/actions';
+import { getEditComponentType, isValidDataType } from '~/make/helper';
 import './PropSetting.less';
 
-const {TabPane} = Tabs;
+const { TabPane } = Tabs;
 
 const FormItem = Form.Item;
 
 function PropSetting() {
   const dispatch = useDispatch();
-  const app = useSelector(state => state.app);
+  const app = useSelector((state) => state.app);
 
   if (!app.activeComp) {
     return <div className="right mini"></div>;
   }
 
-  let comp = app.comps.filter(c => c.id === app.activeComp)[0];
+  let comp = app.comps.filter((c) => c.id === app.activeComp)[0];
 
   if (!comp) {
-    let flexArray = app.comps.filter(c => c.type === 'Flex');
+    let flexArray = app.comps.filter((c) => c.type === 'Flex');
     let current;
     for (var i = 0; i < flexArray.length; i++) {
       current = flexArray[i];
@@ -30,11 +30,11 @@ function PropSetting() {
         comp = current;
         break;
       } else {
-        comp = current.comps.filter(c => c.id === app.activeComp)[0];
+        comp = current.comps.filter((c) => c.id === app.activeComp)[0];
         if (comp) {
           break;
         }
-        let subFlexs = current.comps.filter(c => c.type === 'Flex');
+        let subFlexs = current.comps.filter((c) => c.type === 'Flex');
         flexArray = flexArray.concat(subFlexs);
       }
     }
@@ -55,7 +55,7 @@ function PropSetting() {
     initValues[k] = comp.styles[k];
   }
 
-  const onValuesChange = changedValues => {
+  const onValuesChange = (changedValues) => {
     let ckeys = Object.keys(changedValues);
     for (let k of ckeys) {
       if (keys.includes(k)) {
@@ -65,11 +65,11 @@ function PropSetting() {
       }
     }
 
-    update(dispatch)({comps: app.comps});
+    update(dispatch)({ comps: app.comps });
   };
 
   const renderFormItem = (prop, config) => {
-    const {type, label, tip, elProps = {}} = config;
+    const { type, label, tip, elProps = {} } = config;
     const props = {};
     if (type === 'boolean') {
       props['checked'] = initValues[prop];
@@ -78,7 +78,7 @@ function PropSetting() {
     if (type === 'enum') {
       const options = elProps.options;
       if (typeof options[0] === 'string') {
-        elProps.options = options.map(str => ({label: str, value: str}));
+        elProps.options = options.map((str) => ({ label: str, value: str }));
       }
     }
 
@@ -94,12 +94,9 @@ function PropSetting() {
         key={`${prop}`}
         name={prop}
         initialValue={elProps.defaultValue}
-        label={label ? <Tooltip title={`${tip}`}>{label}</Tooltip> : null}>
-        {React.createElement(
-          editCompType,
-          {...props, ...elProps},
-          elProps.children
-        )}
+        label={label ? <Tooltip title={`${tip}`}>{label}</Tooltip> : null}
+      >
+        {React.createElement(editCompType, { ...props, ...elProps }, elProps.children)}
       </FormItem>
     );
   };
@@ -114,14 +111,16 @@ function PropSetting() {
     <div className="right">
       <Form
         onValuesChange={onValuesChange}
+        layout="vertical"
         key={comp.id}
-        initialValues={initValues}>
+        initialValues={initValues}
+      >
         <Tabs type="line" size="large">
           <TabPane tab="属性设置" key="1">
-            {fields.map(f => renderFormItem(f, props[f]))}
+            {fields.map((f) => renderFormItem(f, props[f]))}
           </TabPane>
           <TabPane tab="样式设置" key="2">
-            {styleFields.map(f => renderFormItem(f, styles[f]))}
+            {styleFields.map((f) => renderFormItem(f, styles[f]))}
           </TabPane>
         </Tabs>
       </Form>

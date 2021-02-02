@@ -1,20 +1,21 @@
 import React from 'react';
 import * as antd from 'antd';
-import {useSelector, useDispatch} from 'react-redux';
-import {Form} from 'antd';
-import {DeleteOutlined} from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { Form, Checkbox } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import FlexContainer from '../containers/FlexContainer';
 import custom from '../custom-components';
 import './Renderer.less';
 
-const allComponents = {...antd, ...custom};
+antd['CheckboxGroup'] = Checkbox.Group;
+const allComponents = { ...antd, ...custom };
 
-const Renderer = ({item, isDesign = false, onRemove, isTop = false}) => {
-  const app = useSelector(state => state.app);
-  const {comps = []} = item;
+const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
+  const app = useSelector((state) => state.app);
+  const { comps = [] } = item;
   const [form] = Form.useForm();
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     console.log(values);
   };
 
@@ -22,10 +23,10 @@ const Renderer = ({item, isDesign = false, onRemove, isTop = false}) => {
     return null;
   }
 
-  const getEventProps = item => {
+  const getEventProps = (item) => {
     const props = Object.keys(item.props);
     let eventProps = {};
-    const handlers = props.filter(p => p.startsWith('on'));
+    const handlers = props.filter((p) => p.startsWith('on'));
     if (handlers) {
       for (let p of handlers) {
         if (item.props[p]) {
@@ -40,9 +41,9 @@ const Renderer = ({item, isDesign = false, onRemove, isTop = false}) => {
     return eventProps;
   };
 
-  // get Select options
-  const getOptions = item => {
-    const {optionLabels = [], optionValues = []} = item.props;
+  // get Select/Checkbox options
+  const getOptions = (item) => {
+    const { optionLabels = [], optionValues = [] } = item.props;
     const options = [];
     if (optionLabels.length === optionValues.length) {
       optionLabels.map((option, idx) => {
@@ -55,8 +56,8 @@ const Renderer = ({item, isDesign = false, onRemove, isTop = false}) => {
     return options;
   };
 
-  const renderItem = item => {
-    const type = allComponents[item.type] || item.type;
+  const renderItem = (item) => {
+    let type = allComponents[item.type] || item.type;
 
     const isFlex = item.type == 'Flex';
 
@@ -64,15 +65,16 @@ const Renderer = ({item, isDesign = false, onRemove, isTop = false}) => {
       const events = getEventProps(item);
       const props = {
         ...item.props,
-        style: {...item.styles},
+        style: { ...item.styles },
         isDesign,
         ...events,
       };
       if (item.type in antd) {
-        const {name, label, ...rest} = props;
-        if (item.type === 'Select') {
+        const { name, label, ...rest } = props;
+        if (['Select', 'CheckboxGroup'].indexOf(item.type) > -1) {
           rest.options = getOptions(item);
         }
+
         return (
           <Form.Item name={name} label={label}>
             {React.createElement(type, rest)}
@@ -84,20 +86,21 @@ const Renderer = ({item, isDesign = false, onRemove, isTop = false}) => {
     } else {
       const props = {
         ...item.props,
-        style: {...item.styles},
+        style: { ...item.styles },
         isDesign,
       };
       return <FlexContainer {...props} item={item} />;
     }
   };
 
-  const renderComp = comp => {
+  const renderComp = (comp) => {
     return isDesign ? (
       <li className={`cmp design`} data-id={comp.id} key={comp.id}>
         <div
           className={`mask ${app.activeComp === comp.id ? 'active' : ''} ${
             comp.type == 'Flex' ? 'flex' : ''
-          }`}></div>
+          }`}
+        ></div>
         <DeleteOutlined className="delete" onClick={onRemove} />
         {renderItem(comp)}
       </li>
