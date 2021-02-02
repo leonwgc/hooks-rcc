@@ -16,6 +16,7 @@ export default function Upload({
   data,
   action,
   children,
+  showUploadList = true,
   showModal = true,
   ...antdUploadProps
 }) {
@@ -36,7 +37,23 @@ export default function Upload({
     }
     if (file.status === 'done') {
       setLoading(false);
-      onFileListChange(fileList);
+      onFileListChange(
+        fileList.map((file) => {
+          if (file.response) {
+            let res = file.response;
+            if (res.code == '0') {
+              let r = res.result[0];
+              return {
+                url: r.cdnHref,
+                uid: r.id,
+                name: r.fileName,
+              };
+            }
+          } else {
+            return file;
+          }
+        })
+      );
     }
   };
 
@@ -52,11 +69,12 @@ export default function Upload({
         action={action}
         withCredentials={true}
         listType="picture-card"
-        showUploadList={true}
+        showUploadList={showUploadList}
         onChange={onUploadChange}
         onRemove={onRemove}
         onPreview={onPreview}
         multiple={false}
+        fileList={fileList}
         {...antdUploadProps}
       >
         {children(loading, fileList)}

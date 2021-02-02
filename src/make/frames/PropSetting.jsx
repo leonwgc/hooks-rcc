@@ -12,6 +12,7 @@ const { TabPane } = Tabs;
 const FormItem = Form.Item;
 
 function PropSetting() {
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const app = useSelector((state) => state.app);
 
@@ -89,6 +90,14 @@ function PropSetting() {
       editCompType = antd[type] || type;
     }
 
+    if (type === 'images') {
+      return React.createElement(editCompType, {
+        form,
+        onValuesChange,
+        images: comp.props[prop] || [],
+      });
+    }
+
     return (
       <FormItem
         key={`${prop}`}
@@ -110,6 +119,7 @@ function PropSetting() {
   return (
     <div className="right">
       <Form
+        form={form}
         onValuesChange={onValuesChange}
         layout="vertical"
         key={comp.id}

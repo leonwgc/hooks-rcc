@@ -1,4 +1,5 @@
 import * as antd from 'antd';
+import ImagesSetting from './prop-setting-component/ImagesSetting';
 
 let id = 1;
 export function gid() {
@@ -12,9 +13,10 @@ const editorComponentMap = {
   boolean: antd.Switch,
   enum: antd.Select, // 下拉设置选项
   mstring: antd.Input.TextArea,
+  images: ImagesSetting,
 };
 
-export const isValidDataType = type => {
+export const isValidDataType = (type) => {
   return Object.keys(editorComponentMap).indexOf(type) != -1;
 };
 

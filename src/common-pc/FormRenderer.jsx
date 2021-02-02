@@ -1,6 +1,24 @@
 import React, { useCallback } from 'react';
 import { Form, Row, Col } from 'antd';
 
+const itemRender = (item, key, span = 24) => {
+  // elProps 组件的其他属性
+  // itemProps Form.Item的其他属性
+  const { type, name, rules, label, elProps = {}, itemProps = {}, render, ...props } = item;
+
+  return (
+    <Col span={span} key={key}>
+      {render ? (
+        render()
+      ) : (
+        <Form.Item name={name} label={label} rules={rules} {...itemProps}>
+          {React.createElement(type, { ...props, ...elProps })}
+        </Form.Item>
+      )}
+    </Col>
+  );
+};
+
 // 默认二维数组
 // 如果是一维数组，则从上往下一行放一个 item
 // 如果是二维数组，则每个子数组元素的数量，则为一行显示的item数量 ,数量应该可以被24整除
@@ -10,26 +28,6 @@ export default function FormRenderer({ layoutData }) {
   if (!Array.isArray(firstItem)) {
     useOneColumnInRow = true;
   }
-
-  const itemRender = (item, key, span = 24) => {
-    const { type, name, rules, label, elProps = {}, render, ...props } = item;
-
-    return span != 24 ? (
-      <Col span={span} key={key}>
-        <Form.Item name={name} label={label} rules={rules}>
-          {!render ? React.createElement(type, { ...props, ...elProps }) : render()}
-        </Form.Item>
-      </Col>
-    ) : (
-      <Row key={key} gutter={{ xs: 8, sm: 16, md: 24 }}>
-        <Col span={span}>
-          <Form.Item name={name} label={label} rules={rules}>
-            {!render ? React.createElement(type, { ...props, ...elProps }) : render()}
-          </Form.Item>
-        </Col>
-      </Row>
-    );
-  };
 
   return !useOneColumnInRow ? (
     <div className="renderer">
