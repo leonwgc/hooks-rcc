@@ -1,29 +1,25 @@
 import React from 'react';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import Header from './frames/Header';
 import Left from './frames/Left';
 import Stage from './frames/Stage';
 import PropSetting from './frames/PropSetting';
-import configureStore from './stores/configureStore';
+
 import './App.less';
 
-const store = configureStore();
-
-export default function Main() {
+export default function App({ history }) {
   return (
-    <Provider store={store}>
-      <div className="ns-main">
-        <Header />
-        <div className="section">
-          <div className="left">
-            <Left />
-          </div>
-          <div className="main">
-            <Stage />
-          </div>
-          <PropSetting />
+    <div className="ns-main">
+      <Header />
+      <div className="section">
+        <div className="left">
+          <Left />
         </div>
+        <div className="main">
+          <Stage history={history} />
+        </div>
+        <PropSetting />
       </div>
-    </Provider>
+    </div>
   );
 }

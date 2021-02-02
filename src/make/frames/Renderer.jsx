@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as antd from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Checkbox } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import FlexContainer from '../containers/FlexContainer';
 import custom from '../custom-components';
+import { update } from '../stores/actions';
 import './Renderer.less';
 
 antd['CheckboxGroup'] = Checkbox.Group;
@@ -12,8 +13,21 @@ const allComponents = { ...antd, ...custom };
 
 const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
   const app = useSelector((state) => state.app);
+  const dispatch = useDispatch();
   const { comps = [] } = item;
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (!app) {
+      let data = localStorage.getItem('m');
+      const app = JSON.parse(data);
+      update(dispatch)({ comps: app.comps });
+    }
+  }, []);
+
+  if (!app) {
+    return null;
+  }
 
   const onFinish = (values) => {
     console.log(values);

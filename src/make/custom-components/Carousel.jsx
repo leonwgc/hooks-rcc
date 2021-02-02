@@ -9,7 +9,7 @@ export default function MyCarousel({
   const contentRender = () => {
     return images.map((item, i) => {
       return (
-        <div style={style} key={+i}>
+        <div style={{ width: '100vw', height: 160 }} key={+i}>
           <img src={item.url} alt={item.name} draggable={false} />
         </div>
       );
