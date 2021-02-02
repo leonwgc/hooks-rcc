@@ -57,6 +57,10 @@ const routes = [
     path: '/pixi',
     component: lazy(() => import('./pixi/App')),
   },
+  {
+    path: '/dm',
+    component: lazy(() => import('./dragmove/App')),
+  },
 ];
 
 export default routes;
