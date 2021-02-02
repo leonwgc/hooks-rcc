@@ -6,7 +6,7 @@ let _loaded = false;
 let _callbacks = [];
 const _isTouch = window.ontouchstart !== undefined;
 
-export const dragmove = function (target, handler, onStart, onEnd) {
+export const dragmove = function (target, boundary = window, onStart, onEnd) {
   // Register a global event to capture mouse moves (once).
   if (!_loaded) {
     document.addEventListener(_isTouch ? 'touchmove' : 'mousemove', function (e) {
@@ -32,7 +32,7 @@ export const dragmove = function (target, handler, onStart, onEnd) {
 
   // On the first click and hold, record the offset of the pointer in relation
   // to the point of click inside the element.
-  handler.addEventListener(_isTouch ? 'touchstart' : 'mousedown', function (e) {
+  target.addEventListener(_isTouch ? 'touchstart' : 'mousedown', function (e) {
     e.stopPropagation();
     e.preventDefault();
     if (target.dataset.dragEnabled === 'false') {
@@ -77,10 +77,22 @@ export const dragmove = function (target, handler, onStart, onEnd) {
 
     // If boundary checking is on, don't let the element cross the viewport.
     if (target.dataset.dragBoundary === 'true') {
-      if (lastX < 1 || lastX >= window.innerWidth - target.offsetWidth) {
+      if (boundary === window) {
+        if (lastX < 1 || lastX >= window.innerWidth - target.offsetWidth) {
+          return;
+        }
+        if (lastY < 1 || lastY >= window.innerHeight - target.offsetHeight) {
+          return;
+        }
+      }
+    }
+    if (boundary) {
+      const rect = boundary.getBoundingClientRect();
+      const { left, right, top, bottom } = rect;
+      if (lastX <= left || lastX + target.offsetWidth >= right) {
         return;
       }
-      if (lastY < 1 || lastY >= window.innerHeight - target.offsetHeight) {
+      if (lastY <= top || lastY + target.offsetHeight >= bottom) {
         return;
       }
     }
@@ -89,5 +101,4 @@ export const dragmove = function (target, handler, onStart, onEnd) {
     target.style.top = lastY + 'px';
   });
 };
-
-export { dragmove as default };
+export default dragmove;
