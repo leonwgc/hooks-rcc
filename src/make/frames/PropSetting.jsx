@@ -14,7 +14,7 @@ function PropSetting() {
   const app = useSelector((state) => state.app);
 
   if (!app.activeComp) {
-    return <div className="right mini"></div>;
+    return <div className="prop-setting mini"></div>;
   }
 
   let comp = app.comps.filter((c) => c.id === app.activeComp)[0];
@@ -39,7 +39,7 @@ function PropSetting() {
   }
 
   if (!comp) {
-    return <div className="right mini"></div>;
+    return <div className="prop-setting mini"></div>;
   }
 
   const initValues = {};
@@ -91,7 +91,7 @@ function PropSetting() {
   });
 
   return (
-    <div className="right">
+    <div className="prop-setting">
       <Form
         form={form}
         onValuesChange={onValuesChange}

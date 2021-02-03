@@ -30,7 +30,7 @@ const MyInput = {
     },
     maxLength: {
       label: '最大长度',
-      type: 'number',
+      type: Input,
     },
     size: {
       label: '控件大小',

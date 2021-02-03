@@ -72,18 +72,20 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
 
   const renderItem = (item) => {
     let type = allComponents[item.type] || item.type;
-
     const isFlex = item.type == 'Flex';
+
+    let props = {
+      key: item.id,
+      ...item.props,
+      style: { ...item.styles },
+      isDesign,
+    };
 
     if (!isFlex) {
       const events = getEventProps(item);
-      const props = {
-        ...item.props,
-        style: { ...item.styles },
-        isDesign,
-        ...events,
-      };
+      props = { ...props, ...events };
       if (item.type in antd) {
+        // antd special deal 
         const { name, label, ...rest } = props;
         if (['Select', 'CheckboxGroup'].indexOf(item.type) > -1) {
           rest.options = getOptions(item);
@@ -98,11 +100,6 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
         return React.createElement(type, props);
       }
     } else {
-      const props = {
-        ...item.props,
-        style: { ...item.styles },
-        isDesign,
-      };
       return <FlexContainer {...props} item={item} />;
     }
   };

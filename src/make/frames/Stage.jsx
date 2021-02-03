@@ -43,7 +43,7 @@ const Stage = ({ history }) => {
           ) : null}
         </Space>
       </div>
-      <FlexContainer item={app} style={{ height: '80vh' }} />
+      <FlexContainer item={app} style={{ height: 667, width: 375 }} />
       <Modal
         style={{ top: 10 }}
         title={
