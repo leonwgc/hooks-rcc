@@ -1,6 +1,6 @@
 import React, { useEffect, uesState } from 'react';
 import { Form, Tabs } from 'antd';
-import config from './config';
+import config from './components-config';
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from './stores/actions';
 import FormRenderer from '~/common-pc/FormRenderer';

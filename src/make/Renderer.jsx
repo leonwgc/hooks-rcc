@@ -93,7 +93,7 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
 
   const renderComp = (comp) => {
     return isDesign ? (
-      <li className={`cmp`} data-id={comp.id} key={comp.id}>
+      <li className={`design-cmp`} data-id={comp.id} key={comp.id}>
         <div
           className={`mask ${app.activeComp === comp.id ? 'active' : ''} ${
             comp.type == 'Flex' ? 'flex' : ''

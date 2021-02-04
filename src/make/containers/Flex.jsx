@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gid } from '~/make/helper';
 import { update } from '../stores/actions';
 import Sortable from 'sortablejs';
-import config from '../config';
+import config from '../components-config';
 import Renderer from '../Renderer';
 import './Flex.less';
 
@@ -110,7 +110,7 @@ const Flex = ({ item = null, isDesign = true, style = {}, ...others }) => {
     const onClick = (e) => {
       const li = e.target.parentElement;
 
-      if (li.classList.contains('cmp')) {
+      if (li.classList.contains('design-cmp')) {
         update(dispatch)({ activeComp: li.dataset.id });
       } else {
         if (e.target === flex) {
@@ -140,12 +140,10 @@ const Flex = ({ item = null, isDesign = true, style = {}, ...others }) => {
 
   const isTopContainer = item === app;
 
-  const _style = { ...others, ...style };
-
   return (
     <div
       className={`${!isTopContainer ? 'flex' : ''} ${isDesign ? 'stage' : ''}`}
-      style={_style}
+      style={style}
       ref={ref}
     >
       <Renderer isDesign={isDesign} onRemove={isDesign ? onRemove : null} item={item} />
