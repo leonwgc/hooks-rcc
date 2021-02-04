@@ -99,7 +99,10 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
             comp.type == 'Flex' ? 'flex' : ''
           }`}
         ></div>
-        <DeleteOutlined className="delete" onClick={onRemove} />
+        <div className="edit">
+          <DeleteOutlined  onClick={onRemove} style={{ color: '#fff' }} />
+        </div>
+
         {renderItem(comp)}
       </li>
     ) : (
