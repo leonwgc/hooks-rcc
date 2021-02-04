@@ -1,5 +1,5 @@
 import { Input, Switch, Select } from 'antd';
-import ImagesSetting from '../prop-setting-component/ImagesSetting';
+import ImagesSetting from '../prop-setting-components/ImagesSetting';
 
 const Carousel = {
   props: {

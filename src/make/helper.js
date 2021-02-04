@@ -1,5 +1,5 @@
 import * as antd from 'antd';
-import ImagesSetting from './prop-setting-component/ImagesSetting';
+import ImagesSetting from './prop-setting-components/ImagesSetting';
 
 let id = 1;
 export function gid() {

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Sortable from 'sortablejs';
 import { Tabs } from 'antd';
-import config from '../config';
-import './Left.less';
+import config from './config';
+import './ComponentPanel.less';
 
 const { TabPane } = Tabs;
 
-const App = () => {
+const ComponentPanel = () => {
   const ref = useRef(null);
   const ref1 = useRef(null);
   const [key, setKey] = useState('1');
@@ -35,28 +35,13 @@ const App = () => {
   const baseComponents = Object.keys(config).filter((item) => item != 'Flex');
 
   return (
-    <>
+    <div className="component-panel">
       <Tabs type="line" size="large" activeKey={key} onChange={setKey}>
         <TabPane tab="基础组件" key="1" forceRender={true}>
           <ul ref={ref}>
             <li data-id="Flex" className="cmp flex">
               Flex Container
             </li>
-            {/* <li data-id="Flex" className="cmp flex">
-              Flex Container
-            </li>
-            <li data-id="Button" className="cmp">
-              Button
-            </li>
-            <li data-id="Input" className="cmp">
-              Input
-            </li>
-            <li data-id="Select" className="cmp">
-              Select
-            </li>
-            <li data-id="img" className="cmp">
-              Image
-            </li> */}
             {baseComponents.map((item) => (
               <li key={item} data-id={item} className="cmp">
                 {item}
@@ -72,8 +57,8 @@ const App = () => {
           </ul>
         </TabPane>
       </Tabs>
-    </>
+    </div>
   );
 };
 
-export default App;
+export default ComponentPanel;

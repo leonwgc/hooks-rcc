@@ -1,14 +1,14 @@
 import React, { useEffect, uesState } from 'react';
 import { Form, Tabs } from 'antd';
-import config from '../config';
+import config from './config';
 import { useSelector, useDispatch } from 'react-redux';
-import { update } from '../stores/actions';
+import { update } from './stores/actions';
 import FormRenderer from '~/common-pc/FormRenderer';
-import './PropSetting.less';
+import './SettingPanel.less';
 
 const { TabPane } = Tabs;
 
-function PropSetting() {
+function SettingPanel() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const app = useSelector((state) => state.app);
@@ -111,4 +111,4 @@ function PropSetting() {
   );
 }
 
-export default PropSetting;
+export default SettingPanel;

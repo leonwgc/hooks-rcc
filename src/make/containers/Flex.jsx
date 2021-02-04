@@ -1,34 +1,27 @@
-import React, {useEffect, useRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {gid} from '~/make/helper';
-import {update} from '../stores/actions';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { gid } from '~/make/helper';
+import { update } from '../stores/actions';
 import Sortable from 'sortablejs';
 import config from '../config';
-import Renderer from '../frames/Renderer';
-import useWindowSize from '../hooks/useWindowSize';
-import './FlexContainer.less';
+import Renderer from '../Renderer';
+import './Flex.less';
 
-const FlexContainer = ({
-  item = null,
-  isDesign = true,
-  style = {},
-  ...others
-}) => {
-  const app = useSelector(state => state.app);
+const Flex = ({ item = null, isDesign = true, style = {}, ...others }) => {
+  const app = useSelector((state) => state.app);
   const ref = useRef(null);
-  const size = useWindowSize();
   const dispatch = useDispatch();
   let data = item ? item.comps || [] : app.comps;
   let newAddedComponent = null;
 
-  const updateData = data => {
+  const updateData = (data) => {
     if (item) {
       item.comps = data;
-      update(dispatch)({comps: [...app.comps]});
+      update(dispatch)({ comps: [...app.comps] });
     } else {
-      update(dispatch)({comps: [...data]});
+      update(dispatch)({ comps: [...data] });
     }
-    update(dispatch)({activeComp: null});
+    update(dispatch)({ activeComp: null });
   };
 
   useEffect(() => {
@@ -55,7 +48,7 @@ const FlexContainer = ({
          */
         set: function (s) {
           if (newAddedComponent) {
-            const {id, index, type, dom} = newAddedComponent;
+            const { id, index, type, dom } = newAddedComponent;
             dom.remove();
 
             let props = config[type].props;
@@ -69,8 +62,8 @@ const FlexContainer = ({
 
             for (let f of fields) {
               let dv = '';
-              const {elProps = {}} = props[f];
-              const {defaultValue} = elProps;
+              const { elProps = {} } = props[f];
+              const { defaultValue } = elProps;
               if (typeof defaultValue === 'function') {
                 dv = defaultValue();
               } else {
@@ -86,7 +79,7 @@ const FlexContainer = ({
             let cmp = {
               type,
               id,
-              props: {key: id, ...defaultProps},
+              props: { key: id, ...defaultProps },
               styles: defaultStyles,
             };
 
@@ -114,14 +107,14 @@ const FlexContainer = ({
   useEffect(() => {
     const flex = ref.current;
 
-    const onClick = e => {
+    const onClick = (e) => {
       const li = e.target.parentElement;
 
       if (li.classList.contains('cmp')) {
-        update(dispatch)({activeComp: li.dataset.id});
+        update(dispatch)({ activeComp: li.dataset.id });
       } else {
         if (e.target === flex) {
-          update(dispatch)({activeComp: null});
+          update(dispatch)({ activeComp: null });
         }
       }
     };
@@ -132,7 +125,7 @@ const FlexContainer = ({
     };
   }, []);
 
-  const onRemove = e => {
+  const onRemove = (e) => {
     let item = e.target.parentElement;
     while (item.nodeName !== 'LI') {
       item = item.parentElement;
@@ -140,27 +133,24 @@ const FlexContainer = ({
 
     if (item) {
       const id = item.dataset.id;
-      data = data.filter(c => c.id !== id);
+      data = data.filter((c) => c.id !== id);
       updateData(data);
     }
   };
 
   const isTopContainer = item === app;
 
-  const _style = {...others, ...style};
+  const _style = { ...others, ...style };
 
   return (
     <div
       className={`${!isTopContainer ? 'flex' : ''} ${isDesign ? 'stage' : ''}`}
       style={_style}
-      ref={ref}>
-      <Renderer
-        isDesign={isDesign}
-        onRemove={isDesign ? onRemove : null}
-        item={item}
-      />
+      ref={ref}
+    >
+      <Renderer isDesign={isDesign} onRemove={isDesign ? onRemove : null} item={item} />
     </div>
   );
 };
 
-export default FlexContainer;
+export default Flex;

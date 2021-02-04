@@ -1,0 +1,52 @@
+.cmp {
+  &[draggable] {
+    border: none;
+  }
+  list-style: none;
+  // margin: 0;
+  display: block;
+  // font-size: 16px;
+  padding-left: 10px;
+  // line-height: 40px;
+  min-height: 40px;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333;
+  cursor: move;
+  border: 1px dashed #999;
+  // &:hover {
+  //   color: #409eff;
+  // }
+
+  // &.design {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: auto;
+  outline: none;
+
+  &:not(:first-child) {
+    margin-top: 2px;
+  }
+
+  .mask {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    opacity: 0.4;
+    &:hover,
+    &.active {
+      background: #b3d8ff;
+    }
+
+    &.flex {
+      left: 95%;
+    }
+  }
+  // }
+}

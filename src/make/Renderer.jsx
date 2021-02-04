@@ -3,9 +3,8 @@ import * as antd from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Checkbox } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import FlexContainer from '../containers/FlexContainer';
-import custom from '../custom-components';
-import { update } from '../stores/actions';
+import Flex from './containers/Flex';
+import custom from './custom-components';
 import './Renderer.less';
 
 antd['CheckboxGroup'] = Checkbox.Group;
@@ -17,21 +16,9 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
   const { comps = [] } = item;
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (!app) {
-      let data = localStorage.getItem('m');
-      const app = JSON.parse(data);
-      update(dispatch)({ comps: app.comps });
-    }
-  }, []);
-
-  if (!app) {
+  if (!app && isDesign) {
     return null;
   }
-
-  const onFinish = (values) => {
-    console.log(values);
-  };
 
   if (!comps.length) {
     return null;
@@ -85,7 +72,7 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
       const events = getEventProps(item);
       props = { ...props, ...events };
       if (item.type in antd) {
-        // antd special deal 
+        // antd special deal
         const { name, label, ...rest } = props;
         if (['Select', 'CheckboxGroup'].indexOf(item.type) > -1) {
           rest.options = getOptions(item);
@@ -100,13 +87,13 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
         return React.createElement(type, props);
       }
     } else {
-      return <FlexContainer {...props} item={item} />;
+      return <Flex {...props} item={item} />;
     }
   };
 
   const renderComp = (comp) => {
     return isDesign ? (
-      <li className={`cmp design`} data-id={comp.id} key={comp.id}>
+      <li className={`cmp`} data-id={comp.id} key={comp.id}>
         <div
           className={`mask ${app.activeComp === comp.id ? 'active' : ''} ${
             comp.type == 'Flex' ? 'flex' : ''
@@ -120,17 +107,7 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
     );
   };
 
-  const render = () => {
-    return comps.map(renderComp);
-  };
-
-  return isTop ? (
-    <Form onFinish={onFinish} form={form}>
-      {render()}
-    </Form>
-  ) : (
-    render()
-  );
+  return comps.map(renderComp);
 };
 
 export default Renderer;

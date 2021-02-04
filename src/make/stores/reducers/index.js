@@ -14,11 +14,6 @@ export const Update = 'Update';
 //   comps: DesginComoment[];
 // };
 
-// type State = {
-//   comps: DesginComoment[];
-//   activeComp: string;
-// };
-
 const initstate = {
   comps: [],
   activeComp: null,
