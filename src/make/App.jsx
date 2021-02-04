@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import ComponentPanel from './ComponentPanel';
-import Stage from './Stage';
+import Stage from './EditorStage';
 import PropSetting from './SettingPanel';
 import Footer from './Footer';
 
@@ -9,13 +9,11 @@ import './App.less';
 
 export default function App({ history }) {
   return (
-    <div className="ns-main">
+    <div className="page-app">
       <Header />
       <div className="section">
         <ComponentPanel />
-        <div className="main">
-          <Stage />
-        </div>
+        <Stage />
         <PropSetting />
       </div>
       <Footer />

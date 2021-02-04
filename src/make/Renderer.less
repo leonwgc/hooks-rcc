@@ -2,20 +2,41 @@
   list-style: none;
   display: block;
   padding-left: 10px;
-  // line-height: 40px;
-  min-height: 40px;
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: move;
   border: 1px dashed #999;
-
+  min-height: 40px;
+  width: 100%;
   position: relative;
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 0;
-  height: auto;
   outline: none;
+
+  .delete {
+    position: absolute;
+    right: 0;
+    font-size: 14px;
+    color: #f56c6c;
+    border-color: #fbc4c4;
+    opacity: 0.4;
+    cursor: pointer;
+    z-index: 200;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .sortable-ghost {
+    padding: 0;
+    border-top: 3px solid #266eff;
+    border-style: solid;
+    height: 0;
+  }
 
   &:not(:first-child) {
     margin-top: 2px;

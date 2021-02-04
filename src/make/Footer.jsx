@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import { update } from './stores/actions';
+import Renderer from './Renderer';
 import './Footer.less';
 
 export default function Footer() {
@@ -10,7 +11,7 @@ export default function Footer() {
 
   const onPreview = () => {
     update(dispatch)({ ...app, preview: true });
-    localStorage.setItem('m', JSON.stringify(app));
+    // localStorage.setItem('m', JSON.stringify(app));
   };
 
   const onClear = () => {
@@ -30,6 +31,21 @@ export default function Footer() {
           </Button>
         </Space>
       </div>
+      <Modal
+        style={{ top: 10 }}
+        bodyStyle={{ padding: 0 }}
+        title={null}
+        visible={app.preview}
+        onCancel={() => {
+          update(dispatch)({ ...app, preview: false });
+        }}
+        width={375}
+        footer={null}
+      >
+        <div style={{ height: 667, overflowY: 'scroll' }}>
+          <Renderer isDesign={false} item={app} isTop={true} />
+        </div>
+      </Modal>
     </div>
   );
 }

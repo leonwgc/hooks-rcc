@@ -7,7 +7,7 @@ import config from '../components-config';
 import Renderer from '../Renderer';
 import './Flex.less';
 
-const Flex = ({ item = null, isDesign = true, style = {}, ...others }) => {
+const Flex = ({ item = null, isDesign = false, style = {} }) => {
   const app = useSelector((state) => state.app);
   const ref = useRef(null);
   const dispatch = useDispatch();
