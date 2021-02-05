@@ -42,7 +42,7 @@ export default function Footer() {
         width={375}
         footer={null}
       >
-        <div style={{ height: 667, overflowY: 'scroll' }}>
+        <div style={{ height: 667, overflowY: 'scroll' }} className='preview-box'>
           <Renderer isDesign={false} item={app} isTop={true} />
         </div>
       </Modal>
