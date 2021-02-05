@@ -13,6 +13,12 @@ function SettingPanel() {
   const dispatch = useDispatch();
   const app = useSelector((state) => state.app);
 
+  useEffect(() => {
+    if (app.activeComp) {
+      form.resetFields();
+    }
+  }, [app.activeComp]);
+
   if (!app.activeComp) {
     return <div className="prop-setting mini"></div>;
   }
@@ -91,7 +97,7 @@ function SettingPanel() {
   });
 
   return (
-    <div className="prop-setting">
+    <div className="prop-setting" key={app.activeComp}>
       <Form
         form={form}
         onValuesChange={onValuesChange}
