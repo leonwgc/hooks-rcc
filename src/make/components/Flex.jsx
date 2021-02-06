@@ -56,13 +56,13 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
               const cfg = getConfigById(cid);
               let { props = {}, style = {} } = cfg.setting;
 
-              let fields = Object.keys(props);
+              let propFields = Object.keys(props);
               let styleFields = Object.keys(style);
 
               let defaultProps = {};
               let defaultStyles = {};
 
-              for (let f of fields) {
+              for (let f of propFields) {
                 let dv = '';
                 const { elProps = {} } = props[f];
                 const { defaultValue } = elProps;
@@ -74,9 +74,21 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
                 defaultProps[f] = dv;
               }
 
-              for (let sf of styleFields) {
-                defaultStyles[sf] = style[sf].defaultValue;
+              for (let f of styleFields) {
+                let dv = '';
+                const { elProps = {} } = style[f];
+                const { defaultValue } = elProps;
+                if (typeof defaultValue === 'function') {
+                  dv = defaultValue();
+                } else {
+                  dv = defaultValue;
+                }
+                defaultStyles[f] = dv;
               }
+
+              // for (let sf of styleFields) {
+              //   defaultStyles[sf] = style[sf].defaultValue;
+              // }
 
               const id = [cid, '-', gid()].join('');
 

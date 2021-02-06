@@ -60,6 +60,9 @@ const Product = {
     fontSize: {
       label: 'fontSize',
       type: Input,
+      elProps: {
+        defaultValue: '30px',
+      },
     },
     color: {
       label: 'fontColor',
@@ -68,7 +71,6 @@ const Product = {
         type: 'color',
         defaultValue: 'red',
       },
-    
     },
   },
 };

@@ -9,7 +9,6 @@ const { TabPane } = Tabs;
 const ComponentPanel = () => {
   const ref = useRef(null);
   const ref1 = useRef(null);
-  // const [key, setKey] = useState('1');
 
   useEffect(() => {
     let s1 = Sortable.create(ref.current, {
@@ -32,34 +31,13 @@ const ComponentPanel = () => {
     };
   }, []);
 
-  // const list = [
-  //   { name: '基础组件', comps: components, ref: ref },
-  //   { name: '蚂蚁组件', comps: antdComponents, ref: ref1 },
-  // ];
-
-  // const TabPane = React.forwardRef((props, ref) => {
-  //   // const item = props.item;
-  //   const { item = {}, ...rest } = props;
-  //   return (
-  //     <TabPane tab={item.name} {...rest}>
-  //       <ul ref={ref}>
-  //         {item.comps.map((c) => (
-  //           <li key={c.id} data-id={c.id} className="cmp panel-cmp">
-  //             {c.designRender()}
-  //           </li>
-  //         ))}
-  //       </ul>
-  //     </TabPane>
-  //   );
-  // });
-
   return (
     <div className="component-panel">
       <Tabs type="line" size="large" defaultActiveKey="1">
         <TabPane tab="基础组件" key="1" forceRender={true}>
           <ul ref={ref}>
             {components.map((item, idx) => (
-              <li key={idx} data-cid={item.id} className="cmp panel-cmp">
+              <li key={idx} data-cid={item.cid} className="cmp panel-cmp">
                 {item.designRender()}
               </li>
             ))}

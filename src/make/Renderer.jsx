@@ -4,20 +4,11 @@ import { DeleteOutlined } from '@ant-design/icons';
 import Flex from './components/Flex';
 import './Renderer.less';
 
-// antd['CheckboxGroup'] = Checkbox.Group;
-// const allComponents = { ...antd, ...custom };
-
-const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
+const Renderer = ({ item, isDesign = false, onRemove }) => {
   const app = useSelector((state) => state.app);
-  // const dispatch = useDispatch();
   const { comps = [] } = item;
-  // const [form] = Form.useForm();
 
-  if (!app && isDesign) {
-    return null;
-  }
-
-  if (!comps.length) {
+  if ((!app && isDesign) || !comps.length) {
     return null;
   }
 
@@ -39,23 +30,7 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
     return eventProps;
   };
 
-  // get Select/Checkbox options
-  const getOptions = (item) => {
-    const { optionLabels = [], optionValues = [] } = item.props;
-    const options = [];
-    if (optionLabels.length === optionValues.length) {
-      optionLabels.map((option, idx) => {
-        options.push({
-          label: option,
-          value: optionValues[idx],
-        });
-      });
-    }
-    return options;
-  };
-
   const renderItem = (item) => {
-    // let type = allComponents[item.type] || item.type;
     const isFlex = item.cid == 'Flex';
 
     let props = {
@@ -67,21 +42,6 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
     if (!isFlex) {
       const events = getEventProps(item);
       props = { ...props, ...events };
-      // if (item.type in antd) {
-      //   // antd special deal
-      //   const { name, label, ...rest } = props;
-      //   if (['Select', 'CheckboxGroup'].indexOf(item.type) > -1) {
-      //     rest.options = getOptions(item);
-      //   }
-
-      //   return (
-      //     <Form.Item name={name} label={label}>
-      //       {React.createElement(type, rest)}
-      //     </Form.Item>
-      //   );
-      // } else {
-      //   return React.createElement(type, props);
-      // }
       return React.createElement(item.type, props);
     } else {
       return <Flex {...props} item={item} />;
