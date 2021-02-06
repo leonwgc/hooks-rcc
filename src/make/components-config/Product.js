@@ -1,4 +1,4 @@
-import { Input, Switch, Select } from 'antd';
+import { Input, Switch, Select, Divider } from 'antd';
 
 const Product = {
   props: {
@@ -30,25 +30,15 @@ const Product = {
     },
   },
   styles: {
-    line: {
-      type: 'Divider',
-      elProps: {
-        children: '整体样式设置',
-      },
-    },
     cssText: {
       label: 'cssText',
-      tip: '整体样式设置优先于单个样式设置',
       type: Input.TextArea,
       elProps: {
-        defaultValue: 'font-size:30px; color:red;',
         allowClear: true,
       },
-    },
-    line1: {
-      type: 'Divider',
-      elProps: {
-        children: '单个样式设置',
+      itemProps: {
+        tooltip: '整体样式设置优先于单个样式设置',
+        help: '设置了cssText，其他样式设置无效',
       },
     },
     margin: {

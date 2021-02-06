@@ -4,7 +4,7 @@ import config from './components-config';
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from './stores/actions';
 import FormRenderer from '~/common-pc/FormRenderer';
-import { getActiveComponentById } from './helper';
+import useSelectedComponent from './hooks/useSelectedComponent';
 import './SettingPanel.less';
 
 const { TabPane } = Tabs;
@@ -14,13 +14,13 @@ function SettingPanel() {
   const dispatch = useDispatch();
   const app = useSelector((state) => state.app);
 
-  const comp = getActiveComponentById(app.activeComp, app.comps);
+  const comp = useSelectedComponent();
 
   useEffect(() => {
-    if (app.activeComp) {
+    if (comp) {
       form.resetFields();
     }
-  }, [app.activeComp]);
+  }, [comp]);
 
   if (!comp) {
     return <div className="prop-setting mini"></div>;
@@ -75,7 +75,7 @@ function SettingPanel() {
   });
 
   return (
-    <div className="prop-setting" key={app.activeComp}>
+    <div className="prop-setting">
       <Form
         form={form}
         onValuesChange={onValuesChange}

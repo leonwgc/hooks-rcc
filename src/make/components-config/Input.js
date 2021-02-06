@@ -1,55 +1,41 @@
-import { Input, Switch, Select } from 'antd';
+import { Input, Switch, Select, InputNumber } from 'antd';
 
 const MyInput = {
   props: {
-    placeholder: {
-      label: 'placeholder',
-      type: Input,
-    },
-    disabled: {
-      label: '禁用状态',
-      tip: '是否禁用状态，默认为 false',
-      type: Switch,
-      itemProps: {
-        valuePropName:'checked'
-      },
-    },
     name: {
-      label: 'name',
-      tip: '表单字段key',
+      label: 'ID',
       type: Input,
       elProps: {
         defaultValue: () => 'id' + Date.now(),
         placeholder: '表单字段key',
       },
-    },
-    label: {
-      label: 'label',
-      tip: '输入框的 label',
-      type: Input,
-      elProps: {
-        defaultValue: '输入',
+      itemProps: {
+        tooltip: ' 数据存储的名称/英文/必填 ',
       },
     },
-    maxLength: {
-      label: '最大长度',
+    label: {
+      label: '标题',
       type: Input,
-    },
-    size: {
-      label: '控件大小',
-      tip: '控件大小。注：标准表单内的输入框大小限制为 large。可选 large default small',
-      type: Select,
       elProps: {
-        options: ['large', 'default', 'small'].map((v) => ({
-          label: v,
-          value: v,
-        })),
-        defaultValue: 'default',
+        defaultValue: '输入框',
+      },
+    },
+    placeholder: {
+      label: '说明',
+      type: Input,
+      elProps: {
+        defaultValue: '请输入',
+      },
+    },
+    disabled: {
+      label: '禁用状态',
+      type: Switch,
+      itemProps: {
+        valuePropName: 'checked',
       },
     },
     type: {
-      label: '声明 input 类型',
-      tip: '声明 input 类型，同原生 input 标签的 type 属性',
+      label: '类型',
       type: Select,
       elProps: {
         options: [
@@ -70,15 +56,26 @@ const MyInput = {
         defaultValue: 'text',
       },
     },
+    maxLength: {
+      label: '最大长度',
+      type: InputNumber,
+    },
+    size: {
+      label: '控件大小',
+      type: Select,
+      elProps: {
+        options: ['large', 'default', 'small'].map((v) => ({
+          label: v,
+          value: v,
+        })),
+        defaultValue: 'default',
+      },
+    },
+
     onPressEnter: {
       label: '按下回车回调',
       type: Input,
-      placeholder: '(e) => {}',
-    },
-    onChange: {
-      label: '输入框内容变化时的回调',
-      type: Input,
-      placeholder: '(e)=>{}',
+      placeholder: 'console.log(1)',
     },
   },
 };

@@ -1,6 +1,6 @@
-let id = 1;
 export function gid() {
-  return id++;
+  let stamp = +new Date();
+  return (((1 + Math.random()) * stamp) | 0).toString(16);
 }
 
 export const getActiveComponentById = (id, comps = []) => {

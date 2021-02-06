@@ -1,4 +1,4 @@
-import { Input, Switch, Select } from 'antd';
+import { Input, Switch, Select, Divider } from 'antd';
 
 const MySelect = {
   props: {
@@ -23,7 +23,7 @@ const MySelect = {
       tip: '支持清除',
       type: Switch,
       itemProps: {
-        valuePropName:'checked'
+        valuePropName: 'checked',
       },
       elProps: {
         defaultValue: true,
@@ -71,23 +71,15 @@ const MySelect = {
     },
   },
   styles: {
-    line: {
-      label: '整体样式设置',
-      type: 'divider',
-      tip: '整体样式设置和单个样式设置不要同时设置，选择一种！',
-    },
     cssText: {
       label: 'cssText',
-      tip: 'css样式,设置这个了就不用设置下面其他属性',
       type: Input.TextArea,
       elProps: {
         defaultValue: 'font-size:30px; color:red;',
       },
-    },
-    line1: {
-      label: '单个样式设置',
-      type: 'divider',
-      tip: '整体样式设置和单个样式设置不要同时设置，选择一种！',
+      itemProps: {
+        tooltip: 'css样式,设置这个了就不用设置下面其他属性',
+      },
     },
     margin: {
       label: '外边局',
