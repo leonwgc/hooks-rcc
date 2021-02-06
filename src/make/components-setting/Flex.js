@@ -64,6 +64,9 @@ export const Flex = {
     width: {
       label: '宽度',
       type: Input,
+      elProps: {
+        defaultValue: '50%',
+      },
     },
     height: {
       label: '高度',

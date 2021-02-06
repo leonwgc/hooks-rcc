@@ -9,7 +9,7 @@ export const getActiveComponentById = (id, comps = []) => {
   let comp = comps.filter((c) => c.id === id)[0];
 
   if (!comp) {
-    let flexArray = comps.filter((c) => c.type === 'Flex');
+    let flexArray = comps.filter((c) => c.cid === 'Flex');
     let current;
     for (var i = 0; i < flexArray.length; i++) {
       current = flexArray[i];
@@ -21,7 +21,7 @@ export const getActiveComponentById = (id, comps = []) => {
         if (comp) {
           break;
         }
-        let subFlexs = current.comps.filter((c) => c.type === 'Flex');
+        let subFlexs = current.comps.filter((c) => c.cid === 'Flex');
         flexArray = flexArray.concat(subFlexs);
       }
     }

@@ -24,7 +24,7 @@ export default function MyCarousel({
   };
 
   return (
-    <div className="my-slider" style={{ height }}>
+    <div style={{ height, width: '100%' }}>
       <Carousel
         vertical={vertical}
         autoplay={autoplay}

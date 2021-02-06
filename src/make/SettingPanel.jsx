@@ -17,7 +17,10 @@ function SettingPanel() {
   useEffect(() => {
     if (comp) {
       form.resetFields();
-      setTab('0');
+      const { cid } = comp;
+      const cfg = getConfigById(cid);
+      let { style = {} } = cfg.setting;
+      setTab(!Object.keys(style).length ? '0' : '1');
     }
   }, [comp]);
 
