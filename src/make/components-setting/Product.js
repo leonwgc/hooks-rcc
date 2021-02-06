@@ -29,7 +29,7 @@ const Product = {
       },
     },
   },
-  styles: {
+  style: {
     cssText: {
       label: 'cssText',
       type: Input.TextArea,
@@ -66,7 +66,9 @@ const Product = {
       type: Input,
       elProps: {
         type: 'color',
+        defaultValue: 'red',
       },
+    
     },
   },
 };

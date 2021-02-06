@@ -1,4 +1,5 @@
 import { Input, Switch, Select, Divider } from 'antd';
+import { getOptions } from './util';
 
 const MySelect = {
   props: {
@@ -34,10 +35,7 @@ const MySelect = {
       tip: 'multiple | tags',
       type: Select,
       elProps: {
-        options: ['multiple', 'tags'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['multiple', 'tags']),
         allowClear: true,
       },
     },
@@ -48,10 +46,7 @@ const MySelect = {
       elProps: {
         mode: 'tags',
         allowClear: true,
-        options: ['选项1', '选项2'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['选项1', '选项2']),
         defaultValue: ['选项1', '选项2'],
       },
     },
@@ -62,21 +57,16 @@ const MySelect = {
       elProps: {
         mode: 'tags',
         allowClear: true,
-        options: ['选项1的值', '选项2的值'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['选项1的值', '选项2的值']),
         defaultValue: ['选项1的值', '选项2的值'],
       },
     },
   },
-  styles: {
+  style: {
     cssText: {
       label: 'cssText',
       type: Input.TextArea,
-      elProps: {
-        defaultValue: 'font-size:30px; color:red;',
-      },
+      elProps: {},
       itemProps: {
         tooltip: 'css样式,设置这个了就不用设置下面其他属性',
       },

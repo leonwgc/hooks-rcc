@@ -1,4 +1,5 @@
 import { Input, Switch, Select, InputNumber } from 'antd';
+import { getOptions } from './util';
 
 const MyInput = {
   props: {
@@ -38,7 +39,7 @@ const MyInput = {
       label: '类型',
       type: Select,
       elProps: {
-        options: [
+        options: getOptions([
           'text',
           'checkbox',
           'file',
@@ -49,10 +50,7 @@ const MyInput = {
           'radio',
           'reset',
           'submit',
-        ].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        ]),
         defaultValue: 'text',
       },
     },
@@ -64,10 +62,7 @@ const MyInput = {
       label: '控件大小',
       type: Select,
       elProps: {
-        options: ['large', 'default', 'small'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['large', 'default', 'small']),
         defaultValue: 'default',
       },
     },

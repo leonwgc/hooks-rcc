@@ -1,4 +1,5 @@
 import { Input, Switch, Select } from 'antd';
+import { getOptions } from './util';
 
 const CheckboxGroup = {
   props: {
@@ -25,11 +26,8 @@ const CheckboxGroup = {
       elProps: {
         mode: 'tags',
         allowClear: true,
-        options: ['选项1', '选项2'].map((v) => ({
-          label: v,
-          value: v,
-        })),
-        defaultValue: ['选项1', '选项2']
+        options: getOptions(['选项1', '选项2']),
+        defaultValue: ['选项1', '选项2'],
       },
     },
     optionValues: {
@@ -39,14 +37,11 @@ const CheckboxGroup = {
       elProps: {
         mode: 'tags',
         allowClear: true,
-        options: ['选项1的值', '选项2的值'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['选项1的值', '选项2的值']),
         defaultValue: ['选项1的值', '选项2的值'],
       },
     },
   },
-  styles: {},
+  style: {},
 };
 export default CheckboxGroup;

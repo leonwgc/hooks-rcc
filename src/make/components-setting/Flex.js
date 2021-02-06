@@ -1,14 +1,16 @@
 import { Input, Switch, Select } from 'antd';
+import { getOptions } from './util';
 
 export const Flex = {
-  props: {
+  props: {},
+  style: {
     justifyContent: {
       label: '水平排列方式',
       tip: '水平排列方式',
       type: Select,
       elProps: {
         defaultValue: 'start',
-        options: [
+        options: getOptions([
           'center',
           'start',
           'end',
@@ -16,10 +18,7 @@ export const Flex = {
           'space-around',
           'space-evenly',
           'stretch',
-        ].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        ]),
       },
     },
     alignItems: {
@@ -28,7 +27,7 @@ export const Flex = {
       type: Select,
       elProps: {
         defaultValue: 'center',
-        options: [
+        options: getOptions([
           'center',
           'start',
           'end',
@@ -36,10 +35,7 @@ export const Flex = {
           'space-around',
           'space-evenly',
           'stretch',
-        ].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        ]),
       },
     },
     flexDirection: {
@@ -48,14 +44,9 @@ export const Flex = {
       type: Select,
       elProps: {
         defaultValue: 'row',
-        options: ['row', 'column'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['row', 'column']),
       },
     },
-  },
-  styles: {
     margin: {
       label: '外边局',
       type: Input,

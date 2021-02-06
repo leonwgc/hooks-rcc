@@ -71,6 +71,6 @@ const Carousel = {
       },
     },
   },
-  styles: {},
+  style: {},
 };
 export default Carousel;

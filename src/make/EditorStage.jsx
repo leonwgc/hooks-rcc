@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Flex from '~/make/containers/Flex';
+import Flex from '~/make/components/Flex';
 import './EditorStage.less';
 
 const EditorStage = () => {

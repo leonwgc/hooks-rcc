@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gid } from '~/make/helper';
 import { update } from '../stores/actions';
 import Sortable from 'sortablejs';
-import config from '../components-config';
+import config from '../components-setting';
 import Renderer from '../Renderer';
 import classnames from 'classnames';
+import components, { getConfigById } from './index';
 import './Flex.less';
 
 const Flex = ({ item = null, isDesign = false, style = {} }) => {
@@ -29,16 +30,15 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
     if (isDesign) {
       let s1 = Sortable.create(ref.current, {
         group: {
-          name: gid() + '',
+          name: gid(),
           put: ['cmp'],
         },
         onAdd(e) {
-          let type = e.item.dataset.id;
+          let cid = e.item.dataset.cid;
           e.item.style.display = 'none';
 
           newAddedComponent = {
-            id: type + '-' + gid(),
-            type,
+            cid,
             index: e.newIndex,
             dom: e.item,
           };
@@ -50,14 +50,14 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
            */
           set: function (s) {
             if (newAddedComponent) {
-              const { id, index, type, dom } = newAddedComponent;
+              const { index, dom, cid } = newAddedComponent;
               dom.remove();
 
-              let props = config[type].props;
-              let fields = Object.keys(props);
+              const cfg = getConfigById(cid);
+              let { props = {}, style = {} } = cfg.setting;
 
-              let styles = config[type].styles || {};
-              let styleFields = Object.keys(styles);
+              let fields = Object.keys(props);
+              let styleFields = Object.keys(style);
 
               let defaultProps = {};
               let defaultStyles = {};
@@ -75,14 +75,17 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
               }
 
               for (let sf of styleFields) {
-                defaultStyles[sf] = styles[sf].defaultValue;
+                defaultStyles[sf] = style[sf].defaultValue;
               }
 
+              const id = [cid, '-', gid()].join('');
+
               let cmp = {
-                type,
+                type: cfg.type,
+                cid: cid,
                 id,
                 props: { key: id, ...defaultProps },
-                styles: defaultStyles,
+                style: { ...defaultStyles },
               };
 
               if (index == 0) {

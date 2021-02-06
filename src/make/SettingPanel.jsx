@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Tabs } from 'antd';
-import config from './components-config';
 import FormRenderer from '~/common-pc/FormRenderer';
 import useSelectedComponent from './hooks/useSelectedComponent';
 import useUpdateStore from './hooks/useUpdateStore';
+import { getConfigById } from './components/index';
 import './SettingPanel.less';
 
 const { TabPane } = Tabs;
@@ -12,47 +12,40 @@ function SettingPanel() {
   const [form] = Form.useForm();
   const comp = useSelectedComponent();
   const updateStore = useUpdateStore();
+  const [tab, setTab] = useState('0');
 
   useEffect(() => {
     if (comp) {
       form.resetFields();
+      setTab('0');
     }
   }, [comp]);
 
   if (!comp) {
-    return <div className="prop-setting mini"></div>;
+    return <div className="prop-setting hide"></div>;
   }
 
-  const initValues = {};
-  const keys = Object.keys(comp.props);
-
-  for (let k of keys) {
-    initValues[k] = comp.props[k];
-  }
-
-  const styleKeys = Object.keys(comp.styles);
-  for (let k of styleKeys) {
-    initValues[k] = comp.styles[k];
-  }
+  const initValues = { ...comp.props, ...comp.style };
+  const { cid } = comp;
+  const cfg = getConfigById(cid);
+  let { props = {}, style = {} } = cfg.setting;
+  const propFields = Object.keys(props);
+  const styleFields = Object.keys(style);
 
   const onValuesChange = (changedValues) => {
     let ckeys = Object.keys(changedValues);
+    let v;
     for (let k of ckeys) {
-      if (keys.includes(k)) {
-        comp.props[k] = changedValues[k];
+      v = changedValues[k];
+      if (propFields.includes(k)) {
+        comp.props = { ...comp.props, [k]: v };
       } else {
-        comp.styles[k] = changedValues[k];
+        comp.style = { ...comp.style, [k]: v };
       }
     }
 
     updateStore();
   };
-
-  const props = config[comp.type].props;
-  const propFields = Object.keys(props);
-
-  const styles = config[comp.type].styles || {};
-  const styleFields = Object.keys(styles);
 
   const propsLayoutData = [];
   const styleLayoutData = [];
@@ -67,7 +60,7 @@ function SettingPanel() {
   styleFields.map((key) => {
     styleLayoutData.push({
       name: key,
-      ...styles[key],
+      ...style[key],
     });
   });
 
@@ -79,11 +72,11 @@ function SettingPanel() {
         layout="vertical"
         initialValues={initValues}
       >
-        <Tabs type="line" size="large">
-          <TabPane tab="属性设置" key="1">
+        <Tabs type="line" size="large" activeKey={tab} onChange={setTab}>
+          <TabPane tab="属性设置" key="0">
             <FormRenderer layoutData={propsLayoutData}></FormRenderer>
           </TabPane>
-          <TabPane tab="样式设置" key="2">
+          <TabPane tab="样式设置" key="1">
             <FormRenderer layoutData={styleLayoutData}></FormRenderer>
           </TabPane>
         </Tabs>

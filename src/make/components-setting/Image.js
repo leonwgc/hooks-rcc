@@ -29,7 +29,7 @@ const img = {
       },
     },
   },
-  styles: {
+  style: {
     margin: {
       label: '外边局',
       type: Input,

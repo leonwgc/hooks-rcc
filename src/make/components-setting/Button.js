@@ -1,4 +1,5 @@
 import { Input, Switch, Select } from 'antd';
+import { getOptions } from './util';
 
 const Button = {
   props: {
@@ -15,10 +16,7 @@ const Button = {
       type: Select,
       elProps: {
         defaultValue: 'primary',
-        options: ['default', 'primary', 'dashed', 'danger', 'link'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['default', 'primary', 'dashed', 'danger', 'link']),
       },
     },
 
@@ -61,10 +59,7 @@ const Button = {
       tip: '设置按钮形状，可选值为 circle、 round 或者不设',
       type: Select,
       elProps: {
-        options: ['default', 'circle', 'round'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['default', 'circle', 'round']),
       },
     },
     size: {
@@ -72,10 +67,7 @@ const Button = {
       tip: '设置按钮大小',
       type: Select,
       elProps: {
-        options: ['default', 'small', 'large'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['default', 'small', 'large']),
       },
     },
     target: {
@@ -83,10 +75,7 @@ const Button = {
       tip: '相当于a链接的target属性, 设置跳转链接时有效',
       type: Select,
       elProps: {
-        options: ['_blank', '_self', '_parent', '_top'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['_blank', '_self', '_parent', '_top']),
       },
     },
     htmlType: {
@@ -94,10 +83,7 @@ const Button = {
       tip: 'htmlType',
       type: Select,
       elProps: {
-        options: ['submit', 'button'].map((v) => ({
-          label: v,
-          value: v,
-        })),
+        options: getOptions(['submit', 'button']),
       },
     },
     href: {

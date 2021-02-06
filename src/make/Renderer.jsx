@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
-import * as antd from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import { Form, Checkbox } from 'antd';
+import { useSelector } from 'react-redux';
 import { DeleteOutlined } from '@ant-design/icons';
-import Flex from './containers/Flex';
-import custom from './custom-components';
+import Flex from './components/Flex';
 import './Renderer.less';
 
-antd['CheckboxGroup'] = Checkbox.Group;
-const allComponents = { ...antd, ...custom };
+// antd['CheckboxGroup'] = Checkbox.Group;
+// const allComponents = { ...antd, ...custom };
 
 const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
   const app = useSelector((state) => state.app);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { comps = [] } = item;
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
 
   if (!app && isDesign) {
     return null;
@@ -58,13 +55,12 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
   };
 
   const renderItem = (item) => {
-    let type = allComponents[item.type] || item.type;
-    const isFlex = item.type == 'Flex';
+    // let type = allComponents[item.type] || item.type;
+    const isFlex = item.cid == 'Flex';
 
     let props = {
-      key: item.id,
       ...item.props,
-      style: { ...item.styles },
+      style: item.style,
       isDesign,
     };
 
@@ -86,7 +82,7 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
       // } else {
       //   return React.createElement(type, props);
       // }
-      return React.createElement(type, props);
+      return React.createElement(item.type, props);
     } else {
       return <Flex {...props} item={item} />;
     }
