@@ -1,20 +1,17 @@
-import React, { useEffect, uesState, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Tabs } from 'antd';
 import config from './components-config';
-import { useSelector, useDispatch } from 'react-redux';
-import { update } from './stores/actions';
 import FormRenderer from '~/common-pc/FormRenderer';
 import useSelectedComponent from './hooks/useSelectedComponent';
+import useUpdateStore from './hooks/useUpdateStore';
 import './SettingPanel.less';
 
 const { TabPane } = Tabs;
 
 function SettingPanel() {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
-  const app = useSelector((state) => state.app);
-
   const comp = useSelectedComponent();
+  const updateStore = useUpdateStore();
 
   useEffect(() => {
     if (comp) {
@@ -48,7 +45,7 @@ function SettingPanel() {
       }
     }
 
-    update(dispatch)({ comps: app.comps });
+    updateStore();
   };
 
   const props = config[comp.type].props;

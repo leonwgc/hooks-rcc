@@ -1,20 +1,41 @@
 import React, { useRef, useEffect } from 'react';
-import { Carousel as ZarmCarousel } from 'zarm';
+import Carousel from 'nuka-carousel';
+import './Carousel.less';
 
 export default function MyCarousel({
-  loop = true,
+  autoplay,
+  wrapAround,
+  autoplayInterval,
   images = [],
-  style = { width: 375, height: 160 },
+  height,
+  vertical = false,
+  slidesToShow = 1,
 }) {
   const contentRender = () => {
     return images.map((item, i) => {
-      return (
-        <div style={{ width: '100vw', height: 160 }} key={+i}>
-          <img src={item.url} alt={item.name} draggable={false} />
-        </div>
-      );
+      return <img src={item.url} key={+i} className="carousel-pic-item" />;
     });
   };
 
-  return <ZarmCarousel loop={loop}>{contentRender()}</ZarmCarousel>;
+  const defaultControlsConfig = {
+    prevButtonStyle: { display: 'none' },
+    nextButtonStyle: { display: 'none' },
+    pagingDotsStyle: { fill: '#fff' },
+  };
+
+  return (
+    <div className="my-slider" style={{ height }}>
+      <Carousel
+        vertical={vertical}
+        autoplay={autoplay}
+        autoplayInterval={autoplayInterval}
+        slidesToShow={slidesToShow}
+        defaultControlsConfig={defaultControlsConfig}
+        initialSlideHeight={height}
+        wrapAround={wrapAround}
+      >
+        {contentRender()}
+      </Carousel>
+    </div>
+  );
 }

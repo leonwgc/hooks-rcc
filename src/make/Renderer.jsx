@@ -71,21 +71,22 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
     if (!isFlex) {
       const events = getEventProps(item);
       props = { ...props, ...events };
-      if (item.type in antd) {
-        // antd special deal
-        const { name, label, ...rest } = props;
-        if (['Select', 'CheckboxGroup'].indexOf(item.type) > -1) {
-          rest.options = getOptions(item);
-        }
+      // if (item.type in antd) {
+      //   // antd special deal
+      //   const { name, label, ...rest } = props;
+      //   if (['Select', 'CheckboxGroup'].indexOf(item.type) > -1) {
+      //     rest.options = getOptions(item);
+      //   }
 
-        return (
-          <Form.Item name={name} label={label}>
-            {React.createElement(type, rest)}
-          </Form.Item>
-        );
-      } else {
-        return React.createElement(type, props);
-      }
+      //   return (
+      //     <Form.Item name={name} label={label}>
+      //       {React.createElement(type, rest)}
+      //     </Form.Item>
+      //   );
+      // } else {
+      //   return React.createElement(type, props);
+      // }
+      return React.createElement(type, props);
     } else {
       return <Flex {...props} item={item} />;
     }
@@ -100,7 +101,7 @@ const Renderer = ({ item, isDesign = false, onRemove, isTop = false }) => {
           }`}
         ></div>
         <div className="edit">
-          <DeleteOutlined  onClick={onRemove} style={{ color: '#fff' }} />
+          <DeleteOutlined onClick={onRemove} style={{ color: '#fff' }} />
         </div>
 
         {renderItem(comp)}
