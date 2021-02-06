@@ -11,13 +11,20 @@ const Button = {
     },
     disabled: {
       label: '禁用',
-      tip: '按钮失效状态',
       type: Switch,
+      itemProps: {
+        tooltip: '按钮失效状态',
+        valuePropName:'checked'
+      },
     },
     loading: {
       label: 'loading',
       tip: 'loading',
       type: Switch,
+      itemProps: {
+        valuePropName:'checked'
+      },
+      elProps: {},
     },
     htmlType: {
       label: 'htmlType',
@@ -34,6 +41,10 @@ const Button = {
       label: '幽灵模式',
       tip: '按钮背景透明',
       type: Switch,
+      itemProps: {
+        tooltip: '按钮背景透明',
+        valuePropName:'checked'
+      },
     },
     href: {
       label: '跳转的地址',
@@ -97,6 +108,9 @@ const Button = {
       label: '自适应宽度',
       tip: '将按钮宽度调整为其父宽度',
       type: Switch,
+      itemProps: {
+        valuePropName:'checked'
+      },
     },
   },
 };

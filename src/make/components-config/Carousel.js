@@ -6,10 +6,16 @@ const Carousel = {
     autoPlay: {
       label: '是否自动轮播',
       type: Switch,
+      itemProps: {
+        valuePropName:'checked'
+      },
     },
     loop: {
       label: '是否循环',
       type: Switch,
+      itemProps: {
+        valuePropName:'checked'
+      },
       elProps: {
         defaultValue: true,
       },

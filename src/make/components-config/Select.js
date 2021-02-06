@@ -22,6 +22,9 @@ const MySelect = {
       label: '支持清除',
       tip: '支持清除',
       type: Switch,
+      itemProps: {
+        valuePropName:'checked'
+      },
       elProps: {
         defaultValue: true,
       },

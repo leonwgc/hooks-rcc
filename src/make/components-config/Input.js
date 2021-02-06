@@ -10,6 +10,9 @@ const MyInput = {
       label: '禁用状态',
       tip: '是否禁用状态，默认为 false',
       type: Switch,
+      itemProps: {
+        valuePropName:'checked'
+      },
     },
     name: {
       label: 'name',
