@@ -156,12 +156,12 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
     }
   };
 
-  const isTopContainer = item === app;
+  // const isTopContainer = item === app;
 
   return (
     <div
       className={classnames({
-        flex: !isTopContainer,
+        flex: true,
         stage: isDesign,
       })}
       style={style}
