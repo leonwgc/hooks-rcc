@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { DeleteOutlined } from '@ant-design/icons';
 import Flex from './components/Flex';
+import classnames from 'classnames';
 import './Renderer.less';
 
 const Renderer = ({ item, isDesign = false, onRemove }) => {
@@ -52,9 +53,11 @@ const Renderer = ({ item, isDesign = false, onRemove }) => {
     return isDesign ? (
       <li className={`design-cmp`} data-id={comp.id} key={comp.id}>
         <div
-          className={`mask ${app.activeComp === comp.id ? 'active' : ''} ${
-            comp.type == 'Flex' ? 'flex' : ''
-          }`}
+          className={classnames({
+            mask: true,
+            active: app.activeComp === comp.id,
+            flex: comp.cid == 'Flex',
+          })}
         ></div>
         <div className="edit">
           <DeleteOutlined onClick={onRemove} style={{ color: '#fff' }} />
