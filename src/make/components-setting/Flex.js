@@ -4,12 +4,19 @@ import { getOptions } from '../helper';
 export const Flex = {
   props: {},
   style: {
+    display: {
+      label: '容器类型',
+      type: Select,
+      elProps: {
+        defaultValue: 'block',
+        options: getOptions(['block', 'flex', 'inline-block', 'inline-flex']),
+      },
+    },
     justifyContent: {
       label: '水平排列方式',
       tip: '水平排列方式',
       type: Select,
       elProps: {
-        defaultValue: 'start',
         options: getOptions([
           'center',
           'start',
@@ -26,7 +33,6 @@ export const Flex = {
       tip: '垂直排列方式',
       type: Select,
       elProps: {
-        defaultValue: 'start',
         options: getOptions([
           'center',
           'start',
@@ -43,7 +49,6 @@ export const Flex = {
       tip: 'flex方向',
       type: Select,
       elProps: {
-        defaultValue: 'column',
         options: getOptions(['row', 'column']),
       },
     },
@@ -75,6 +80,9 @@ export const Flex = {
     minHeight: {
       label: '最小高度',
       type: Input,
+      elProps: {
+        defaultValue: '160px',
+      },
     },
   },
 };

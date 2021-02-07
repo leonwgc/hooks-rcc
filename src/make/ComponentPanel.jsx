@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Tabs } from 'antd';
 import ComponentSelectList from './ComponentSelectList';
 import components, { antdComponents } from './components/index';
@@ -7,18 +8,11 @@ import './ComponentPanel.less';
 const { TabPane } = Tabs;
 
 const ComponentPanel = () => {
-  const [, forceUpdate] = useReducer((x) => x + 1, 1);
+  const app = useSelector((state) => state.app);
 
   return (
     <div className="component-panel">
-      <Tabs
-        type="line"
-        onChange={(k) => {
-          if (k === '2') {
-            forceUpdate();
-          }
-        }}
-      >
+      <Tabs type="line">
         <TabPane tab="基础组件" key="0">
           <ComponentSelectList components={components} />
         </TabPane>

@@ -7,8 +7,8 @@ import settings from '../components-setting';
 export const flex = {
   cid: 'Flex',
   type: Flex,
-  name: 'Flex容器组件',
-  designRender: () => 'Flex容器组件',
+  name: '容器组件',
+  designRender: () => '容器组件',
   setting: settings.Flex,
 };
 

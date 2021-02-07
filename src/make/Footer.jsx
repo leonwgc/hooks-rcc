@@ -27,7 +27,7 @@ export default function Footer() {
       ...formData,
       tid: gid(),
     });
-    updateStore({ showTplDlg: false });
+    updateStore({ showTplDlg: false, _f: Math.random() });
     form.resetFields();
     message.success('保存成功');
   };
@@ -61,7 +61,13 @@ export default function Footer() {
           <Button type="primary" onClick={() => updateStore({ showTplDlg: true })}>
             保存为模板
           </Button>
-          <Button type="primary" onClick={() => storage.removeAll()}>
+          <Button
+            type="primary"
+            onClick={() => {
+              storage.removeAll();
+              updateStore({ _f: Math.random() });
+            }}
+          >
             删除全部模板
           </Button>
         </Space>

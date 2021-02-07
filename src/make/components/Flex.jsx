@@ -113,13 +113,8 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
     }
   };
 
-  const _style = {
-    display: 'flex',
-    width: '100%',
-  };
-
   return (
-    <div style={{ ..._style, ...style }} ref={ref}>
+    <div style={{ ...style }} ref={ref} data-type="container">
       <Renderer isDesign={isDesign} onRemove={isDesign ? onRemove : null} item={item} />
     </div>
   );

@@ -16,7 +16,6 @@ const EditorStage = () => {
           width: 375,
           overflowY: 'scroll',
           backgroundColor: '#fff',
-          flexDirection: 'column',
         }}
       />
     </div>

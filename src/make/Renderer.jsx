@@ -37,12 +37,12 @@ const Renderer = ({ item = {}, isDesign = false, onRemove }) => {
     }
 
     // flex also act as tpl wrapper
-    const isDesign = item.tpl ? false : isDesign;
+    const _isDesign = item.tpl ? false : isDesign;
 
     return React.createElement(type, {
       ...item.props,
       style: item.style,
-      isDesign,
+      isDesign: _isDesign,
       item: item.tpl ? (typeof item.tpl === 'string' ? JSON.parse(item.tpl) : item.tpl) : item,
       ...getEventProps(item),
     });
