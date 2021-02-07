@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import './Product.less';
 
 export default function Product({ link, src, desc, title, style = {} }) {
   const ref = useRef(null);
@@ -20,7 +19,7 @@ export default function Product({ link, src, desc, title, style = {} }) {
       onClick={link ? () => (location.href = link) : null}
     >
       <div className="eve-image">
-        <img src={src} alt="product" />
+        <img src={src} alt="product" style={{ maxWidth: '100%' }} />
       </div>
       <div>
         <div className="title">{title}</div>

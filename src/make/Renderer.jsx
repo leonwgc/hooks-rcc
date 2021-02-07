@@ -7,7 +7,8 @@ const getEventProps = (item) => {
   const props = Object.keys(item.props);
   let eventProps = {};
   const handlers = props.filter((p) => p.startsWith('on'));
-  if (handlers) {
+
+  if (handlers.length) {
     for (let p of handlers) {
       if (item.props[p]) {
         try {
