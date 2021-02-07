@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Modal, Space } from 'antd';
-import { update } from './stores/actions';
+import useUpdateStore from './hooks/useUpdateStore';
 import Renderer from './Renderer';
 import './Footer.less';
 
 export default function Footer() {
   const app = useSelector((state) => state.app);
-  const dispatch = useDispatch();
+  const updateStore = useUpdateStore();
 
   const onPreview = () => {
-    update(dispatch)({ ...app, preview: true });
-    // localStorage.setItem('m', JSON.stringify(app));
+    updateStore({ preview: true });
   };
 
   const onClear = () => {
-    update(dispatch)({ comps: [], activeComp: null });
+    updateStore({ comps: [], activeComp: null });
   };
 
   return (
@@ -37,13 +36,13 @@ export default function Footer() {
         title={null}
         visible={app.preview}
         onCancel={() => {
-          update(dispatch)({ ...app, preview: false });
+          updateStore({ preview: false });
         }}
         width={375}
         footer={null}
       >
-        <div style={{ height: 667, overflowY: 'scroll' }} className='preview-box'>
-          <Renderer isDesign={false} item={app} isTop={true} />
+        <div style={{ height: 667, overflowY: 'scroll' }} className="preview-box">
+          <Renderer isDesign={false} item={app} />
         </div>
       </Modal>
     </div>
