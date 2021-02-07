@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './Product.less';
 
-export default function Product({ link, imageSrc, desc, title, style = {} }) {
+export default function Product({ link, src, desc, title, style = {} }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Product({ link, imageSrc, desc, title, style = {} }) {
       onClick={link ? () => (location.href = link) : null}
     >
       <div className="eve-image">
-        <img src={imageSrc} alt="product" />
+        <img src={src} alt="product" />
       </div>
       <div>
         <div className="title">{title}</div>

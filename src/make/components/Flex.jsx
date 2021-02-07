@@ -5,7 +5,6 @@ import Renderer from '../Renderer';
 import classnames from 'classnames';
 import { getConfigById } from './index';
 import useUpdateStore from '../hooks/useUpdateStore';
-import './Flex.less';
 
 const Flex = ({ item = {}, isDesign = false, style = {} }) => {
   const ref = useRef(null);
@@ -112,15 +111,12 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
     }
   };
 
+  const _style = {
+    display: 'flex',
+  };
+
   return (
-    <div
-      className={classnames({
-        flex: true,
-        stage: isDesign,
-      })}
-      style={style}
-      ref={ref}
-    >
+    <div style={{ ...style, ..._style }} ref={ref}>
       <Renderer isDesign={isDesign} onRemove={isDesign ? onRemove : null} item={item} />
     </div>
   );

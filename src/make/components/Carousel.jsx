@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import Carousel from 'nuka-carousel';
-import './Carousel.less';
 
 export default function MyCarousel({
   autoplay,

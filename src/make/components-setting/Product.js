@@ -2,12 +2,8 @@ import { Input } from 'antd';
 
 const Product = {
   props: {
-    link: {
-      label: 'link',
-      type: Input,
-    },
-    imageSrc: {
-      label: 'imageSrc',
+    src: {
+      label: '图片链接',
       type: Input,
       elProps: {
         defaultValue:
@@ -15,18 +11,22 @@ const Product = {
       },
     },
     title: {
-      label: 'title',
+      label: '标题',
       type: Input,
       elProps: {
         defaultValue: 'title',
       },
     },
     desc: {
-      label: 'desc',
+      label: '说明',
       type: Input,
       elProps: {
         defaultValue: 'this is desc',
       },
+    },
+    link: {
+      label: '点击图片跳转链接',
+      type: Input,
     },
   },
   style: {
@@ -42,11 +42,11 @@ const Product = {
       },
     },
     margin: {
-      label: 'margin',
+      label: '外边距',
       type: Input,
     },
     padding: {
-      label: 'padding',
+      label: '内边距',
       type: Input,
     },
     width: {
@@ -58,18 +58,18 @@ const Product = {
       type: Input,
     },
     fontSize: {
-      label: 'fontSize',
+      label: '字体大小',
       type: Input,
       elProps: {
         defaultValue: '30px',
       },
     },
     color: {
-      label: 'fontColor',
+      label: '字体颜色',
       type: Input,
       elProps: {
         type: 'color',
-        defaultValue: 'red',
+        defaultValue: 'blue',
       },
     },
   },
