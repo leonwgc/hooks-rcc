@@ -1,4 +1,4 @@
-import { Input, Switch, Select, Divider } from 'antd';
+import { Input } from 'antd';
 
 const Product = {
   props: {

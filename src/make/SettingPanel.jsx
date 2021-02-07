@@ -13,14 +13,21 @@ function SettingPanel() {
   const comp = useSelectedComponent();
   const updateStore = useUpdateStore();
   const [tab, setTab] = useState('0');
+  const [hasProps, setHasProps] = useState(false);
+  const [hasStyle, setHasStyle] = useState(false);
 
   useEffect(() => {
     if (comp) {
       form.resetFields();
       const { cid } = comp;
       const cfg = getConfigById(cid);
-      let { style = {} } = cfg.setting;
-      setTab(!Object.keys(style).length ? '0' : '1');
+      let { style = {}, props = {} } = cfg.setting;
+      const hasStyle = Object.keys(style).length;
+      const hasProps = Object.keys(props).length;
+      setHasProps(hasProps);
+      setHasStyle(hasStyle);
+      const tab = hasProps ? '0' : hasStyle ? '1' : '0';
+      setTab(tab);
     }
   }, [comp]);
 
@@ -75,13 +82,17 @@ function SettingPanel() {
         layout="vertical"
         initialValues={initValues}
       >
-        <Tabs type="line" size="large" activeKey={tab} onChange={setTab}>
-          <TabPane tab="属性设置" key="0">
-            <FormRenderer layoutData={propsLayoutData}></FormRenderer>
-          </TabPane>
-          <TabPane tab="样式设置" key="1">
-            <FormRenderer layoutData={styleLayoutData}></FormRenderer>
-          </TabPane>
+        <Tabs type="card" activeKey={tab} onChange={setTab}>
+          {hasProps ? (
+            <TabPane tab="属性设置" key="0">
+              <FormRenderer layoutData={propsLayoutData}></FormRenderer>
+            </TabPane>
+          ) : null}
+          {hasStyle ? (
+            <TabPane tab="样式设置" key="1">
+              <FormRenderer layoutData={styleLayoutData}></FormRenderer>
+            </TabPane>
+          ) : null}
         </Tabs>
       </Form>
     </div>

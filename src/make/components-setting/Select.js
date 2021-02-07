@@ -1,5 +1,5 @@
-import { Input, Switch, Select, Divider } from 'antd';
-import { getOptions } from './util';
+import { Input, Switch, Select } from 'antd';
+import { getOptions } from '../helper';
 
 const MySelect = {
   props: {

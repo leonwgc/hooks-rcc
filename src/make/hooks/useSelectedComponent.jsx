@@ -13,6 +13,8 @@ export default function useSelectedComponent() {
       } catch (ex) {
         setComp(null);
       }
+    } else {
+      setComp(null);
     }
   }, [app.activeComp]);
 

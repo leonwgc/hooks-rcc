@@ -1,5 +1,5 @@
 import { Input, Switch, Select } from 'antd';
-import { getOptions } from './util';
+import { getOptions } from '../helper';
 
 export const Flex = {
   props: {},
@@ -43,7 +43,7 @@ export const Flex = {
       tip: 'flex方向',
       type: Select,
       elProps: {
-        defaultValue: 'row',
+        defaultValue: 'column',
         options: getOptions(['row', 'column']),
       },
     },
@@ -64,13 +64,17 @@ export const Flex = {
     width: {
       label: '宽度',
       type: Input,
-      elProps: {
-        defaultValue: '50%',
-      },
     },
     height: {
       label: '高度',
       type: Input,
+    },
+    minHeight: {
+      label: '最小高度',
+      type: Input,
+      elProps: {
+        defaultValue: '60px',
+      },
     },
   },
 };

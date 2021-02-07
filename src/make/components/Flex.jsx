@@ -1,29 +1,21 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { gid } from '~/make/helper';
-import { update } from '../stores/actions';
+import { gid, getSettingDefaultValues } from '~/make/helper';
 import Sortable from 'sortablejs';
-import config from '../components-setting';
 import Renderer from '../Renderer';
 import classnames from 'classnames';
-import components, { getConfigById } from './index';
+import { getConfigById } from './index';
+import useUpdateStore from '../hooks/useUpdateStore';
 import './Flex.less';
 
-const Flex = ({ item = null, isDesign = false, style = {} }) => {
-  const app = useSelector((state) => state.app);
+const Flex = ({ item = {}, isDesign = false, style = {} }) => {
   const ref = useRef(null);
-  const dispatch = useDispatch();
-  let data = item ? item.comps || [] : app.comps;
+  let data = item.comps || [];
   let newAddedComponent = null;
+  const updateStore = useUpdateStore();
 
   const updateData = (data) => {
-    if (item) {
-      item.comps = data;
-      update(dispatch)({ comps: [...app.comps] });
-    } else {
-      update(dispatch)({ comps: [...data] });
-    }
-    update(dispatch)({ activeComp: null });
+    item.comps = data;
+    updateStore({ activeComp: null });
   };
 
   useEffect(() => {
@@ -54,49 +46,15 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
               dom.remove();
 
               const cfg = getConfigById(cid);
-              let { props = {}, style = {} } = cfg.setting;
+              const { props = {}, style = {} } = cfg.setting;
+              const defaultProps = getSettingDefaultValues(props);
+              const defaultStyles = getSettingDefaultValues(style);
 
-              let propFields = Object.keys(props);
-              let styleFields = Object.keys(style);
-
-              let defaultProps = {};
-              let defaultStyles = {};
-
-              for (let f of propFields) {
-                let dv = '';
-                const { elProps = {} } = props[f];
-                const { defaultValue } = elProps;
-                if (typeof defaultValue === 'function') {
-                  dv = defaultValue();
-                } else {
-                  dv = defaultValue;
-                }
-                defaultProps[f] = dv;
-              }
-
-              for (let f of styleFields) {
-                let dv = '';
-                const { elProps = {} } = style[f];
-                const { defaultValue } = elProps;
-                if (typeof defaultValue === 'function') {
-                  dv = defaultValue();
-                } else {
-                  dv = defaultValue;
-                }
-                defaultStyles[f] = dv;
-              }
-
-              // for (let sf of styleFields) {
-              //   defaultStyles[sf] = style[sf].defaultValue;
-              // }
-
-              const id = [cid, '-', gid()].join('');
-
-              let cmp = {
+              const cmp = {
                 type: cfg.type,
                 cid: cid,
-                id,
-                props: { key: id, ...defaultProps },
+                id: [cid, '-', gid()].join(''),
+                props: { ...defaultProps },
                 style: { ...defaultStyles },
               };
 
@@ -123,16 +81,14 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
   }, [data, updateData, isDesign]);
 
   useEffect(() => {
-    const flex = ref.current;
-
     const onClick = (e) => {
       const li = e.target.parentElement;
 
       if (li.classList.contains('design-cmp')) {
-        update(dispatch)({ activeComp: li.dataset.id });
+        updateStore({ activeComp: li.dataset.id });
       } else {
-        if (e.target === flex) {
-          update(dispatch)({ activeComp: null });
+        if (e.target === ref.current) {
+          updateStore({ activeComp: null });
         }
       }
     };
@@ -155,8 +111,6 @@ const Flex = ({ item = null, isDesign = false, style = {} }) => {
       updateData(data);
     }
   };
-
-  // const isTopContainer = item === app;
 
   return (
     <div

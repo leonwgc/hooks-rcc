@@ -1,5 +1,5 @@
 import { Input, Switch, Select } from 'antd';
-import { getOptions } from './util';
+import { getOptions } from '../helper';
 
 const Button = {
   props: {

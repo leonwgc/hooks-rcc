@@ -6,25 +6,52 @@ export function gid() {
 export const getActiveComponentById = (id, comps = []) => {
   if (!id) return null;
 
-  let comp = comps.filter((c) => c.id === id)[0];
+  let comp = comps.find((c) => c.id === id);
 
   if (!comp) {
-    let flexArray = comps.filter((c) => c.cid === 'Flex');
+    let flexList = comps.filter((c) => c.cid === 'Flex');
     let current;
-    for (var i = 0; i < flexArray.length; i++) {
-      current = flexArray[i];
+    for (var i = 0; i < flexList.length; i++) {
+      current = flexList[i];
       if (current.id === id) {
         comp = current;
         break;
       } else {
-        comp = current.comps.filter((c) => c.id === id)[0];
+        comp = current.comps.find((c) => c.id === id);
         if (comp) {
           break;
         }
-        let subFlexs = current.comps.filter((c) => c.cid === 'Flex');
-        flexArray = flexArray.concat(subFlexs);
+        let subFlexList = current.comps.filter((c) => c.cid === 'Flex');
+        flexList = flexList.concat(subFlexList);
       }
     }
   }
   return comp;
+};
+
+export const getSettingDefaultValues = (setting) => {
+  let keys = Object.keys(setting);
+  let rt = {};
+  let v = '';
+  for (let f of keys) {
+    const { elProps = {} } = setting[f];
+    const { defaultValue } = elProps;
+    if (typeof defaultValue === 'function') {
+      v = defaultValue();
+    } else {
+      v = defaultValue;
+    }
+    rt[f] = v;
+  }
+  return rt;
+};
+
+export const getOptions = (arr) => {
+  if (Array.isArray(arr)) {
+    return arr.map((v) => ({
+      label: v,
+      value: v,
+    }));
+  }
+  return [];
 };

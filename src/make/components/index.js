@@ -2,6 +2,7 @@ import Product from './Product';
 import Flex from './Flex';
 import Carousel from './Carousel';
 import { Button, Input, Select, Checkbox } from 'antd';
+import settings from '../components-setting';
 
 // custom comps
 export const components = [
@@ -10,21 +11,21 @@ export const components = [
     type: Flex,
     name: 'Flex容器组件',
     designRender: () => 'Flex容器组件',
-    setting: require('../components-setting/Flex').default,
+    setting: settings.Flex,
   },
   {
     cid: 'Product',
     type: Product,
     name: '图片文字测试组件',
     designRender: () => '图片文字组件测试',
-    setting: require('../components-setting/Product').default,
+    setting: settings.Product,
   },
   {
     cid: 'Carousel',
     type: Carousel,
     name: '轮播组件',
     designRender: () => '轮播组件',
-    setting: require('../components-setting/Carousel').default,
+    setting: settings.Carousel,
   },
 ];
 
@@ -35,28 +36,28 @@ export const antdComponents = [
     type: Button,
     name: '按钮',
     designRender: () => '按钮',
-    setting: require('../components-setting/Button').default,
+    setting: settings.Button,
   },
   {
     cid: 'Input',
     type: Input,
     name: '输入框',
     designRender: () => '输入框',
-    setting: require('../components-setting/Input').default,
+    setting: settings.Input,
   },
   {
     cid: 'Select',
     type: Select,
     name: '下拉框',
     designRender: () => '下拉框',
-    setting: require('../components-setting/Select').default,
+    setting: settings.Select,
   },
   {
     cid: 'CheckboxGroup',
     type: Checkbox.Group,
     name: '多项选择框',
     designRender: () => '多项选择框',
-    setting: require('../components-setting/CheckboxGroup').default,
+    setting: settings.CheckboxGroup,
   },
 ];
 
@@ -67,21 +68,7 @@ export const htmlComponents = [
     type: 'img',
     name: '图片',
     designRender: () => '图片',
-    setting: require('../components-setting/Image').default,
-  },
-  {
-    cid: 'div',
-    type: 'div',
-    name: '块元素',
-    designRender: () => '块元素',
-    setting: {},
-  },
-  {
-    cid: 'span',
-    type: 'span',
-    name: '内联元素',
-    designRender: () => '内联元素',
-    setting: {},
+    setting: settings.img,
   },
 ];
 

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { DeleteOutlined } from '@ant-design/icons';
-import Flex from './components/Flex';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import './Renderer.less';
 
@@ -32,21 +31,13 @@ const Renderer = ({ item, isDesign = false, onRemove }) => {
   };
 
   const renderItem = (item) => {
-    const isFlex = item.cid == 'Flex';
-
-    let props = {
+    return React.createElement(item.type, {
       ...item.props,
       style: item.style,
       isDesign,
-    };
-
-    if (!isFlex) {
-      const events = getEventProps(item);
-      props = { ...props, ...events };
-      return React.createElement(item.type, props);
-    } else {
-      return <Flex {...props} item={item} />;
-    }
+      item,
+      ...getEventProps(item),
+    });
   };
 
   const renderComp = (comp) => {

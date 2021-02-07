@@ -1,18 +1,10 @@
 .design-cmp {
   list-style: none;
   display: block;
-  padding-left: 10px;
   position: relative;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   cursor: move;
   border: 2px solid rgb(64, 158, 255);
-  min-height: 40px;
   width: 100%;
-  position: relative;
-  margin: 0;
-  padding: 0;
   outline: none;
 
   .edit {
@@ -59,7 +51,7 @@
     }
 
     &.flex {
-      left: 95%;
+      left: calc(100% - 34px);
     }
   }
 }
