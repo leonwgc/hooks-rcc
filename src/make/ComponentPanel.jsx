@@ -9,10 +9,10 @@ const ComponentPanel = () => {
   return (
     <div className="component-panel">
       <Tabs type="line">
-        <TabPane tab="基础组件">
+        <TabPane tab="基础组件" key="0">
           <ComponentSelectList components={components} />
         </TabPane>
-        <TabPane tab="蚂蚁组件">
+        <TabPane tab="蚂蚁组件" key="1">
           <ComponentSelectList components={antdComponents} />
         </TabPane>
       </Tabs>
