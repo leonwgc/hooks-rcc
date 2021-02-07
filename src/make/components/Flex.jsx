@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { gid, getSettingDefaultValues } from '~/make/helper';
 import Sortable from 'sortablejs';
 import Renderer from '../Renderer';
-import classnames from 'classnames';
 import { getConfigById } from './index';
 import useUpdateStore from '../hooks/useUpdateStore';
 
@@ -51,12 +50,27 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
               const defaultProps = getSettingDefaultValues(props);
               const defaultStyles = getSettingDefaultValues(style);
 
+              const hasTpl = typeof tpl === 'string' && tpl.length >= 2;
+
+              const ext = {};
+
+              if (hasTpl) {
+                try {
+                  const _tpl = JSON.parse(tpl);
+                  const { comps = [] } = _tpl;
+
+                  if (comps.length) {
+                    ext.comps = comps;
+                  }
+                } catch (ex) {}
+              }
+
               const cmp = {
                 cid: cid,
                 id: [cid, '-', gid()].join(''),
                 props: { ...defaultProps },
                 style: { ...defaultStyles },
-                tpl,
+                ...ext,
               };
 
               if (index == 0) {
