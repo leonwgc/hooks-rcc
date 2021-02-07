@@ -48,9 +48,9 @@ const Renderer = ({ item = {}, isDesign = false, onRemove }) => {
     });
   };
 
-  const renderComp = (comp) => {
+  const renderComp = (comp, key) => {
     return isDesign ? (
-      <li className={`design-cmp`} data-id={comp.id} key={comp.id}>
+      <li className={`design-cmp`} data-id={comp.id} key={key}>
         <div
           className={classnames({
             mask: true,

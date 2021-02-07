@@ -4,6 +4,7 @@ import { Tabs } from 'antd';
 import ComponentSelectList from './ComponentSelectList';
 import components, { antdComponents } from './components/index';
 import TplSelectList from './TplSelectList';
+import ErrorBoundary from './ErrorBoundary';
 import './ComponentPanel.less';
 const { TabPane } = Tabs;
 
@@ -20,7 +21,9 @@ const ComponentPanel = () => {
           <ComponentSelectList components={antdComponents} />
         </TabPane>
         <TabPane tab="模板" key="2">
-          <TplSelectList />
+          <ErrorBoundary>
+            <TplSelectList />
+          </ErrorBoundary>
         </TabPane>
       </Tabs>
     </div>

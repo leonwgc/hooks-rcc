@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { flex } from './components/index';
-import Flex from './components/Flex';
+import { DeleteOutlined } from '@ant-design/icons';
 import * as storage from './storage';
+import useUpdateStore from './hooks/useUpdateStore';
 import Sortable from 'sortablejs';
 
 export default function TplSelectList() {
   const ref = useRef(null);
-  const list = storage.getList();
+  const updateStore = useUpdateStore();
+  const list = storage.getList() || [];
 
   useEffect(() => {
     if (ref.current) {
@@ -19,7 +21,11 @@ export default function TplSelectList() {
       });
 
       return () => {
-        s.destroy();
+        try {
+          s.destroy();
+        } catch (ex) {
+          console.log(ex);
+        }
       };
     }
   }, []);
@@ -27,9 +33,28 @@ export default function TplSelectList() {
   return (
     <ul ref={ref}>
       {list.map((item, idx) => (
-        <li key={idx} data-cid={flex.cid} data-tpl={JSON.stringify(item)} className="cmp panel-cmp">
-          {/* <Flex item={item} /> */}
+        <li
+          key={idx}
+          data-cid={flex.cid}
+          data-tpl={JSON.stringify(item)}
+          style={{ position: 'relative' }}
+          className="cmp panel-cmp"
+        >
           {item.name}
+          <DeleteOutlined
+            onClick={() => {
+              storage.remove(item.tid);
+              updateStore({ _f: Math.random() });
+            }}
+            style={{
+              color: 'pink',
+              fontSize: 16,
+              cursor: 'pointer',
+              position: 'absolute',
+              right: 5,
+              bottom: 22,
+            }}
+          />
         </li>
       ))}
     </ul>

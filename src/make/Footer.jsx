@@ -61,15 +61,6 @@ export default function Footer() {
           <Button type="primary" onClick={() => updateStore({ showTplDlg: true })}>
             保存为模板
           </Button>
-          <Button
-            type="primary"
-            onClick={() => {
-              storage.removeAll();
-              updateStore({ _f: Math.random() });
-            }}
-          >
-            删除全部模板
-          </Button>
         </Space>
       </div>
       <Modal

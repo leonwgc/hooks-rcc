@@ -22,3 +22,9 @@ export const addTpl = (tplData) => {
 export const removeAll = () => {
   localStorage.removeItem(key);
 };
+
+export const remove = (tid) => {
+  let list = getList();
+  list = list.filter((item) => item.tid !== tid);
+  setList(list);
+};
