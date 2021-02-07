@@ -26,7 +26,7 @@ export const Flex = {
       tip: '垂直排列方式',
       type: Select,
       elProps: {
-        defaultValue: 'center',
+        defaultValue: 'start',
         options: getOptions([
           'center',
           'start',
@@ -64,6 +64,9 @@ export const Flex = {
     width: {
       label: '宽度',
       type: Input,
+      elProps: {
+        placeholder: '100%',
+      },
     },
     height: {
       label: '高度',
@@ -72,9 +75,6 @@ export const Flex = {
     minHeight: {
       label: '最小高度',
       type: Input,
-      elProps: {
-        defaultValue: '60px',
-      },
     },
   },
 };

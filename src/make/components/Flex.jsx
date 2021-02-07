@@ -26,12 +26,14 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
         },
         onAdd(e) {
           let cid = e.item.dataset.cid;
+          let tpl = e.item.dataset.tpl || '';
           e.item.style.display = 'none';
 
           newAddedComponent = {
             cid,
             index: e.newIndex,
             dom: e.item,
+            tpl,
           };
         },
         store: {
@@ -41,7 +43,7 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
            */
           set: function (s) {
             if (newAddedComponent) {
-              const { index, dom, cid } = newAddedComponent;
+              const { index, dom, cid, tpl } = newAddedComponent;
               dom.remove();
 
               const cfg = getConfigById(cid);
@@ -50,11 +52,11 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
               const defaultStyles = getSettingDefaultValues(style);
 
               const cmp = {
-                type: cfg.type,
                 cid: cid,
                 id: [cid, '-', gid()].join(''),
                 props: { ...defaultProps },
                 style: { ...defaultStyles },
+                tpl,
               };
 
               if (index == 0) {
@@ -113,10 +115,11 @@ const Flex = ({ item = {}, isDesign = false, style = {} }) => {
 
   const _style = {
     display: 'flex',
+    width: '100%',
   };
 
   return (
-    <div style={{ ...style, ..._style }} ref={ref}>
+    <div style={{ ..._style, ...style }} ref={ref}>
       <Renderer isDesign={isDesign} onRemove={isDesign ? onRemove : null} item={item} />
     </div>
   );

@@ -4,15 +4,17 @@ import Carousel from './Carousel';
 import { Button, Input, Select, Checkbox } from 'antd';
 import settings from '../components-setting';
 
+export const flex = {
+  cid: 'Flex',
+  type: Flex,
+  name: 'Flex容器组件',
+  designRender: () => 'Flex容器组件',
+  setting: settings.Flex,
+};
+
 // custom comps
 export const components = [
-  {
-    cid: 'Flex',
-    type: Flex,
-    name: 'Flex容器组件',
-    designRender: () => 'Flex容器组件',
-    setting: settings.Flex,
-  },
+  flex,
   {
     cid: 'Product',
     type: Product,

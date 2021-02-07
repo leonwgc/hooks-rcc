@@ -1,6 +1,7 @@
 import React from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
+import { getConfigById } from './components/index';
 import './Renderer.less';
 
 const getEventProps = (item) => {
@@ -30,11 +31,19 @@ const Renderer = ({ item = {}, isDesign = false, onRemove }) => {
   }
 
   const renderItem = (item) => {
-    return React.createElement(item.type, {
+    let { type } = item;
+    if (!type) {
+      type = getConfigById(item.cid).type;
+    }
+
+    // flex also act as tpl wrapper
+    const isDesign = item.tpl ? false : isDesign;
+
+    return React.createElement(type, {
       ...item.props,
       style: item.style,
       isDesign,
-      item,
+      item: item.tpl ? (typeof item.tpl === 'string' ? JSON.parse(item.tpl) : item.tpl) : item,
       ...getEventProps(item),
     });
   };
