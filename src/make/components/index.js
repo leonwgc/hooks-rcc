@@ -2,6 +2,7 @@ import Product from './Product';
 import Flex from './Flex';
 import Carousel from './Carousel';
 import Image from './Image';
+import Image2 from './Image2';
 // import { Button, Input, Select, Checkbox } from 'antd';
 import settings from '../components-setting';
 
@@ -27,8 +28,15 @@ export const components = [
     cid: 'Image',
     type: Image,
     name: '图片',
-    designRender: () => '图片',
-    setting: settings.img,
+    designRender: () => '单行图片',
+    setting: settings.Image,
+  },
+  {
+    cid: 'Image2',
+    type: Image2,
+    name: '两列',
+    designRender: () => '两列图片',
+    setting: settings.Image2,
   },
   {
     cid: 'Product',
