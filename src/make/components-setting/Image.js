@@ -1,40 +1,40 @@
 import { Input, Switch, Select } from 'antd';
+import ImageInput from '../prop-setting-components/ImageInput';
 
 const img = {
   props: {
     src: {
-      label: '图像url',
-      type: Input,
+      label: '图片',
+      type: ImageInput,
       elProps: {
-        defaultValue:
-          'http://t8.baidu.com/it/u=2247852322,986532796&fm=79&app=86&f=JPEG?w=1280&h=853',
-      },
-    },
-    alt: {
-      label: '图像的替代文本',
-      type: Input,
-    },
-    width: {
-      label: '图像的宽度',
-      type: Input,
-      elProps: {
-        defaultValue: 50,
-      },
-    },
-    height: {
-      label: '图像的高度',
-      type: Input,
-      elProps: {
-        defaultValue: 50,
+        imageProp: 'src',
+        defaultValue: 'https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF',
       },
     },
   },
   style: {
-    margin: {
-      label: '外边局',
+    width: {
+      label: '图片宽度',
       type: Input,
       elProps: {
-        placeholder: 'margin',
+        defaultValue: '100%',
+      },
+    },
+    height: {
+      label: '图片高度',
+      type: Input,
+      elProps: {
+        defaultValue: '160px',
+      },
+    },
+    backgroundSize: {
+      label: '图片拉伸属性',
+      type: Input,
+      elProps: {
+        defaultValue: '100% 100%',
+      },
+      itemProps: {
+        help: '参考background-size',
       },
     },
   },
