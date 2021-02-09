@@ -19,6 +19,7 @@ const myUploadFn = (param) => {
     if (res.code == '0') {
       param.success({
         url: res.result[0].cdnHref,
+        meta: null,
         // meta: {
         //   id: 'xxx',
         //   title: 'xxx',
