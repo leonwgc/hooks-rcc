@@ -61,6 +61,10 @@ const routes = [
     path: '/dm',
     component: lazy(() => import('./dragmove/App')),
   },
+  {
+    path: '/phaser',
+    component: lazy(() => import('./phaser/App')),
+  },
 ];
 
 export default routes;

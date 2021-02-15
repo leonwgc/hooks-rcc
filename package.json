@@ -16,6 +16,7 @@
     "css-vars-ponyfill": "^2.4.3",
     "i18next": "^19.8.4",
     "nuka-carousel": "^4.7.5",
+    "phaser": "^3.52.0",
     "pixi.js": "^5.3.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
