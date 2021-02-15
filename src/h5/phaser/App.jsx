@@ -7,11 +7,15 @@ import bomb from './assets/bomb.png';
 import dude from './assets/dude.png';
 
 const App = () => {
+  const width = 800;
+  const height = 600;
+  const platformHeight = 32;
+
   useEffect(() => {
     var config = {
       type: Phaser.AUTO,
-      width: 800,
-      height: 600,
+      width,
+      height,
       physics: {
         default: 'arcade',
         arcade: {
@@ -72,17 +76,20 @@ const App = () => {
     }
     function create() {
       // 一个简单的图片作为背景 A simple background for our game
-      this.add.image(400, 300, 'sky');
-
+      this.add.image(width / 2, height / 2, 'sky');
       // 添加一个静态组  The platforms group contains the ground and the 2 ledges we can jump on
       platforms = this.physics.add.staticGroup();
 
       // 添加地面  Here we create the ground.
       // 将地面放大成合适尺寸 Scale it to fit the width of the game (the original sprite is 400x32 in size)
-      platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+      platforms
+        .create(width / 2, height - platformHeight, 'ground')
+        .setScale(2)
+        .refreshBody();
 
       // 在不同位置添加三条横条 Now let's create some ledges
       platforms.create(600, 400, 'ground');
+
       platforms.create(50, 250, 'ground');
       platforms.create(750, 220, 'ground');
 
@@ -187,7 +194,7 @@ const App = () => {
           child.enableBody(true, child.x, 0, true, true);
         });
 
-        var x = player.x < 400 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        var x = player.x < width / 2 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
         //产生炸弹
         var bomb = bombs.create(x, 16, 'bomb');
         bomb.setBounce(1);
