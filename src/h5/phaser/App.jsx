@@ -42,6 +42,11 @@ const App = () => {
     var game = new Phaser.Game(config);
 
     function preload() {
+      if (game.device.os.desktop) {
+        this.scale.scaleMode = Phaser.Scale.NONE;
+      } else {
+        this.scale.scaleMode = Phaser.Scale.FIT;
+      }
       //加载资源文件
       this.load.image('sky', sky);
       this.load.image('ground', ground);
