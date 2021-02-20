@@ -41,8 +41,6 @@ export default class Play extends Phaser.Scene {
 
     this.load.on('complete', () => {
       percentText.destroy();
-
-      this.scene.start('play');
     });
   }
   create() {

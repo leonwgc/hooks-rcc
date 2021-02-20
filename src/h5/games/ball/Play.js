@@ -57,6 +57,23 @@ export default class Play extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
+    this.winText = this.add
+      .text(width / 2, height / 2, 'You Win!!!', {
+        fontSize: '30px',
+        color: 'green',
+      })
+      .setAlpha(0)
+      .setOrigin(0.5);
+
+    this.tween = this.tweens.add({
+      targets: this.winText,
+      paused: true,
+      alpha: 1,
+      ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+      duration: 1000,
+      repeat: 0, // -1: infinity
+    });
+
     this.apple = this.physics.add.group({
       key: 'apple',
       repeat: 5,
@@ -78,16 +95,32 @@ export default class Play extends Phaser.Scene {
 
     const overlapFn = (ball, apple) => {
       apple.disableBody(true, true);
-      ball.disableBody(true, true);
+      // ball.disableBody(true, true);
       this.score += 10;
       this.scoreText.setText('score:' + this.score);
+
+      if (
+        this.apple.countActive(true) == 0 &&
+        this.apple1.countActive(true) == 0 &&
+        this.apple2.countActive(true) == 0
+      ) {
+        this.isPlaying = false;
+        this.tween.resume();
+        this.scoreText.setVisible(false);
+        setTimeout(() => {
+          this.tween.stop();
+          this.winText.setColor('#fff');
+          this.winText.setText('Game over');
+          this.winText.setAlpha(1);
+          this.scene.pause();
+        }, 1000);
+      }
     };
 
     this.physics.add.overlap(ball1, this.apple, overlapFn);
     this.physics.add.overlap(ball1, this.apple1, overlapFn);
     this.physics.add.overlap(ball1, this.apple2, overlapFn);
   }
-
   update() {
     if (this.ball1.body.onCeiling()) {
       this.ball1.disableBody(true, true);
