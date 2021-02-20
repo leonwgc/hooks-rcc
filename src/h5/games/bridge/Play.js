@@ -10,22 +10,38 @@ export default class Play extends Phaser.Scene {
     const height = this.cameras.main.height;
 
     this.bg = this.add.image(width / 2, height / 2, 'bg').setDisplaySize(width, height);
-    //添加物理物体组
-    this.wood = this.physics.add
-      .image(0, height - 200, 'wood')
-      .setDisplaySize(Phaser.Math.Between(50, 100), 200)
-      .setOrigin(0, 0)
-      .setImmovable(true);
 
-    this.wood1 = this.physics.add
-      .image(
+    this.platforms = this.physics.add.staticGroup();
+
+    this.wood = this.platforms
+      .create(0, height - 200, 'wood')
+      .setDisplaySize(Phaser.Math.Between(50, 100), 200)
+      .setOrigin(0, 0);
+
+    this.wood1 = this.platforms
+      .create(
         Phaser.Math.Between(this.wood.x + this.wood.width + 20, width - 100),
         height - 200,
         'wood'
       )
       .setDisplaySize(Phaser.Math.Between(50, 100), 200)
-      .setOrigin(0, 0)
-      .setImmovable(true);
+      .setOrigin(0, 0);
+
+    this.line = this.add
+      .rectangle(
+        this.wood.x + this.wood.displayWidth,
+        height - this.wood.displayHeight,
+        0,
+        5,
+        'red'
+      )
+      .setOrigin(0);
+
+    // this.line.body.allowGravity = false;
+
+    // this.line.setImmovable(true);
+    // this.line.body.allowGravity = false;
+    // this.line.setVelocityX(50);
 
     var player = (this.player = this.physics.add
       .sprite(this.wood.displayWidth / 2, height - 200 - 33, 'player')
@@ -34,16 +50,6 @@ export default class Play extends Phaser.Scene {
     player.setDepth(10000);
 
     this.len = 0;
-
-    this.line = this.add
-      .rectangle(
-        this.wood.x + this.wood.displayWidth,
-        height - this.wood.displayHeight,
-        this.len,
-        5,
-        'red'
-      )
-      .setOrigin(0);
 
     this.platforms = this.physics.add.staticGroup();
 
