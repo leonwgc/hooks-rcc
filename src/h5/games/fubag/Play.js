@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class ScenePlay extends Phaser.Scene {
+export default class Play extends Phaser.Scene {
   constructor() {
     super({ key: 'play' });
   }
@@ -18,11 +18,6 @@ export default class ScenePlay extends Phaser.Scene {
     this.player = this.physics.add
       .sprite(width / 2, height - 100, 'player')
       .setDisplaySize(170, 190);
-    this.cover = this.add.sprite(width / 2, height / 2, 'cover').setInteractive();
-    // click to start
-    this.cover.on('pointerdown', () => {
-      this.start();
-    });
 
     // press key to start
     this.input.keyboard.on('keydown', () => {
@@ -77,6 +72,12 @@ export default class ScenePlay extends Phaser.Scene {
           child.enableBody(true, child.x, 0, true, true);
         });
       }
+    });
+
+    this.cover = this.add.sprite(width / 2, height / 2, 'cover').setInteractive();
+    // click to start
+    this.cover.on('pointerdown', () => {
+      this.start();
     });
   }
   moveFudai() {

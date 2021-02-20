@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Phaser from 'phaser';
-import SceneStart from './SceneStart';
-import ScenePlay from './ScenePlay';
+import Start from './Start';
+import Play from './Play';
 
 const App = () => {
   const width = 750;
@@ -19,7 +19,7 @@ const App = () => {
           debug: false,
         },
       },
-      scene: [SceneStart, ScenePlay],
+      scene: [Start, Play],
     };
 
     var game = new Phaser.Game(config);

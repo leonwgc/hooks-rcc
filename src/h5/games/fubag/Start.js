@@ -6,7 +6,7 @@ import fudai from './assets/fudai.png';
 import player from './assets/player.png';
 import red from './assets/red.png';
 
-export default class ScenePlay extends Phaser.Scene {
+export default class Play extends Phaser.Scene {
   constructor() {
     super({ key: 'start' });
   }
