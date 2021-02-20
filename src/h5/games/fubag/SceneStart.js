@@ -4,6 +4,7 @@ import coverBg from './assets/cover.png';
 import gameBg from './assets/gameBg.jpg';
 import fudai from './assets/fudai.png';
 import player from './assets/player.png';
+import red from './assets/red.png';
 
 export default class ScenePlay extends Phaser.Scene {
   constructor() {
@@ -23,6 +24,7 @@ export default class ScenePlay extends Phaser.Scene {
     this.load.image('gameBg', gameBg);
     this.load.image('player', player);
     this.load.image('fudai', fudai);
+    this.load.image('red', red);
   }
   create() {
     const width = this.cameras.main.width;

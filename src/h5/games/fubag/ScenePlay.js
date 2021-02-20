@@ -15,7 +15,9 @@ export default class ScenePlay extends Phaser.Scene {
     const height = this.cameras.main.height;
     this.bg = this.add.image(width / 2, height / 2, 'gameBg');
 
-    this.player = this.physics.add.sprite(width / 2, height - 100, 'player').setScale(0.3);
+    this.player = this.physics.add
+      .sprite(width / 2, height - 100, 'player')
+      .setDisplaySize(170, 190);
     this.cover = this.add.sprite(width / 2, height / 2, 'cover').setInteractive();
     // click to start
     this.cover.on('pointerdown', () => {
@@ -54,12 +56,12 @@ export default class ScenePlay extends Phaser.Scene {
       setXY: { x: 12, y: 0, stepX: 100 },
     });
 
-    this.particles = this.add.particles('blue');
+    this.particles = this.add.particles('red');
 
     this.fudai.children.iterate((child) => {
       var emitter = this.particles.createEmitter({
         speed: 100,
-        scale: { start: 1, end: .1 },
+        scale: { start: 1, end: 0.1 },
         blendMode: 'ADD',
       });
 
