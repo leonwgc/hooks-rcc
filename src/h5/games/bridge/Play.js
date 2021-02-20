@@ -14,14 +14,14 @@ export default class Play extends Phaser.Scene {
     this.platforms = this.physics.add.staticGroup();
 
     this.wood = this.platforms
-      .create(0, height - 200, 'wood')
-      .setDisplaySize(Phaser.Math.Between(50, 100), 200)
+      .create(0, height - 491, 'wood')
+      // .setDisplaySize(Phaser.Math.Between(50, 100), 200)
       .setOrigin(0, 0);
 
     this.wood1 = this.platforms
       .create(
         Phaser.Math.Between(this.wood.x + this.wood.width + 20, width - 100),
-        height - 200,
+        height - 491,
         'wood'
       )
       .setDisplaySize(Phaser.Math.Between(50, 100), 200)

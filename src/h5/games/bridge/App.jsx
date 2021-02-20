@@ -7,8 +7,8 @@ const App = () => {
   useEffect(() => {
     var config = {
       type: Phaser.AUTO,
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: window.innerWidth * window.devicePixelRatio,
+      height: window.innerHeight * window.devicePixelRatio,
       physics: {
         default: 'arcade',
         arcade: {
