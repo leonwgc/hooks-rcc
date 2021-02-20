@@ -65,6 +65,7 @@ export default class Play extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, this.fudai, (player, fudai) => {
       fudai.disableBody(true, true);
+      this.sound.play('score');
       this.score += 10;
       this.scoreText.setText('score:' + this.score);
       if (this.fudai.countActive(true) === 0) {

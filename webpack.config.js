@@ -239,7 +239,7 @@ const config = {
         use: getStyleLoaders(true),
       },
       {
-        test: /\.(png|jpg|gif|jpeg|svg)$/,
+        test: /\.(png|jpg|gif|jpeg|svg|wav)$/,
         use: {
           loader: 'url-loader',
           options: {

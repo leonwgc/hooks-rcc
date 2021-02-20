@@ -5,6 +5,7 @@ import gameBg from './assets/gameBg.jpg';
 import fudai from './assets/fudai.png';
 import player from './assets/player.png';
 import red from './assets/red.png';
+import score from './assets/score.wav';
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -25,6 +26,7 @@ export default class Play extends Phaser.Scene {
     this.load.image('player', player);
     this.load.image('fudai', fudai);
     this.load.image('red', red);
+    this.load.audio('score', score);
   }
   create() {
     const width = this.cameras.main.width;

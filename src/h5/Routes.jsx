@@ -66,7 +66,7 @@ const routes = [
     component: lazy(() => import('./phaser/App')),
   },
   {
-    path: '/test',
+    path: '/fubag',
     component: lazy(() => import('./games/fubag/App')),
   },
 ];
