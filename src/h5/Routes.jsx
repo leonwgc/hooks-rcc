@@ -69,6 +69,10 @@ const routes = [
     path: '/fubag',
     component: lazy(() => import('./games/fubag/App')),
   },
+  {
+    path: '/ball',
+    component: lazy(() => import('./games/ball/App')),
+  },
 ];
 
 export default routes;
