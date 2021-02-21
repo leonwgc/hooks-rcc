@@ -24,7 +24,7 @@ export default class Play extends Phaser.Scene {
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
     this.bg = this.add.image(width / 2, height / 2, 'bg').setDisplaySize(width, height);
-
+    this.isover = false;
     this.platforms = this.physics.add.staticGroup();
 
     this.wood = this.platforms.create(60, height - 491 / 2, 'wood');
@@ -58,11 +58,12 @@ export default class Play extends Phaser.Scene {
       .setOrigin(0)
       .refreshBody();
 
+    this.line.angle = -90;
+
     this.player = this.physics.add
       .sprite(this.wood.x, this.wood.y - this.wood.height / 2 - 80, 'player')
       .setScale(0.5)
-      .setBounce(0.4)
-      .setCollideWorldBounds(true);
+    // .setCollideWorldBounds(true);
 
     this.physics.add.collider(this.player, this.platforms);
 
@@ -71,54 +72,74 @@ export default class Play extends Phaser.Scene {
     this.timer = 0;
 
     this.input.on('pointerdown', () => {
-      this.timer = setInterval(() => {
-        this.len += 30;
-        this.line.displayWidth = this.len;
-        console.log(this.len);
-      }, 100);
+      if (!this.isover) {
+        this.timer = setInterval(() => {
+          this.len += 60;
+          this.line.displayWidth = this.len;
+        }, 100);
+      }
     });
 
+    this.scoreText = this.add
+      .text(width / 2, height / 2, '', {
+        fontSize: '60px',
+        color: 'blue',
+      })
+      .setOrigin(0.5)
+      .setVisible(false);
+
     this.input.on('pointerup', () => {
+      if (this.isover) return;
       clearInterval(this.timer);
 
-      var isWin = this.len + this.wood.width >= this.wood1.x - this.wood1.width / 2;
+      var isWin =
+        this.len + this.wood.width >= this.wood1.x - this.wood1.width / 2 &&
+        this.len + this.wood.width <= this.wood1.x + this.wood1.width / 2;
       if (isWin) {
         this.player.body.allowGravity = false;
+      } else {
+        this.isover = true;
       }
 
       this.tweens.add({
-        targets: this.player,
-        ease: 'Linear', 
-        duration: 500,
-        x: isWin ? this.wood1.x : this.player.x + this.len,
-        repeat: 0,
+        targets: [this.line],
+        ease: 'Linear',
+        duration: 200,
+        angle: 0,
         onComplete: () => {
-          if (isWin) {
-            this.len = 0;
-            this.swithWood();
-          } else {
-            this.tweens.add({
-              targets: [this.line],
-              ease: 'Linear', 
-              duration: 200,
-              angle: 90,
-              repeat: 0, 
-              onComplete: () => {
-                this.player.body.allowGravity = true;
-              },
-            });
-          }
+          this.tweens.add({
+            targets: this.player,
+            ease: 'Linear',
+            duration: 500,
+            x: isWin ? this.wood1.x : this.player.x + this.len,
+            repeat: 0,
+            onComplete: () => {
+              if (isWin) {
+                this.len = 0;
+                this.swithWood();
+              } else {
+                this.tweens.add({
+                  targets: [this.line],
+                  ease: 'Linear',
+                  duration: 200,
+                  angle: 90,
+                  repeat: 0,
+                  onComplete: () => {
+                    this.player.body.allowGravity = true;
+                    this.player.setVelocityY(600);
+                    this.player.setVelocityX(100);
+                    this.scoreText.setText('Gave over');
+                    this.scoreText.setVisible(true);
+                  },
+                });
+              }
+            },
+          });
         },
       });
     });
 
     this.score = 0;
-    this.scoreText = this.add
-      .text(width / 2, height / 2, 'score: 0', {
-        fontSize: '18px',
-      })
-      .setOrigin(0.5)
-      .setVisible(false);
   }
   swithWood() {
     const width = this.cameras.main.width;
@@ -138,7 +159,12 @@ export default class Play extends Phaser.Scene {
         t.x = this.getNextX(this.wood1.x, this.wood1.width, 120, width, true, move);
         this.wood2 = t;
         this.line.displayWidth = 0;
+        this.line.angle = -90;
         this.line.x = this.wood.x + this.wood.width / 2;
+
+        if (this.wood1.x > width) {
+          this.wood1.x = this.getNextX(this.wood.x, this.wood.width, 120, width);
+        }
       },
     });
   }
