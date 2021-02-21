@@ -4,23 +4,48 @@ export default class Play extends Phaser.Scene {
   constructor() {
     super({ key: 'play' });
   }
+  getNextX(prevX, prevWidth, width, sceneWidth, forceOut = false, prevMove = 0) {
+    var min = prevX + prevWidth + width;
+    var max = prevX + sceneWidth / 2 + width / 2;
+    var v = Phaser.Math.Between(min, max);
+
+    while (forceOut && v - prevX + prevWidth / 2 + width / 2 < sceneWidth) {
+      v += prevMove * 2 * Math.random();
+    }
+
+    while (forceOut && prevMove && v - width / 2 - prevMove > sceneWidth) {
+      v -= Math.random() * prevMove;
+    }
+
+    return v;
+  }
 
   create() {
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
-
     this.bg = this.add.image(width / 2, height / 2, 'bg').setDisplaySize(width, height);
-    var player = (this.player = this.physics.add.sprite(120 / 2, height - 490 - 132 / 2, 'player'))
-      .setScale(0.5)
-      .setOrigin(0);
-    player.body.allowGravity = false;
-    this.platforms = this.physics.add.staticGroup();
-    this.physics.add.collider(this.player, this.platforms);
-    this.wood = this.platforms.create(0, height - 491, 'wood').setOrigin(0, 0);
 
-    this.wood1 = this.platforms
-      .create(Phaser.Math.Between(120 * 2, width - 120), height - 491, 'wood')
-      .setOrigin(0, 0);
+    this.platforms = this.physics.add.staticGroup();
+
+    this.wood = this.platforms.create(60, height - 491 / 2, 'wood');
+    this.wood1 = this.platforms.create(
+      this.getNextX(this.wood.x, this.wood.width, 120, width),
+      height - 491 / 2,
+      'wood'
+    );
+
+    this.wood2 = this.platforms.create(
+      this.getNextX(
+        this.wood1.x,
+        this.wood1.width,
+        120,
+        width,
+        true,
+        this.wood1.x - this.wood1.displayWidth / 2
+      ),
+      height - 491 / 2,
+      'wood'
+    );
 
     var line = this.add.graphics();
     line.fillStyle('#000', 1);
@@ -29,16 +54,22 @@ export default class Play extends Phaser.Scene {
     line.destroy();
 
     this.line = this.platforms
-      .create(this.wood.x + this.wood.displayWidth, height - this.wood.displayHeight, 'line')
-      .setOrigin(0);
+      .create(this.wood.x + this.wood.width / 2, height - this.wood.height, 'line')
+      .setOrigin(0)
+      .refreshBody();
 
-    player.setDepth(10000).setBounce(0.1).setCollideWorldBounds(true);
+    this.player = this.physics.add
+      .sprite(this.wood.x, this.wood.y - this.wood.height / 2 - 80, 'player')
+      .setScale(0.5)
+      .setBounce(0.4)
+      .setCollideWorldBounds(true);
+
+    this.physics.add.collider(this.player, this.platforms);
 
     this.len = 0;
-
     this.input.enabled = true;
     this.timer = 0;
-    // press key to start
+
     this.input.on('pointerdown', () => {
       this.timer = setInterval(() => {
         this.len += 30;
@@ -49,7 +80,36 @@ export default class Play extends Phaser.Scene {
 
     this.input.on('pointerup', () => {
       clearInterval(this.timer);
-      this.player.setX(this.player.x + this.len);
+
+      var isWin = this.len + this.wood.width >= this.wood1.x - this.wood1.width / 2;
+      if (isWin) {
+        this.player.body.allowGravity = false;
+      }
+
+      this.tweens.add({
+        targets: this.player,
+        ease: 'Linear', 
+        duration: 500,
+        x: isWin ? this.wood1.x : this.player.x + this.len,
+        repeat: 0,
+        onComplete: () => {
+          if (isWin) {
+            this.len = 0;
+            this.swithWood();
+          } else {
+            this.tweens.add({
+              targets: [this.line],
+              ease: 'Linear', 
+              duration: 200,
+              angle: 90,
+              repeat: 0, 
+              onComplete: () => {
+                this.player.body.allowGravity = true;
+              },
+            });
+          }
+        },
+      });
     });
 
     this.score = 0;
@@ -60,9 +120,27 @@ export default class Play extends Phaser.Scene {
       .setOrigin(0.5)
       .setVisible(false);
   }
-  update() {
-    if (this.player.body.onFloor()) {
-      this.player.disableBody(true, true); // game over
-    }
+  swithWood() {
+    const width = this.cameras.main.width;
+
+    const move = this.wood1.x - this.wood1.displayWidth / 2;
+
+    this.tweens.add({
+      targets: [this.wood, this.wood1, this.wood2, this.player, this.line],
+      ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+      duration: 1000,
+      x: '-=' + move, // wood1 replace wood
+      onComplete: () => {
+        this.player.body.allowGravity = true;
+        var t = this.wood;
+        this.wood = this.wood1;
+        this.wood1 = this.wood2;
+        t.x = this.getNextX(this.wood1.x, this.wood1.width, 120, width, true, move);
+        this.wood2 = t;
+        this.line.displayWidth = 0;
+        this.line.x = this.wood.x + this.wood.width / 2;
+      },
+    });
   }
+  update() {}
 }
