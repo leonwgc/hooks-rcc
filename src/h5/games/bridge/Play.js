@@ -62,8 +62,7 @@ export default class Play extends Phaser.Scene {
 
     this.player = this.physics.add
       .sprite(this.wood.x, this.wood.y - this.wood.height / 2 - 80, 'player')
-      .setScale(0.5)
-    // .setCollideWorldBounds(true);
+      .setScale(0.5);
 
     this.physics.add.collider(this.player, this.platforms);
 
@@ -92,9 +91,11 @@ export default class Play extends Phaser.Scene {
       if (this.isover) return;
       clearInterval(this.timer);
 
-      var isWin =
-        this.len + this.wood.width >= this.wood1.x - this.wood1.width / 2 &&
-        this.len + this.wood.width <= this.wood1.x + this.wood1.width / 2;
+      const isShort = this.len + this.wood.width < this.wood1.x - this.wood1.width / 2;
+      const isLong = this.len + this.wood.width > this.wood1.x + this.wood1.width / 2;
+
+      var isWin = !isShort && !isLong;
+
       if (isWin) {
         this.player.body.allowGravity = false;
       } else {
@@ -111,7 +112,7 @@ export default class Play extends Phaser.Scene {
             targets: this.player,
             ease: 'Linear',
             duration: 500,
-            x: isWin ? this.wood1.x : this.player.x + this.len,
+            x: isWin ? this.wood1.x : this.wood.displayWidth + this.len,
             repeat: 0,
             onComplete: () => {
               if (isWin) {
@@ -122,14 +123,10 @@ export default class Play extends Phaser.Scene {
                   targets: [this.line],
                   ease: 'Linear',
                   duration: 200,
-                  angle: 90,
+                  angle: isShort ? 90 : 0,
                   repeat: 0,
                   onComplete: () => {
-                    this.player.body.allowGravity = true;
-                    this.player.setVelocityY(600);
-                    this.player.setVelocityX(100);
-                    this.scoreText.setText('Gave over');
-                    this.scoreText.setVisible(true);
+                    this.setGameOver();
                   },
                 });
               }
@@ -138,24 +135,28 @@ export default class Play extends Phaser.Scene {
         },
       });
     });
-
-    this.score = 0;
+  }
+  setGameOver() {
+    this.player.body.allowGravity = true;
+    this.player.setVelocityY(600);
+    this.player.setVelocityX(100);
+    this.scoreText.setText('Gave over');
+    this.scoreText.setVisible(true);
   }
   swithWood() {
     const width = this.cameras.main.width;
-
     const move = this.wood1.x - this.wood1.displayWidth / 2;
 
     this.tweens.add({
       targets: [this.wood, this.wood1, this.wood2, this.player, this.line],
-      ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+      ease: 'Linear',
       duration: 1000,
-      x: '-=' + move, // wood1 replace wood
+      x: '-=' + move,
       onComplete: () => {
-        this.player.body.allowGravity = true;
         var t = this.wood;
         this.wood = this.wood1;
         this.wood1 = this.wood2;
+        this.platforms.children.iterate((child) => child.refreshBody());
         t.x = this.getNextX(this.wood1.x, this.wood1.width, 120, width, true, move);
         this.wood2 = t;
         this.line.displayWidth = 0;

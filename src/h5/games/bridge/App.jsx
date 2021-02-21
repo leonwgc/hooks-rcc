@@ -13,7 +13,7 @@ const App = () => {
         default: 'arcade',
         arcade: {
           gravity: { y: 300 },
-          debug: false,
+          debug: true,
         },
       },
       scene: [Start, Play],
