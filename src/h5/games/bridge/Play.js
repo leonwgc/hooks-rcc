@@ -21,11 +21,13 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
+    this.sound.play('bgAudio');
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
     this.bg = this.add.image(width / 2, height / 2, 'bg').setDisplaySize(width, height);
     this.isover = false;
     this.platforms = this.physics.add.staticGroup();
+    this.xs = this.physics.add.staticGroup();
 
     this.wood = this.platforms.create(60, height - 491 / 2, 'wood');
     this.wood1 = this.platforms.create(
@@ -46,6 +48,7 @@ export default class Play extends Phaser.Scene {
       height - 491 / 2,
       'wood'
     );
+    this.updateAllWoodsX();
 
     var line = this.add.graphics();
     line.fillStyle('#000', 1);
@@ -139,16 +142,35 @@ export default class Play extends Phaser.Scene {
   setGameOver() {
     this.player.body.allowGravity = true;
     this.player.setVelocityY(600);
-    this.player.setVelocityX(100);
+    this.sound.play('fail');
+    // this.player.setVelocityX(100);
     this.scoreText.setText('Gave over');
     this.scoreText.setVisible(true);
+  }
+  updateWoodX(w) {
+    const { x, y } = w;
+    if (!w.cl) {
+      w.cl = this.xs.create(x - 20, y + 60, 'cl');
+      w.cr = this.xs.create(x + 50, y - 50, 'cr');
+    } else {
+      w.cl.x = x - 20;
+      w.cl.y = y + 60;
+      w.cr.x = x + 50;
+      w.cr.y = y - 50;
+    }
+  }
+  updateAllWoodsX() {
+    return;
+    this.platforms.children.iterate((c) => this.updateWoodX(c));
   }
   swithWood() {
     const width = this.cameras.main.width;
     const move = this.wood1.x - this.wood1.displayWidth / 2;
 
+    const xs = this.xs.getChildren();
+
     this.tweens.add({
-      targets: [this.wood, this.wood1, this.wood2, this.player, this.line],
+      targets: [this.wood, this.wood1, this.wood2, this.player, this.line, ...xs],
       ease: 'Linear',
       duration: 1000,
       x: '-=' + move,
@@ -157,6 +179,7 @@ export default class Play extends Phaser.Scene {
         this.wood = this.wood1;
         this.wood1 = this.wood2;
         this.platforms.children.iterate((child) => child.refreshBody());
+
         t.x = this.getNextX(this.wood1.x, this.wood1.width, 120, width, true, move);
         this.wood2 = t;
         this.line.displayWidth = 0;
@@ -166,6 +189,7 @@ export default class Play extends Phaser.Scene {
         if (this.wood1.x > width) {
           this.wood1.x = this.getNextX(this.wood.x, this.wood.width, 120, width);
         }
+        this.updateAllWoodsX();
       },
     });
   }

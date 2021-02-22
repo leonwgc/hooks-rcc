@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import bg from './assets/bg.jpg';
 import player from './assets/player.png';
 import wood from './assets/wood.png';
+import cl from './assets/cl.png';
+import cr from './assets/cr.png';
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -19,6 +21,17 @@ export default class Play extends Phaser.Scene {
     this.load.image('bg', bg);
     this.load.image('player', player);
     this.load.image('wood', wood);
+    this.load.image('cl', cl);
+    this.load.image('cr', cr);
+    this.load.audio(
+      'bgAudio',
+      'https://image.zuifuli.com/17/20191224/6cd43c3f4967eaa474706bcd3ff9cfeb.mp3'
+    );
+
+    this.load.audio(
+      'fail',
+      'https://image.zuifuli.com/17/20191225/f72784b8f9c1c1afe577b3e5e4934ae2.mp3'
+    );
 
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
