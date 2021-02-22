@@ -4,11 +4,13 @@ import Start from './Start';
 import Play from './Play';
 
 const App = () => {
+  const width = 750;
+  const height = 1335;
   useEffect(() => {
     var config = {
       type: Phaser.AUTO,
-      width: window.innerWidth * window.devicePixelRatio,
-      height: window.innerHeight * window.devicePixelRatio,
+      width,
+      height,
       physics: {
         default: 'arcade',
         arcade: {
