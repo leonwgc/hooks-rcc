@@ -77,6 +77,10 @@ const routes = [
     path: '/bridge',
     component: lazy(() => import('./games/bridge/App')),
   },
+  {
+    path: '/transform',
+    component: lazy(() => import('./transform/App')),
+  },
 ];
 
 export default routes;
